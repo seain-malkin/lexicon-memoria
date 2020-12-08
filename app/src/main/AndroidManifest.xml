@@ -8,6 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Lexicon_memoria" />
+        android:theme="@style/Theme.Lexicon_memoria">
+        <activity android:name=".LexiconListActivity"></activity>
+    </application>
 
 </manifest>
