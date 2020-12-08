@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="listBackground">
+        <item name="android:background">@color/grey</item>
+    </style>
+    <style name="listView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_margin">4dp</item>
+    </style>
+    <style name="cardTitle" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:padding">4dp</item>
+    </style>
+    <style name="cardSubtitle" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:padding">4dp</item>
+    </style>
+</resources>
