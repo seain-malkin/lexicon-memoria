@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.Lexicon_memoria.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">?attr/actionMenuTextColor</item>
+        <item name="android:actionMenuTextColor">?attr/actionMenuTextColor</item>
+        <item name="android:colorAccent">?attr/colorAccent</item>
+        <item name="android:colorControlNormal">?attr/colorControlNormal</item>
+        <item name="android:colorControlActivated">?attr/colorControlActivated</item>
+        <item name="android:colorControlHighlight">?attr/colorControlHighlight</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="iconTint">?attr/actionMenuTextColor</item>
+    </style>
     <style name="listView" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_margin">4dp</item>
     </style>
@@ -8,5 +19,8 @@
     </style>
     <style name="cardSubtitle" parent="TextAppearance.AppCompat.Caption">
         <item name="android:padding">4dp</item>
+    </style>
+    <style name="toolbarTitle" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize">21sp</item>
     </style>
 </resources>

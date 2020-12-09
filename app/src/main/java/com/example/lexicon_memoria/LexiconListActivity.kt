@@ -2,6 +2,7 @@ package com.example.lexicon_memoria
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 
@@ -36,5 +37,10 @@ class LexiconListActivity : AppCompatActivity() {
                 lexListFrag = fragment
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_lexicon_list, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
