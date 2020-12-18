@@ -3,6 +3,7 @@ package com.example.lexicon_memoria
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 
@@ -36,6 +37,12 @@ class LexiconListActivity : AppCompatActivity() {
                 // If already exists, just save the reference
                 lexListFrag = fragment
             }
+        }
+
+        // Floating Action Button
+        val fab: View = findViewById(R.id.fab)
+        fab.setOnClickListener {
+            startActivity(NewLexiconActivity.getIntent(this))
         }
     }
 
