@@ -6,8 +6,10 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.fragments.LexiconListFragment
+import com.example.lexicon_memoria.fragments.NewLexiconDialogFragment
 
 private const val TAG_LEXICON_LIST = "lexicon_list"
+private const val TAG_DIALOG_NEW_LEXICON = "dialog_new_lexicon"
 
 class LexiconListActivity : AppCompatActivity() {
 
@@ -41,8 +43,11 @@ class LexiconListActivity : AppCompatActivity() {
 
         // Floating Action Button
         val fab: View = findViewById(R.id.fab)
-        fab.setOnClickListener {
+        // On click, prompt for a new lexicon
+        val newLexiconDialog = NewLexiconDialogFragment()
 
+        fab.setOnClickListener {
+            newLexiconDialog.show(supportFragmentManager, TAG_DIALOG_NEW_LEXICON)
         }
     }
 
