@@ -42,7 +42,7 @@ class LexiconListActivity : AppCompatActivity() {
         // Floating Action Button
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener {
-            startActivity(NewLexiconActivity.getIntent(this))
+
         }
     }
 
