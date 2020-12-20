@@ -11,7 +11,10 @@
         <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="iconTint">?attr/actionMenuTextColor</item>
     </style>
-    <style name="listView" parent="Widget.MaterialComponents.CardView">
+    <style name="view">
+        <item name="android:background">?attr/color</item>
+    </style>
+    <style name="cardView" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_margin">4dp</item>
     </style>
     <style name="cardTitle" parent="TextAppearance.MaterialComponents.Headline5">
@@ -22,5 +25,15 @@
     </style>
     <style name="toolbarTitle" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="h1" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+    <style name="buttonPositive" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">?attr/colorSecondary</item>
+    </style>
+    <style name="editText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
     </style>
 </resources>
