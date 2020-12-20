@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.lexicon_memoria.databinding.LexiconListViewBinding
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 
 private const val TAG_LEXICON_LIST = "lexicon_list"
