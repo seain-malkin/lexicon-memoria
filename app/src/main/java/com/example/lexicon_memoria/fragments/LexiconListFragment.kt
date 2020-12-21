@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lexicon_memoria.LexiconListActivity
 import com.example.lexicon_memoria.R
+import com.example.lexicon_memoria.adapter.LexiconListAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,8 +45,8 @@ class LexiconListFragment : Fragment() {
 
         // Setup the recycler view to display the lexicon list
         rv = view.findViewById(R.id.rvLexList)
-        rv.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        rv.adapter = LexListAdapter()
+        rv.adapter = LexiconListAdapter()
+        rv.layoutManager = LinearLayoutManager(activity)
 
         return view
     }
@@ -67,33 +69,5 @@ class LexiconListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    private inner class LexListAdapter : RecyclerView.Adapter<LexListVH>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LexListVH {
-            return LexListVH(LayoutInflater.from(activity), parent)
-        }
-
-        override fun onBindViewHolder(holder: LexListVH, position: Int) {
-            holder.bind(position)
-        }
-
-        override fun getItemCount(): Int {
-            return 25
-        }
-    }
-
-    /**
-     * Represents each view in the lexicon list
-     */
-    inner class LexListVH(
-        li: LayoutInflater,
-        parent: ViewGroup
-    ) : RecyclerView.ViewHolder(
-        li.inflate(R.layout.lexicon_list_view, parent, false)
-    ) {
-        fun bind(position: Int) {
-
-        }
     }
 }
