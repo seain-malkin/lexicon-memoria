@@ -4,11 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "lexicons")
+@Entity(tableName = "lexicons", primaryKeys = ["user_id", "label"])
 data class LexiconEntity(
-
-    @PrimaryKey @ColumnInfo(name = "id")
-    val id: Int,
 
     @ColumnInfo(name = "user_id")
     val userId: Int,
