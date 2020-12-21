@@ -34,6 +34,7 @@
                     android:textAppearance="@style/h1"/>
 
                 <EditText
+                    android:id="@+id/lexicon_label"
                     android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -41,6 +42,7 @@
                     style="@style/editText" />
 
                 <Button
+                    android:id="@+id/button_create"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/button_create"
