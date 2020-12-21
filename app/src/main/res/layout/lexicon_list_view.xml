@@ -16,7 +16,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto">
 
             <TextView
-                android:id="@+id/llvTitle"
+                android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -25,11 +25,11 @@
                 style="@style/cardTitle"/>
 
             <TextView
-                android:id="@+id/llvWordCount"
+                android:id="@+id/word_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llvTitle"
+                app:layout_constraintTop_toBottomOf="@id/label"
                 style="@style/cardSubtitle"
                 android:text="7/32"/>
 

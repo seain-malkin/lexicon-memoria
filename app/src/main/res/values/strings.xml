@@ -3,6 +3,7 @@
     <string name="create_lexicon_title">Create a new lexicon</string>
     <string name="create_lexicon_hint">Enter a name for the lexicon</string>
     <string name="button_create">Create</string>
+    <string name="empty_not_saved">Lexicon not created: Blank label</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

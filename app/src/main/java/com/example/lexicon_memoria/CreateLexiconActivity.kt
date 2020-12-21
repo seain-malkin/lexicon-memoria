@@ -48,6 +48,7 @@ class CreateLexiconActivity : AppCompatActivity() {
                 replyIntent.putExtra(EXTRA_LABEL, label)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
+            finish()
         }
     }
 

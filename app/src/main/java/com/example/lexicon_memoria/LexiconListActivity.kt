@@ -1,19 +1,32 @@
 package com.example.lexicon_memoria
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.Observer
+import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.fragments.LexiconListFragment
+import com.example.lexicon_memoria.viewmodel.LexiconViewModel
+import com.example.lexicon_memoria.viewmodel.LexiconViewModelFactory
 
 private const val TAG_LEXICON_LIST = "lexicon_list"
 private const val TAG_DIALOG_NEW_LEXICON = "dialog_new_lexicon"
+private const val REQUEST_CODE_CREATE_LEXICON = 1
 
 class LexiconListActivity : AppCompatActivity() {
 
     /** Reference to the [LexiconListFragment] */
     private lateinit var lexListFrag: LexiconListFragment
+
+    private val lexiconViewModel: LexiconViewModel by viewModels {
+        LexiconViewModelFactory((application as LexmemApplication).lexicons)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +57,33 @@ class LexiconListActivity : AppCompatActivity() {
         val fab: View = findViewById(R.id.fab)
         // On click, prompt for a new lexicon
 
-
         fab.setOnClickListener {
-            startActivity(CreateLexiconActivity.getIntent(this))
+            startActivityForResult(
+                CreateLexiconActivity.getIntent(this),
+                REQUEST_CODE_CREATE_LEXICON
+            )
+        }
+
+        // Define an observer on the lexicon list
+        lexiconViewModel.all.observe(this, Observer { lexicons ->
+            lexicons?.let { lexListFrag.adapter?.submitList(it) }
+        })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_CREATE_LEXICON && resultCode == Activity.RESULT_OK) {
+            data?.getStringExtra(CreateLexiconActivity.EXTRA_LABEL)?.let {
+                val lexicon = LexiconEntity(1, it, System.currentTimeMillis().toInt())
+                lexiconViewModel.insert(lexicon)
+            }
+        } else {
+            Toast.makeText(
+                applicationContext,
+                R.string.empty_not_saved,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

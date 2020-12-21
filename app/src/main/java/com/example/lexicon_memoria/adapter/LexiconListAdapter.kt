@@ -3,6 +3,7 @@ package com.example.lexicon_memoria.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -34,12 +35,15 @@ class LexiconListAdapter
     class LexiconViewHolder(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
+
+        private val label: TextView = itemView.findViewById(R.id.label)
+
         /**
          * Binds the item data to the view
          * @param[text]
          */
         fun bind(text: String?) {
-
+            label.text = text
         }
 
         companion object {

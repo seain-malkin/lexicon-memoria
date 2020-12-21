@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lexicon_memoria.LexiconListActivity
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.adapter.LexiconListAdapter
 
@@ -28,6 +27,8 @@ class LexiconListFragment : Fragment() {
 
     private lateinit var rv: RecyclerView
 
+    var adapter: LexiconListAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,7 +46,8 @@ class LexiconListFragment : Fragment() {
 
         // Setup the recycler view to display the lexicon list
         rv = view.findViewById(R.id.rvLexList)
-        rv.adapter = LexiconListAdapter()
+        adapter = LexiconListAdapter()
+        rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(activity)
 
         return view
