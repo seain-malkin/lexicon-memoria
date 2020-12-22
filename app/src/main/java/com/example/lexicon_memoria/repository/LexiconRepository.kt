@@ -12,7 +12,11 @@ import kotlinx.coroutines.flow.Flow
  */
 class LexiconRepository(private val lexiconDao: LexiconDao) {
 
-    val all: Flow<List<LexiconEntity>> = lexiconDao.get(1)
+    val all: Flow<List<LexiconEntity>> = lexiconDao.get("sjam")
+
+    fun select(username: String) : Flow<List<LexiconEntity>> {
+        return lexiconDao.get(username)
+    }
 
     /**
      * Inserts a lexicon into persistant storage

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface LexiconDao {
 
     @Query("SELECT * FROM lexicons WHERE created_by = :username ORDER BY label")
-    fun get(username: Int) : Flow<List<LexiconEntity>>
+    fun get(username: String) : Flow<List<LexiconEntity>>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(vararg lexicons: LexiconEntity)
