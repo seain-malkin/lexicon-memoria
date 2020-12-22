@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.lexicon_memoria.database.dao.LexiconDao
+import com.example.lexicon_memoria.database.dao.UserDao
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -20,6 +21,8 @@ import kotlin.system.measureTimeMillis
 public abstract class LexmemDatabase : RoomDatabase() {
 
     abstract fun lexiconDao(): LexiconDao
+
+    abstract fun userDao(): UserDao
 
     companion object {
         /** Name of database to use on device */
@@ -80,10 +83,10 @@ public abstract class LexmemDatabase : RoomDatabase() {
         suspend fun populateDatabase(lexiconDao: LexiconDao) {
             lexiconDao.deleteAll()
 
-            var lexicon = LexiconEntity(1, "General", System.currentTimeMillis().toInt())
+            var lexicon = LexiconEntity("sjam", "General", System.currentTimeMillis().toInt())
             lexiconDao.insert(lexicon)
 
-            lexicon = LexiconEntity(1, "Computer Science", System.currentTimeMillis().toInt())
+            lexicon = LexiconEntity("sjam", "Computer Science", System.currentTimeMillis().toInt())
             lexiconDao.insert(lexicon)
         }
     }

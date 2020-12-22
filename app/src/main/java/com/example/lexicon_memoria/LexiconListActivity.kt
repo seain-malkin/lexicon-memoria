@@ -74,7 +74,7 @@ class LexiconListActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_CODE_CREATE_LEXICON && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(CreateLexiconActivity.EXTRA_LABEL)?.let {
-                val lexicon = LexiconEntity(1, it, System.currentTimeMillis().toInt())
+                val lexicon = LexiconEntity("sjam", it, System.currentTimeMillis().toInt())
                 lexiconViewModel.insert(lexicon)
             }
         } else {

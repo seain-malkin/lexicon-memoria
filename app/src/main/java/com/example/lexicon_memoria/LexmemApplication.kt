@@ -3,6 +3,7 @@ package com.example.lexicon_memoria
 import android.app.Application
 import com.example.lexicon_memoria.database.LexmemDatabase
 import com.example.lexicon_memoria.repository.LexiconRepository
+import com.example.lexicon_memoria.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -19,4 +20,7 @@ class LexmemApplication : Application() {
 
     /** Reference to the lexicon repository */
     val lexicons by lazy { LexiconRepository(database.lexiconDao()) }
+
+    /** Reference to the users repository */
+    val users by lazy { UserRepository(database.userDao()) }
 }
