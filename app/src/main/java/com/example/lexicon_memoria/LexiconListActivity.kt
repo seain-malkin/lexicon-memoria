@@ -16,7 +16,6 @@ import com.example.lexicon_memoria.viewmodel.LexiconViewModel
 import com.example.lexicon_memoria.viewmodel.LexiconViewModelFactory
 
 private const val TAG_LEXICON_LIST = "lexicon_list"
-private const val TAG_DIALOG_NEW_LEXICON = "dialog_new_lexicon"
 private const val REQUEST_CODE_CREATE_LEXICON = 1
 
 class LexiconListActivity : AppCompatActivity() {
