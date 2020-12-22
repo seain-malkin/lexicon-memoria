@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.lexicon_memoria.database.dao.LexiconDao
 import com.example.lexicon_memoria.database.dao.UserDao
 import com.example.lexicon_memoria.database.entity.LexiconEntity
+import com.example.lexicon_memoria.database.entity.UserEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -17,7 +19,7 @@ import kotlin.system.measureTimeMillis
  * Database class for the entire application
  * @author Seain Malkin (dev@seain.me)
  */
-@Database(entities = arrayOf(LexiconEntity::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(LexiconEntity::class, UserEntity::class), version = 2, exportSchema = false)
 public abstract class LexmemDatabase : RoomDatabase() {
 
     abstract fun lexiconDao(): LexiconDao
@@ -26,11 +28,17 @@ public abstract class LexmemDatabase : RoomDatabase() {
 
     companion object {
         /** Name of database to use on device */
-        private const val DATABASE_NAME = "lexmem_database"
+        private const val DATABASE_NAME = "lexmem_database2"
 
         /** Object reference for singleton implemention */
         @Volatile
         private var INSTANCE: LexmemDatabase? = null
+
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE lexicons")
+            }
+        }
 
         /**
          * Initialises the class if required then returns it's object reference
@@ -49,8 +57,9 @@ public abstract class LexmemDatabase : RoomDatabase() {
                     LexmemDatabase::class.java,
                     DATABASE_NAME
                 )
-                    .addCallback(LexmemDatabaseCallback(scope))
-                    .build()
+                        .addMigrations(MIGRATION_1_2)
+                        .addCallback(LexmemDatabaseCallback(scope))
+                        .build()
 
                 INSTANCE = instance
                 return instance

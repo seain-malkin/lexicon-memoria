@@ -1,6 +1,9 @@
 package com.example.lexicon_memoria.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.*
+import androidx.savedstate.SavedStateRegistryOwner
+import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.repository.LexiconRepository
 import kotlinx.coroutines.launch
@@ -11,11 +14,16 @@ import kotlinx.coroutines.launch
  * @property[repository] The lexicon repository object
  */
 class LexiconViewModel(
-    private val repository: LexiconRepository
+    private val repository: LexiconRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    /** The username who owns the lexicons retrieved */
+    val username: String = savedStateHandle["username"] ?:
+        throw IllegalArgumentException("Missing username")
+
     /** Reference to an observed list of lexicon objects */
-    val all: LiveData<List<LexiconEntity>> = repository.all.asLiveData()
+    val all: LiveData<List<LexiconEntity>> = repository.selectAll(username).asLiveData()
 
     /**
      * Inserts a lexicon object asynchronously
@@ -33,13 +41,15 @@ class LexiconViewModel(
  * @property[repository] The lexicon repository object
  */
 class LexiconViewModelFactory(
-    private val repository: LexiconRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    private val repository: LexiconRepository,
+    private val owner: SavedStateRegistryOwner,
+    private val defaultArgs: Bundle?
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+    override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
         if (!modelClass.isAssignableFrom(LexiconViewModel::class.java)) {
             throw IllegalArgumentException("Unkown ViewMdel class")
         }
         @Suppress("UNCHECKED_CAST")
-        return LexiconViewModel(repository) as T
+        return LexiconViewModel(repository, handle) as T
     }
 }

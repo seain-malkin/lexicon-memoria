@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
+import androidx.lifecycle.SavedStateViewModelFactory
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 import com.example.lexicon_memoria.viewmodel.LexiconViewModel
@@ -23,13 +24,22 @@ class LexiconListActivity : AppCompatActivity() {
     /** Reference to the [LexiconListFragment] */
     private lateinit var lexListFrag: LexiconListFragment
 
+    /** View Model for displaying list of lexicons */
     private val lexiconViewModel: LexiconViewModel by viewModels {
-        LexiconViewModelFactory((application as LexmemApplication).lexicons)
+        LexiconViewModelFactory(
+                (application as LexmemApplication).lexicons,
+                this,
+                intent.extras
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lexicon_list)
+
+        if (savedInstanceState == null) {
+            intent.putExtra("username", "sjam")
+        }
 
         setSupportActionBar(findViewById(R.id.toolbar))
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

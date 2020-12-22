@@ -12,9 +12,7 @@ import kotlinx.coroutines.flow.Flow
  */
 class LexiconRepository(private val lexiconDao: LexiconDao) {
 
-    val all: Flow<List<LexiconEntity>> = lexiconDao.get("sjam")
-
-    fun select(username: String) : Flow<List<LexiconEntity>> {
+    fun selectAll(username: String) : Flow<List<LexiconEntity>> {
         return lexiconDao.get(username)
     }
 
