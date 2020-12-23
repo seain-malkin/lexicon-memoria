@@ -14,5 +14,5 @@ data class UserEntity(
         val email: String,
 
         @ColumnInfo(name = "creation_timestamp")
-        val creation_timestamp: Int
+        val creationTimestamp: Int
 )

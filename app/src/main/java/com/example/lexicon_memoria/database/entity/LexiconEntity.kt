@@ -7,11 +7,11 @@ import androidx.room.Entity
 data class LexiconEntity(
 
     @ColumnInfo(name = "created_by") // username
-    val created_by: String,
+    val createdBy: String,
 
     @ColumnInfo(name = "label")
     val label: String,
 
     @ColumnInfo(name = "creation_timestamp")
-    val creation_timestamp: Int
+    val creationTimestamp: Int
 )

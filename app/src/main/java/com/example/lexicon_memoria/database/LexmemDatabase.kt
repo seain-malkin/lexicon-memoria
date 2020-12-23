@@ -8,21 +8,27 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.lexicon_memoria.database.dao.LexiconDao
 import com.example.lexicon_memoria.database.dao.UserDao
+import com.example.lexicon_memoria.database.dao.WordDao
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.database.entity.UserEntity
+import com.example.lexicon_memoria.database.entity.WordEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.time.Instant
-import kotlin.system.measureTimeMillis
 
 /**
  * Database class for the entire application
  * @author Seain Malkin (dev@seain.me)
  */
-@Database(entities = arrayOf(LexiconEntity::class, UserEntity::class), version = 2, exportSchema = false)
-public abstract class LexmemDatabase : RoomDatabase() {
+@Database(
+    entities = [LexiconEntity::class, UserEntity::class, WordEntity::class],
+    version = 3,
+    exportSchema = false
+)
+abstract class LexmemDatabase : RoomDatabase() {
 
     abstract fun lexiconDao(): LexiconDao
+
+    abstract fun wordDao() : WordDao
 
     abstract fun userDao(): UserDao
 
@@ -33,12 +39,6 @@ public abstract class LexmemDatabase : RoomDatabase() {
         /** Object reference for singleton implemention */
         @Volatile
         private var INSTANCE: LexmemDatabase? = null
-
-        private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("DROP TABLE lexicons")
-            }
-        }
 
         /**
          * Initialises the class if required then returns it's object reference
@@ -57,7 +57,7 @@ public abstract class LexmemDatabase : RoomDatabase() {
                     LexmemDatabase::class.java,
                     DATABASE_NAME
                 )
-                        .addMigrations(MIGRATION_1_2)
+                        .fallbackToDestructiveMigration()
                         .addCallback(LexmemDatabaseCallback(scope))
                         .build()
 

@@ -22,7 +22,7 @@ class LexiconListViewModel(
         throw IllegalArgumentException("Missing username")
 
     /** Reference to an observed list of lexicon objects */
-    val all: LiveData<List<LexiconEntity>> = repository.selectAll(username).asLiveData()
+    val all: LiveData<List<LexiconEntity>> = repository.select(username).asLiveData()
 
     /**
      * Inserts a lexicon object asynchronously
