@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.Observer
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModel
@@ -73,7 +72,7 @@ class LexiconListActivity : AppCompatActivity() {
         }
 
         // Define an observer on the lexicon list
-        lexiconListViewModel.all.observe(this, Observer { lexicons ->
+        lexiconListViewModel.all.observe(this, { lexicons ->
             lexicons?.let { lexListFrag.adapter?.submitList(it) }
         })
     }

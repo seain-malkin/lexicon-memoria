@@ -3,7 +3,6 @@ package com.example.lexicon_memoria.viewmodel
 import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.repository.LexiconRepository
 import kotlinx.coroutines.launch
@@ -35,7 +34,7 @@ class LexiconListViewModel(
 }
 
 /**
- * Factory for creating [LexiconViewModel]. Allows the view model to survive configuration
+ * Factory for creating [LexiconListViewModel]. Allows the view model to survive configuration
  * and lifecycle changes.
  * @author Seain Malkin (dev@seain.me)
  * @property[repository] The lexicon repository object
