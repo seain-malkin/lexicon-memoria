@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
  * @author Seain Malkin (dev@seain.me)
  * @property[repository] The lexicon repository object
  */
-class LexiconViewModel(
+class LexiconListViewModel(
     private val repository: LexiconRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -40,16 +40,16 @@ class LexiconViewModel(
  * @author Seain Malkin (dev@seain.me)
  * @property[repository] The lexicon repository object
  */
-class LexiconViewModelFactory(
+class LexiconListViewModelFactory(
     private val repository: LexiconRepository,
-    private val owner: SavedStateRegistryOwner,
-    private val defaultArgs: Bundle?
+    owner: SavedStateRegistryOwner,
+    defaultArgs: Bundle?
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
-        if (!modelClass.isAssignableFrom(LexiconViewModel::class.java)) {
+        if (!modelClass.isAssignableFrom(LexiconListViewModel::class.java)) {
             throw IllegalArgumentException("Unkown ViewMdel class")
         }
         @Suppress("UNCHECKED_CAST")
-        return LexiconViewModel(repository, handle) as T
+        return LexiconListViewModel(repository, handle) as T
     }
 }

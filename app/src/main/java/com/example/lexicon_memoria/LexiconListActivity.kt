@@ -10,11 +10,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateViewModelFactory
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.fragments.LexiconListFragment
-import com.example.lexicon_memoria.viewmodel.LexiconViewModel
-import com.example.lexicon_memoria.viewmodel.LexiconViewModelFactory
+import com.example.lexicon_memoria.viewmodel.LexiconListViewModel
+import com.example.lexicon_memoria.viewmodel.LexiconListViewModelFactory
 
 private const val TAG_LEXICON_LIST = "lexicon_list"
 private const val REQUEST_CODE_CREATE_LEXICON = 1
@@ -25,8 +24,8 @@ class LexiconListActivity : AppCompatActivity() {
     private lateinit var lexListFrag: LexiconListFragment
 
     /** View Model for displaying list of lexicons */
-    private val lexiconViewModel: LexiconViewModel by viewModels {
-        LexiconViewModelFactory(
+    private val lexiconListViewModel: LexiconListViewModel by viewModels {
+        LexiconListViewModelFactory(
                 (application as LexmemApplication).lexicons,
                 this,
                 intent.extras
@@ -74,7 +73,7 @@ class LexiconListActivity : AppCompatActivity() {
         }
 
         // Define an observer on the lexicon list
-        lexiconViewModel.all.observe(this, Observer { lexicons ->
+        lexiconListViewModel.all.observe(this, Observer { lexicons ->
             lexicons?.let { lexListFrag.adapter?.submitList(it) }
         })
     }
@@ -85,7 +84,7 @@ class LexiconListActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_CREATE_LEXICON && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(CreateLexiconActivity.EXTRA_LABEL)?.let {
                 val lexicon = LexiconEntity("sjam", it, System.currentTimeMillis().toInt())
-                lexiconViewModel.insert(lexicon)
+                lexiconListViewModel.insert(lexicon)
             }
         } else {
             Toast.makeText(
