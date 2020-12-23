@@ -35,8 +35,10 @@ class LexiconListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lexicon_list)
 
+        val username = "sjam"
+
         if (savedInstanceState == null) {
-            intent.putExtra("username", "sjam")
+            intent.putExtra("username", username)
         }
 
         setSupportActionBar(findViewById(R.id.toolbar))
@@ -49,7 +51,7 @@ class LexiconListActivity : AppCompatActivity() {
 
             // If fragment doesn't exist, create it and attach it
             if (fragment !is LexiconListFragment) {
-                lexListFrag = LexiconListFragment.newInstance()
+                lexListFrag = LexiconListFragment.newInstance(username)
                 fm.beginTransaction().run {
                     replace(R.id.flContent, lexListFrag, TAG_LEXICON_LIST)
                     commit()
@@ -70,11 +72,6 @@ class LexiconListActivity : AppCompatActivity() {
                 REQUEST_CODE_CREATE_LEXICON
             )
         }
-
-        // Define an observer on the lexicon list
-        lexiconListViewModel.all.observe(this, { lexicons ->
-            lexicons?.let { lexListFrag.adapter?.submitList(it) }
-        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -1,15 +1,18 @@
 package com.example.lexicon_memoria.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.adapter.LexiconListAdapter.LexiconViewHolder
+import com.google.android.material.card.MaterialCardView
 
 /**
  * Recyclerview adapter to display a list of lexicons
@@ -37,6 +40,13 @@ class LexiconListAdapter
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val label: TextView = itemView.findViewById(R.id.label)
+
+        init {
+            val card: MaterialCardView = itemView.findViewById(R.id.card)
+            card.setOnClickListener {
+                Log.i("Card Clicked", "Card: ${label.text}")
+            }
+        }
 
         /**
          * Binds the item data to the view

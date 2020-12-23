@@ -5,15 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.adapter.LexiconListAdapter
+import com.example.lexicon_memoria.viewmodel.LexiconListViewModel
+import com.example.lexicon_memoria.viewmodel.LexiconListViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_USERNAME = "username"
 
 /**
  * A simple [Fragment] subclass.
@@ -21,19 +22,21 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class LexiconListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var username: String? = null
 
-    private lateinit var rv: RecyclerView
-
-    var adapter: LexiconListAdapter? = null
+    /** View Model for displaying list of lexicons */
+    private val lexiconListViewModel: LexiconListViewModel by activityViewModels {
+        LexiconListViewModelFactory(
+                (requireActivity().application as LexmemApplication).lexicons,
+                requireActivity(),
+                arguments
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            username = it.getString(ARG_USERNAME)
         }
     }
 
@@ -45,10 +48,15 @@ class LexiconListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_lexicon_list, container, false)
 
         // Setup the recycler view to display the lexicon list
-        rv = view.findViewById(R.id.rvLexList)
-        adapter = LexiconListAdapter()
-        rv.adapter = adapter
-        rv.layoutManager = LinearLayoutManager(activity)
+        val recycler: RecyclerView = view.findViewById(R.id.rvLexList)
+        val adapter = LexiconListAdapter()
+        recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(activity)
+
+        // Define an observer on the lexicon list
+        lexiconListViewModel.all.observe(viewLifecycleOwner, { lexicons ->
+            lexicons?.let { adapter.submitList(it) }
+        })
 
         return view
     }
@@ -58,17 +66,14 @@ class LexiconListFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
+         * @param[username] The username associated with displayed lexicons
          * @return A new instance of fragment LexiconListFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String = "", param2: String = "") =
+        fun newInstance(username: String) =
             LexiconListFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_USERNAME, username)
                 }
             }
     }
