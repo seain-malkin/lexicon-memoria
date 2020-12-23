@@ -12,11 +12,27 @@ import kotlinx.coroutines.flow.Flow
  */
 class LexiconRepository(private val lexiconDao: LexiconDao) {
 
-    fun select(username: String) : Flow<List<LexiconEntity>> {
+    /**
+     * Select all lexicons for the given user
+     * @param[username] The lexicon owner username
+     * @return The list of lexicons
+     */
+    fun select(
+        username: String
+    ) : Flow<List<LexiconEntity>> {
         return lexiconDao.select(username)
     }
 
-    fun select(username: String, label: String) : Flow<List<LexiconEntity>> {
+    /**
+     * Select one lexicon given the user and lexicon names
+     * @param[username] The owners name
+     * @param[label] The label of the lexicon
+     * @return A list of lexicons (Only 1 result)
+     */
+    fun select(
+        username: String,
+        label: String
+    ) : Flow<List<LexiconEntity>> {
         return lexiconDao.select(username, label)
     }
 
@@ -24,7 +40,6 @@ class LexiconRepository(private val lexiconDao: LexiconDao) {
      * Inserts a lexicon into persistant storage
      * @param[lexicon] The lexicon object to insert
      */
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(lexicon: LexiconEntity) {
         lexiconDao.insert(lexicon)
