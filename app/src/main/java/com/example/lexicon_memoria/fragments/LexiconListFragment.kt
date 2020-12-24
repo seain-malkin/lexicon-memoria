@@ -1,6 +1,7 @@
 package com.example.lexicon_memoria.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,7 @@ private const val ARG_USERNAME = "username"
  * Use the [LexiconListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LexiconListFragment : Fragment() {
+class LexiconListFragment : LexiconListAdapter.LexiconListAdapterListener, Fragment() {
     private var username: String? = null
 
     /** View Model for displaying list of lexicons */
@@ -59,6 +60,10 @@ class LexiconListFragment : Fragment() {
         })
 
         return view
+    }
+
+    override fun onLexiconListItemClick(label: String) {
+        Log.i("Lexicon List", "$label")
     }
 
     companion object {

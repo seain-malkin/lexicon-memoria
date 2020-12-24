@@ -18,12 +18,28 @@ import com.google.android.material.card.MaterialCardView
  * Recyclerview adapter to display a list of lexicons
  * @author Seain Malkin (dev@seain.me)
  */
-class LexiconListAdapter
+class LexiconListAdapter(
+        var listener: LexiconListAdapterListener? = null
+)
     : ListAdapter<LexiconEntity, LexiconViewHolder>(LexiconComparator()) {
+
+    /**
+     * Listener interface for fragment/activity communication
+     */
+    interface LexiconListAdapterListener {
+
+        /**
+         * Triggered when a list item is clicked
+         * @param[label] The lexicon label
+         */
+        fun onLexiconListItemClick(label: String)
+    }
 
     /** @see[ListAdapter.onCreateViewHolder] */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LexiconViewHolder {
-        return LexiconViewHolder.create(parent)
+        return LexiconViewHolder(LayoutInflater.from(parent.context).inflate(
+                R.layout.lexicon_list_view, parent, false
+        ))
     }
 
     /** @see[ListAdapter.onBindViewHolder] */
@@ -35,16 +51,16 @@ class LexiconListAdapter
      * Represents the [View] used to display each lexicon in the list
      * @property[itemView] The inflated view
      */
-    class LexiconViewHolder(
+    inner class LexiconViewHolder(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val label: TextView = itemView.findViewById(R.id.label)
 
         init {
-            val card: MaterialCardView = itemView.findViewById(R.id.card)
-            card.setOnClickListener {
-                Log.i("Card Clicked", "Card: ${label.text}")
+            // Attach even listener that informs external listener
+            itemView.findViewById<CardView>(R.id.card).setOnClickListener {
+                listener?.onLexiconListItemClick(label.text.toString())
             }
         }
 
@@ -54,20 +70,6 @@ class LexiconListAdapter
          */
         fun bind(text: String?) {
             label.text = text
-        }
-
-        companion object {
-            /**
-             * Returns the view holder with the inflated view. This can be extended to allow
-             * different views depending on the object being displayed
-             * @param[parent] The parent of the view
-             */
-            fun create(parent: ViewGroup): LexiconViewHolder {
-                // Inflates the view and instantiates the view holder
-                return LexiconViewHolder(LayoutInflater.from(parent.context).inflate(
-                    R.layout.lexicon_list_view, parent, false
-                ))
-            }
         }
     }
 
