@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.database.entity.LexiconEntity
+import com.example.lexicon_memoria.fragments.LexiconListFragment
 import com.example.lexicon_memoria.repository.LexiconRepository
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,7 @@ class LexiconListViewModel(
 ) : ViewModel() {
 
     /** The username who owns the lexicons retrieved */
-    val username: String = savedStateHandle["username"] ?:
+    private val username: String = savedStateHandle[LexiconListFragment.ARG_USERNAME] ?:
         throw IllegalArgumentException("Missing username")
 
     /** Reference to an observed list of lexicon objects */

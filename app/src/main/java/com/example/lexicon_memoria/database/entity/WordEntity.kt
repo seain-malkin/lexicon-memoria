@@ -16,23 +16,23 @@ data class WordEntity(
     val label: String,
 
     @ColumnInfo(name = "daily_score")
-    val dailyScore: Int,
+    val dailyScore: Int = 0,
 
     @ColumnInfo(name = "daily_next_ts")
-    val dailyNextTs: Int,
+    val dailyNextTs: Int = 0,
 
     @ColumnInfo(name = "weekly_score")
-    val weeklyScore: Int,
+    val weeklyScore: Int = 0,
 
     @ColumnInfo(name = "weekly_next_ts")
-    val weeklyNextTs: Int,
+    val weeklyNextTs: Int = 0,
 
     @ColumnInfo(name = "monthly_score")
-    val monthlyScore: Int,
+    val monthlyScore: Int = 0,
 
     @ColumnInfo(name = "monthly_next_ts")
-    val monthlyNextTs: Int,
+    val monthlyNextTs: Int = 0,
 
     @ColumnInfo(name = "creation_ts")
-    val creationTs: Int
+    val creationTs: Int = System.currentTimeMillis().toInt()
 )

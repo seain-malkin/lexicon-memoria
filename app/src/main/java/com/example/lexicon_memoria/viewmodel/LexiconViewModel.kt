@@ -1,17 +1,35 @@
 package com.example.lexicon_memoria.viewmodel
 
 import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.lexicon_memoria.repository.LexiconRepository
+import com.example.lexicon_memoria.database.entity.WordEntity
+import com.example.lexicon_memoria.fragments.LexiconViewFragment
+import com.example.lexicon_memoria.repository.WordRepository
+import kotlinx.coroutines.launch
 
 class LexiconViewModel(
-    private val repository: LexiconRepository,
+    private val repository: WordRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    /** The username of the data owner */
+    private val username: String = savedStateHandle[LexiconViewFragment.ARG_USERNAME] ?:
+        throw IllegalArgumentException("Missing username")
 
+    /** The lexicon label the word belongs to */
+    private val lexiconLabel: String = savedStateHandle[LexiconViewFragment.ARG_LEXICON_LABEL] ?:
+        throw IllegalArgumentException("Missing lexicon label")
+
+    /** Retrieve all words in a given lexicon */
+    val all: LiveData<List<WordEntity>> = repository.select(username, lexiconLabel).asLiveData()
+
+    /**
+     * Inserts a word
+     * @param[word] The word object to insert
+     */
+    fun insert(word: WordEntity) = viewModelScope.launch {
+        repository.insert(word)
+    }
 }
 
 /**
@@ -21,13 +39,13 @@ class LexiconViewModel(
  * @property[repository] The lexicon repository object
  */
 class LexiconViewModelFactory(
-    private val repository: LexiconRepository,
-    owner: SavedStateRegistryOwner,
-    defaultArgs: Bundle?
+        private val repository: WordRepository,
+        owner: SavedStateRegistryOwner,
+        defaultArgs: Bundle?
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
         if (!modelClass.isAssignableFrom(LexiconViewModel::class.java)) {
-            throw IllegalArgumentException("Unkown ViewMdel class")
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
         @Suppress("UNCHECKED_CAST")
         return LexiconViewModel(repository, handle) as T

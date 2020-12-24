@@ -25,6 +25,9 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
 
     private lateinit var username: String
 
+    /** The fragment visible to the user */
+    private var visibleFragment = TAG_LEXICON_LIST
+
     /** View Model for displaying list of lexicons */
     private val lexiconListViewModel: LexiconListViewModel by viewModels {
         LexiconListViewModelFactory(
@@ -38,6 +41,8 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
      * Toggles the lexicon list fragment and hides the view fragment
      */
     private fun displayLexiconList() {
+        visibleFragment = TAG_LEXICON_LIST
+
         supportFragmentManager.let { fm ->
             fm.commit {
                 setReorderingAllowed(true)
@@ -62,6 +67,8 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
      * Toggles the lexicon view fragment
      */
     private fun displayLexiconView(lexiconLabel: String) {
+        visibleFragment = TAG_LEXICON_VIEW
+
         supportFragmentManager.let { fm ->
             fm.commit {
                 setReorderingAllowed(true)

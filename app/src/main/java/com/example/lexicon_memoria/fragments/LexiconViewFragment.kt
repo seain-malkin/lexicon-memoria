@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
-
-private const val ARG_USERNAME = "username"
-private const val ARG_LEXICON_LABEL = "lexicon_label"
+import com.example.lexicon_memoria.database.entity.WordEntity
+import com.example.lexicon_memoria.viewmodel.LexiconViewModel
+import com.example.lexicon_memoria.viewmodel.LexiconViewModelFactory
 
 /**
  * A simple [Fragment] subclass.
@@ -18,6 +20,14 @@ private const val ARG_LEXICON_LABEL = "lexicon_label"
 class LexiconViewFragment : Fragment() {
     private var username: String? = null
     private var lexiconLabel: String? = null
+
+    private val lexiconViewModel: LexiconViewModel by activityViewModels {
+        LexiconViewModelFactory(
+                (requireActivity().application as LexmemApplication).words,
+                requireActivity(),
+                arguments
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +44,9 @@ class LexiconViewFragment : Fragment() {
     }
 
     companion object {
+        const val ARG_USERNAME = "username"
+        const val ARG_LEXICON_LABEL = "lexicon_label"
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

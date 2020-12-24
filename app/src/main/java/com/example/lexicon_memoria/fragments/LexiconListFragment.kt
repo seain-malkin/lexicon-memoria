@@ -15,8 +15,6 @@ import com.example.lexicon_memoria.adapter.LexiconListAdapter.LexiconListAdapter
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModel
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModelFactory
 
-private const val ARG_USERNAME = "username"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [LexiconListFragment.newInstance] factory method to
@@ -66,6 +64,7 @@ class LexiconListFragment : Fragment() {
     }
 
     companion object {
+        const val ARG_USERNAME = "username"
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
