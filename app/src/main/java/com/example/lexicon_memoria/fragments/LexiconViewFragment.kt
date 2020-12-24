@@ -12,7 +12,7 @@ private const val ARG_LEXICON_LABEL = "lexicon_label"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LexiconFragment.newInstance] factory method to
+ * Use the [LexiconViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class LexiconViewFragment : Fragment() {
