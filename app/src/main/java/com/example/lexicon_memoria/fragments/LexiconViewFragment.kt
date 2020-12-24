@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
-import com.example.lexicon_memoria.database.entity.WordEntity
 import com.example.lexicon_memoria.viewmodel.LexiconViewModel
 import com.example.lexicon_memoria.viewmodel.LexiconViewModelFactory
 
