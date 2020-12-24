@@ -1,7 +1,6 @@
 package com.example.lexicon_memoria.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.adapter.LexiconListAdapter
+import com.example.lexicon_memoria.adapter.LexiconListAdapter.LexiconListAdapterListener
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModel
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModelFactory
 
@@ -22,7 +22,7 @@ private const val ARG_USERNAME = "username"
  * Use the [LexiconListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LexiconListFragment : LexiconListAdapter.LexiconListAdapterListener, Fragment() {
+class LexiconListFragment : Fragment() {
     private var username: String? = null
 
     /** View Model for displaying list of lexicons */
@@ -50,7 +50,10 @@ class LexiconListFragment : LexiconListAdapter.LexiconListAdapterListener, Fragm
 
         // Setup the recycler view to display the lexicon list
         val recycler: RecyclerView = view.findViewById(R.id.rvLexList)
-        val adapter = LexiconListAdapter()
+
+        // Create adapter with activity as listener
+        val adapter = LexiconListAdapter(activity as LexiconListAdapterListener)
+
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(activity)
 
@@ -60,10 +63,6 @@ class LexiconListFragment : LexiconListAdapter.LexiconListAdapterListener, Fragm
         })
 
         return view
-    }
-
-    override fun onLexiconListItemClick(label: String) {
-        Log.i("Lexicon List", "$label")
     }
 
     companion object {

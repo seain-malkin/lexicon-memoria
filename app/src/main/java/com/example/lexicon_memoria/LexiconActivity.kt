@@ -4,21 +4,27 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.commit
+import com.example.lexicon_memoria.adapter.LexiconListAdapter.LexiconListAdapterListener
 import com.example.lexicon_memoria.database.entity.LexiconEntity
+import com.example.lexicon_memoria.fragments.LexiconFragment
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModel
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 private const val TAG_LEXICON_LIST = "lexicon_list"
+private const val TAG_LEXICON_VIEW = "lexicon_view"
 private const val REQUEST_CODE_CREATE_LEXICON = 1
 
-class LexiconActivity : AppCompatActivity() {
+class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
+
+    private lateinit var username: String
 
     /** View Model for displaying list of lexicons */
     private val lexiconListViewModel: LexiconListViewModel by viewModels {
@@ -27,6 +33,55 @@ class LexiconActivity : AppCompatActivity() {
                 this,
                 intent.extras
         )
+    }
+
+    /**
+     * Toggles the lexicon list fragment and hides the view fragment
+     */
+    private fun displayLexiconList() {
+        supportFragmentManager.let { fm ->
+            fm.commit {
+                setReorderingAllowed(true)
+                // Find or create list fragment then display it
+                fm.findFragmentByTag(TAG_LEXICON_LIST).let {
+                    if (it is LexiconListFragment) {
+                        show(it)
+                    } else {
+                        add(R.id.content, LexiconListFragment.newInstance(username),
+                                TAG_LEXICON_LIST)
+                    }
+                }
+                // Hide the view fragment
+                fm.findFragmentByTag(TAG_LEXICON_VIEW)?.let {
+                    hide(it)
+                }
+            }
+        }
+    }
+
+    /**
+     * Toggles the lexicon view fragment
+     */
+    private fun displayLexiconView(lexiconLabel: String) {
+        supportFragmentManager.let { fm ->
+            fm.commit {
+                setReorderingAllowed(true)
+                // Find or create view fragment and display it
+                fm.findFragmentByTag(TAG_LEXICON_VIEW).let {
+                    if (it is LexiconFragment) {
+                        show(it)
+                    } else {
+                        add(R.id.content, LexiconFragment.newInstance(username, lexiconLabel),
+                                TAG_LEXICON_VIEW)
+                    }
+                }
+                // Hide the list fragment
+                fm.findFragmentByTag(TAG_LEXICON_LIST)?.let {
+                    hide(it)
+                }
+                addToBackStack(null)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +93,10 @@ class LexiconActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         // This will be replaced by login on flash activity
-        val username = "sjam"
+        username = "sjam"
         if (savedInstanceState == null) {
             intent.putExtra("username", username)
-        }
-
-        // Attach the list fragment
-        supportFragmentManager.run {
-            findFragmentByTag(TAG_LEXICON_LIST) ?: commit {
-                replace(R.id.content, LexiconListFragment.newInstance(username), TAG_LEXICON_LIST)
-                setReorderingAllowed(true)
-            }
+            displayLexiconList()
         }
 
         // Set click event on floating action bar
@@ -80,5 +128,9 @@ class LexiconActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_lexicon_list, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onLexiconListItemClick(label: String) {
+        displayLexiconView(label)
     }
 }
