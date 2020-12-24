@@ -15,7 +15,7 @@ private const val ARG_LEXICON_LABEL = "lexicon_label"
  * Use the [LexiconFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LexiconFragment : Fragment() {
+class LexiconViewFragment : Fragment() {
     private var username: String? = null
     private var lexiconLabel: String? = null
 
@@ -44,7 +44,7 @@ class LexiconFragment : Fragment() {
          */
         @JvmStatic
         fun newInstance(username: String, lexiconLabel: String) =
-                LexiconFragment().apply {
+                LexiconViewFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_USERNAME, username)
                         putString(ARG_LEXICON_LABEL, lexiconLabel)

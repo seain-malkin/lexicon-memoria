@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -12,7 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.commit
 import com.example.lexicon_memoria.adapter.LexiconListAdapter.LexiconListAdapterListener
 import com.example.lexicon_memoria.database.entity.LexiconEntity
-import com.example.lexicon_memoria.fragments.LexiconFragment
+import com.example.lexicon_memoria.fragments.LexiconViewFragment
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModel
 import com.example.lexicon_memoria.viewmodel.LexiconListViewModelFactory
@@ -68,10 +67,10 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
                 setReorderingAllowed(true)
                 // Find or create view fragment and display it
                 fm.findFragmentByTag(TAG_LEXICON_VIEW).let {
-                    if (it is LexiconFragment) {
+                    if (it is LexiconViewFragment) {
                         show(it)
                     } else {
-                        add(R.id.content, LexiconFragment.newInstance(username, lexiconLabel),
+                        add(R.id.content, LexiconViewFragment.newInstance(username, lexiconLabel),
                                 TAG_LEXICON_VIEW)
                     }
                 }
