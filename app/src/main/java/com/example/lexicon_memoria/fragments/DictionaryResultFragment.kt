@@ -34,11 +34,11 @@ class DictionaryResultFragment : Fragment() {
         val headwordText: TextView = view.findViewById(R.id.headword)
 
         // Update UI when search result completes
-        dictionarySearchVM.result.observe(viewLifecycleOwner, { word ->
+        dictionarySearchVM.searchResults.observe(viewLifecycleOwner, { results ->
             // Update search progress so UI components can update
             dictionarySearchVM.searchInProgress.value = false
             // Bind search result to biew
-            headwordText.text = word.headword
+            headwordText.text = "${results[0]}"
         })
 
         return view

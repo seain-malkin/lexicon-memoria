@@ -5,9 +5,9 @@ import com.example.lexicon_memoria.dictionary.DictionaryWord
 import kotlinx.coroutines.flow.Flow
 
 class DictionaryRepository(
-        private val dataSource: DictionaryRemoteDataSource
+        private val remote: DictionaryRemoteDataSource
 ) {
-    suspend fun getWord(word: String, language: String?) : DictionaryWord {
-        return dataSource.getWord(word, language)
+    fun search(word: String) : Flow<List<DictionaryWord>> {
+        return remote.search(word)
     }
 }

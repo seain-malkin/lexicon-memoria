@@ -1,5 +1,5 @@
 package com.example.lexicon_memoria.dictionary
 
-class DictionaryWord(
-    val headword: String
-)
+interface DictionaryWord {
+    override fun toString() : String
+}

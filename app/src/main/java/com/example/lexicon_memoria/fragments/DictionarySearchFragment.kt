@@ -42,7 +42,7 @@ class DictionarySearchFragment : Fragment() {
         searchButton.setOnClickListener {
             // Only search if not empty field
             if (!TextUtils.isEmpty(searchText.text)) {
-                dictionarySearchVM.lookup(searchText.text.toString())
+                dictionarySearchVM.search(searchText.text.toString())
             }
         }
 

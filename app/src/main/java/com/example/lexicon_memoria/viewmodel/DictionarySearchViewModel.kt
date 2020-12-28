@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.dictionary.DictionaryWord
 import com.example.lexicon_memoria.repository.DictionaryRepository
-import com.example.lexicon_memoria.repository.LexiconRepository
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -23,9 +23,8 @@ class DictionarySearchViewModel(
     private val language: String = savedStateHandle["language"] ?: "en"
 
     /** The result of the dictionary lookup */
-    val result: MutableLiveData<DictionaryWord> by lazy {
-        MutableLiveData<DictionaryWord>()
-    }
+    private val _searchResults = MutableLiveData<List<DictionaryWord>>()
+    val searchResults: LiveData<List<DictionaryWord>> get() = _searchResults
 
     /** Whether a search request is still waiting for a result */
     val searchInProgress: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -34,9 +33,11 @@ class DictionarySearchViewModel(
      * Requests the word from the dictionary and updates the result
      * @param[word] The word to lookup
      */
-    fun lookup(word: String) = viewModelScope.launch {
+    fun search(word: String) = viewModelScope.launch {
         searchInProgress.value = true
-        result.value = repository.getWord(word, language)
+        repository.search(word).collect { results ->
+            _searchResults.value = results
+        }
     }
 }
 
