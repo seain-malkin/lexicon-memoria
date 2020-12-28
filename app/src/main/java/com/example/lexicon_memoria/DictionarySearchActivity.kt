@@ -23,24 +23,6 @@ class DictionarySearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dictionary_search)
         setSupportActionBar(findViewById(R.id.toolbar))
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-
-        // Attach fragments to activity view
-        supportFragmentManager.let { fm ->
-            fm.commit {
-                fm.findFragmentByTag(TAG_DICTIONARY_SEARCH).let {
-                    if (it !is DictionarySearchFragment) {
-                        add(R.id.fragment_search,
-                            DictionarySearchFragment.newInstance(), TAG_DICTIONARY_SEARCH)
-                    }
-                }
-                fm.findFragmentByTag(TAG_DICTIONARY_RESULT).let {
-                    if (it !is DictionaryResultFragment) {
-                        add(R.id.fragment_result,
-                            DictionaryResultFragment.newInstance(), TAG_DICTIONARY_RESULT)
-                    }
-                }
-            }
-        }
     }
 
     companion object {

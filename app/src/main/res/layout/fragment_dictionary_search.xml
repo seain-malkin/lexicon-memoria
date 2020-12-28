@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_search"
         style="@style/editText"
+        android:inputType="text"
         android:hint="Search"/>
 
     <Button

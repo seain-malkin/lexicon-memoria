@@ -13,14 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <FrameLayout
+    <fragment
         android:id="@+id/fragment_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:name="com.example.lexicon_memoria.fragments.DictionarySearchFragment"/>
 
-    <FrameLayout
+    <fragment
         android:id="@+id/fragment_result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:name="com.example.lexicon_memoria.fragments.DictionaryResultFragment"/>
 
 </LinearLayout>

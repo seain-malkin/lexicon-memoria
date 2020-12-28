@@ -20,19 +20,22 @@ class DictionarySearchViewModel(
 ) : ViewModel() {
 
     /** Language of the dictionary */
-    private val language: String = savedStateHandle["language"] ?:
-        throw IllegalArgumentException("Missing language property")
+    private val language: String = savedStateHandle["language"] ?: "en"
 
     /** The result of the dictionary lookup */
     val result: MutableLiveData<DictionaryWord> by lazy {
         MutableLiveData<DictionaryWord>()
     }
 
+    /** Whether a search request is still waiting for a result */
+    val searchInProgress: MutableLiveData<Boolean> = MutableLiveData(false)
+
     /**
      * Requests the word from the dictionary and updates the result
      * @param[word] The word to lookup
      */
     fun lookup(word: String) = viewModelScope.launch {
+        searchInProgress.value = true
         result.value = repository.getWord(word, language)
     }
 }
