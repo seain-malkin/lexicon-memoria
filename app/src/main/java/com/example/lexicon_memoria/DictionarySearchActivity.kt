@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.commit
+import com.example.lexicon_memoria.fragments.DictionaryResultFragment
 import com.example.lexicon_memoria.fragments.DictionarySearchFragment
 
 private const val TAG_DICTIONARY_SEARCH = "dictionary_search"
+private const val TAG_DICTIONARY_RESULT = "dictionary_result"
 
 /**
  * Dictionary Search Activity
@@ -22,11 +24,19 @@ class DictionarySearchActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
-        supportFragmentManager.run {
-            findFragmentByTag(TAG_DICTIONARY_SEARCH).let {
-                if (it !is DictionarySearchFragment) {
-                    commit {
-                        add(R.id.content, DictionarySearchFragment.newInstance(), TAG_DICTIONARY_SEARCH)
+        // Attach fragments to activity view
+        supportFragmentManager.let { fm ->
+            fm.commit {
+                fm.findFragmentByTag(TAG_DICTIONARY_SEARCH).let {
+                    if (it !is DictionarySearchFragment) {
+                        add(R.id.fragment_search,
+                            DictionarySearchFragment.newInstance(), TAG_DICTIONARY_SEARCH)
+                    }
+                }
+                fm.findFragmentByTag(TAG_DICTIONARY_RESULT).let {
+                    if (it !is DictionaryResultFragment) {
+                        add(R.id.fragment_result,
+                            DictionaryResultFragment.newInstance(), TAG_DICTIONARY_RESULT)
                     }
                 }
             }
