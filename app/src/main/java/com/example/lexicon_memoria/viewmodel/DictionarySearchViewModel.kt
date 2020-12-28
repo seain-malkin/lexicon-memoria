@@ -1,28 +1,22 @@
 package com.example.lexicon_memoria.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.example.lexicon_memoria.dictionary.DictionaryWord
 import com.example.lexicon_memoria.repository.DictionaryRepository
+import kotlinx.coroutines.launch
 
 class DictionarySearchViewModel(
     private val repository: DictionaryRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var searchKey: String = ""
     private val language = "en"
 
-    var result: LiveData<List<DictionaryWord>> = search()
-
-    fun update(key: String) {
-        searchKey = key
-        result = search()
+    val result: MutableLiveData<DictionaryWord> by lazy {
+        MutableLiveData<DictionaryWord>()
     }
 
-    private fun search() : LiveData<List<DictionaryWord>> {
-        return repository.lookup(searchKey, language).asLiveData()
+    fun setWord(word: String) = viewModelScope.launch {
+        result.value = repository.getWord(word, language)
     }
 }

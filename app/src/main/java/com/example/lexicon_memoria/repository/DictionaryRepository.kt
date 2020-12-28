@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class DictionaryRepository(
         private val dataSource: DictionaryRemoteDataSource
 ) {
-    fun lookup(word: String, language: String?) : Flow<List<DictionaryWord>> {
-        return dataSource.lookup(word, language)
+    suspend fun getWord(word: String, language: String?) : DictionaryWord {
+        return dataSource.getWord(word, language)
     }
 }
