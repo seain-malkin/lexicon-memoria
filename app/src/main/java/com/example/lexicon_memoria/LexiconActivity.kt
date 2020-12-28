@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 private const val TAG_LEXICON_LIST = "lexicon_list"
 private const val TAG_LEXICON_VIEW = "lexicon_view"
 private const val REQUEST_CODE_CREATE_LEXICON = 1
+private const val REQUEST_CODE_DICTIONARY_SEARCH = 2
 
 class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
 
@@ -107,10 +108,24 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
 
         // Set click event on floating action bar
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            startActivityForResult(
-                CreateLexiconActivity.getIntent(this),
-                REQUEST_CODE_CREATE_LEXICON
-            )
+            // Decide action to take depending on which fragment is visible to the user
+            supportFragmentManager.let { fm ->
+                fm.findFragmentByTag(TAG_LEXICON_LIST).let {
+                    // If list displayed, create new lexicon
+                    if (it is LexiconListFragment && it.isVisible) {
+                        startActivityForResult(
+                            CreateLexiconActivity.getIntent(this),
+                            REQUEST_CODE_CREATE_LEXICON
+                        )
+                    } else {
+                        // If list not displayed, assume lexicon view is. Add new word
+                        startActivityForResult(
+                            DictionarySearchActivity.getIntent(this),
+                            REQUEST_CODE_DICTIONARY_SEARCH
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -122,6 +137,8 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
                 val lexicon = LexiconEntity("sjam", it, System.currentTimeMillis().toInt())
                 lexiconListViewModel.insert(lexicon)
             }
+        } else if (requestCode == REQUEST_CODE_DICTIONARY_SEARCH && resultCode == Activity.RESULT_OK) {
+            // TODO: Add word
         } else {
             Toast.makeText(
                 applicationContext,
