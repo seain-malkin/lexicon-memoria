@@ -9,6 +9,24 @@ import com.google.gson.annotations.SerializedName
  */
 class DictionaryResponse : DictionaryWord {
 
+    override var text: String? = null
+        get() = headword!!.text
+
+    @SerializedName("meta")
+    var meta: Meta? = null
+
+    @SerializedName("hom")
+    var homograph: Int? = null
+
+    @SerializedName("hwi")
+    var headword: Headword? = null
+
+    @SerializedName("fl")
+    override var functionalLabel: String? = null
+
+    @SerializedName("shortdef")
+    var shortDefinition: ArrayList<String>? = null
+
     /**
      * @see[DictionaryWord.toString]
      */
@@ -26,21 +44,6 @@ class DictionaryResponse : DictionaryWord {
             false -> false
         }
     }
-
-    @SerializedName("meta")
-    var meta: Meta? = null
-
-    @SerializedName("hom")
-    var homograph: Int? = null
-
-    @SerializedName("hwi")
-    var headword: Headword? = null
-
-    @SerializedName("fl")
-    var functionalLabel: String? = null
-
-    @SerializedName("shortdef")
-    var shortDefinition: ArrayList<String>? = null
 
     inner class Meta {
         @SerializedName("id")

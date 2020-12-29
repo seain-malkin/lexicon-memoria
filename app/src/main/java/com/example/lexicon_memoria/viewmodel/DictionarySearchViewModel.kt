@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.dictionary.DictionaryWord
+import com.example.lexicon_memoria.dictionary.merriam_webster.DictionaryResponse
 import com.example.lexicon_memoria.repository.DictionaryRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -44,7 +45,11 @@ class DictionarySearchViewModel(
                     }
                 }
                 .catch { e -> Log.i("Search Exception", "$e") }
-                .collect { _searchResults.value = it }
+                .collect { results ->
+                    _searchResults.value = results.filter {
+                        (it as DictionaryResponse).homograph != null
+                    }
+                }
     }
 }
 

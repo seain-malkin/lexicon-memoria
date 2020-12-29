@@ -51,9 +51,11 @@ class DictionaryResultsAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val headword: TextView = itemView.findViewById(R.id.headword)
+        private val funcLabel: TextView = itemView.findViewById(R.id.function_label)
 
         fun bind(result: DictionaryWord) {
-            headword.text = "$result"
+            headword.text = result.text
+            funcLabel.text = result.functionalLabel
         }
     }
 

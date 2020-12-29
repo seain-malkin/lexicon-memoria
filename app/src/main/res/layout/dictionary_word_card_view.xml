@@ -16,15 +16,12 @@
             android:id="@+id/headword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="8dp"
-            android:text="Hello"/>
+            android:paddingRight="8dp"/>
 
-        <ImageView
-            android:id="@+id/audio_button"
+        <TextView
+            android:id="@+id/function_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_audio"
-            app:tint="@color/black_light"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

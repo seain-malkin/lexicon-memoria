@@ -2,6 +2,10 @@ package com.example.lexicon_memoria.dictionary
 
 interface DictionaryWord {
 
+    var text: String?
+
+    var functionalLabel: String?
+
     /**
      * Formats the object to be printed
      */
