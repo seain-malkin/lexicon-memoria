@@ -35,9 +35,6 @@ class DictionaryResultFragment : Fragment() {
 
         // Update UI when search result completes
         dictionarySearchVM.searchResults.observe(viewLifecycleOwner, { results ->
-            // Update search progress so UI components can update
-            dictionarySearchVM.searchInProgress.value = false
-            // Bind search result to biew
             headwordText.text = "${results[0]}"
         })
 

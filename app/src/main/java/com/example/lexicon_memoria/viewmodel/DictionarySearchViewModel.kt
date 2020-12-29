@@ -1,11 +1,15 @@
 package com.example.lexicon_memoria.viewmodel
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.dictionary.DictionaryWord
 import com.example.lexicon_memoria.repository.DictionaryRepository
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
@@ -34,10 +38,16 @@ class DictionarySearchViewModel(
      * @param[word] The word to lookup
      */
     fun search(word: String) = viewModelScope.launch {
-        searchInProgress.value = true
-        repository.search(word).collect { results ->
-            _searchResults.value = results
-        }
+        repository.search(word)
+                .onStart { searchInProgress.value = true }
+                .onCompletion { cause ->
+                    searchInProgress.value = false
+                    if (cause != null) {
+                        // Update UI for error
+                    }
+                }
+                .catch { e -> Log.i("Search Exception", "$e") }
+                .collect { _searchResults.value = it }
     }
 }
 
