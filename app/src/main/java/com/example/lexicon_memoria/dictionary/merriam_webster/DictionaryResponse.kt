@@ -39,15 +39,6 @@ class DictionaryResponse : DictionaryWord {
     @SerializedName("fl")
     var functionalLabel: String? = null
 
-    @SerializedName("sls")
-    var subjectLabel: ArrayList<String>? = null
-
-    @SerializedName("psl")
-    var usageLabel: String? = null
-
-    @SerializedName("ins")
-    var inflections: ArrayList<Inflection>? = null
-
     @SerializedName("shortdef")
     var shortDefinition: ArrayList<String>? = null
 
@@ -62,23 +53,11 @@ class DictionaryResponse : DictionaryWord {
     inner class Headword {
 
         @SerializedName("hw")
-        var headword: String? = null
+        var text: String? = null
 
         override fun toString(): String {
-            return headword!!
+            return text!!
         }
-    }
-
-    inner class Inflection {
-
-        @SerializedName("if")
-        var full: String? = null
-
-        @SerializedName("ifc")
-        var cutback: String? = null
-
-        @SerializedName("il")
-        var label: String? = null
     }
 
 }
