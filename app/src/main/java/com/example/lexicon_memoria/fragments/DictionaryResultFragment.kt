@@ -1,18 +1,25 @@
 package com.example.lexicon_memoria.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
+import com.example.lexicon_memoria.adapter.DictionaryResultsAdapter
+import com.example.lexicon_memoria.dictionary.DictionaryWord
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModel
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModelFactory
 
-class DictionaryResultFragment : Fragment() {
+class DictionaryResultFragment :
+        DictionaryResultsAdapter.DictionaryResultsAdapterListener,
+        Fragment() {
 
     /** Shared View Model */
     private val dictionarySearchVM: DictionarySearchViewModel by activityViewModels {
@@ -30,14 +37,26 @@ class DictionaryResultFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        // Inflate fragment view
         val view = inflater.inflate(R.layout.fragment_dictionary_result, container, false)
-        val headwordText: TextView = view.findViewById(R.id.headword)
 
-        // Update UI when search result completes
+        // Create adapter with fragment as listener
+        val adapter = DictionaryResultsAdapter(this)
+
+        // Setup recycler list
+        val recycler: RecyclerView = view.findViewById(R.id.rv_results)
+        recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(activity)
+
+        // Update recycler list when search results change
         dictionarySearchVM.searchResults.observe(viewLifecycleOwner, { results ->
-            headwordText.text = "${results[0]}"
+            adapter.submitList(results)
         })
 
         return view
+    }
+
+    override fun onDictionaryResultSelected(result: DictionaryWord) {
+        Log.i("Result Selected", "$result")
     }
 }

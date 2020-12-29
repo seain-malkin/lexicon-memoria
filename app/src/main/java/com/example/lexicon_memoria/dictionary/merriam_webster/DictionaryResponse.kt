@@ -9,8 +9,22 @@ import com.google.gson.annotations.SerializedName
  */
 class DictionaryResponse : DictionaryWord {
 
+    /**
+     * @see[DictionaryWord.toString]
+     */
     override fun toString(): String {
         return headword!!.toString()
+    }
+
+    /**
+     * The meta property exists on every result so assume it's not null
+     * @see[DictionaryWord.equals]
+     */
+    override fun equals(other: Any?): Boolean {
+        return when(other is DictionaryResponse) {
+            true -> meta!!.uniqueId!! == other.meta!!.uniqueId!!
+            false -> false
+        }
     }
 
     @SerializedName("meta")

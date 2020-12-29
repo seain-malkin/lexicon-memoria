@@ -1,6 +1,5 @@
 package com.example.lexicon_memoria.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.adapter.LexiconListAdapter.LexiconViewHolder
-import com.google.android.material.card.MaterialCardView
 
 /**
  * Recyclerview adapter to display a list of lexicons
  * @author Seain Malkin (dev@seain.me)
+ * @property[listener] The context listener
  */
 class LexiconListAdapter(
-        var listener: LexiconListAdapterListener? = null
-)
-    : ListAdapter<LexiconEntity, LexiconViewHolder>(LexiconComparator()) {
+        private val listener: LexiconListAdapterListener
+) : ListAdapter<LexiconEntity, LexiconViewHolder>(LexiconComparator()) {
 
     /**
      * Listener interface for fragment/activity communication
@@ -49,7 +47,7 @@ class LexiconListAdapter(
 
     /**
      * Represents the [View] used to display each lexicon in the list
-     * @property[itemView] The inflated view
+     * @param[itemView] The inflated view
      */
     inner class LexiconViewHolder(
         itemView: View
@@ -60,7 +58,7 @@ class LexiconListAdapter(
         init {
             // Attach even listener that informs external listener
             itemView.findViewById<CardView>(R.id.card).setOnClickListener {
-                listener?.onLexiconListItemClick(label.text.toString())
+                listener.onLexiconListItemClick(label.text.toString())
             }
         }
 

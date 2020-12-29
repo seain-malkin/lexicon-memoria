@@ -23,9 +23,6 @@ class DictionarySearchViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    /** Language of the dictionary */
-    private val language: String = savedStateHandle["language"] ?: "en"
-
     /** The result of the dictionary lookup */
     private val _searchResults = MutableLiveData<List<DictionaryWord>>()
     val searchResults: LiveData<List<DictionaryWord>> get() = _searchResults
@@ -56,8 +53,8 @@ class DictionarySearchViewModel(
  * and lifecycle changes.
  * @author Seain Malkin (dev@seain.me)
  * @property[repository] The dictionary repository
- * @property[owner] The lifecycle owner
- * @property[defaultArgs] Default arguments for the saved state
+ * @param[owner] The lifecycle owner
+ * @param[defaultArgs] Default arguments for the saved state
  */
 class DictionarySearchViewModelFactory(
         private val repository: DictionaryRepository,

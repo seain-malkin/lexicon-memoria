@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rv_results"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".fragments.DictionaryResultFragment">
-
-    <include
-        android:id="@+id/word_card_view"
-        layout="@layout/dictionary_word_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+    tools:context=".fragments.DictionaryResultFragment"/>
