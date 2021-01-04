@@ -14,6 +14,7 @@ import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.adapter.DictionaryResultsAdapter
 import com.example.lexicon_memoria.dictionary.DictionaryWord
+import com.example.lexicon_memoria.dictionary.Homograph
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModel
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModelFactory
 
@@ -57,7 +58,7 @@ class DictionaryResultFragment :
         return view
     }
 
-    override fun onDictionaryResultSelected(result: DictionaryWord) {
+    override fun onDictionaryResultSelected(result: Homograph) {
         Log.i("Result Selected", "$result")
     }
 }

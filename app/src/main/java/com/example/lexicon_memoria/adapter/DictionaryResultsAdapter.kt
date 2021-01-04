@@ -3,13 +3,15 @@ package com.example.lexicon_memoria.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.R
-import com.example.lexicon_memoria.dictionary.DictionaryWord
 import com.example.lexicon_memoria.adapter.DictionaryResultsAdapter.ResultViewHolder
+import com.example.lexicon_memoria.dictionary.Homograph
 
 /**
  * Recyclerview adapter to display dictionary result list
@@ -18,7 +20,7 @@ import com.example.lexicon_memoria.adapter.DictionaryResultsAdapter.ResultViewHo
  */
 class DictionaryResultsAdapter(
         private val listener: DictionaryResultsAdapterListener
-) : ListAdapter<DictionaryWord, ResultViewHolder>(ResultComparator()) {
+) : ListAdapter<Homograph, ResultViewHolder>(ResultComparator()) {
 
     /**
      * Listener interface for fragment communication
@@ -29,12 +31,12 @@ class DictionaryResultsAdapter(
          * Triggered when the user selects a search result
          * @param[result] The selected result
          */
-        fun onDictionaryResultSelected(result: DictionaryWord)
+        fun onDictionaryResultSelected(result: Homograph)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         return ResultViewHolder(LayoutInflater.from(parent.context).inflate(
-                R.layout.dictionary_word_card_view, parent, false
+                R.layout.dictionary_result_homograph, parent, false
         ))
     }
 
@@ -50,22 +52,31 @@ class DictionaryResultsAdapter(
             itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
-        private val headword: TextView = itemView.findViewById(R.id.headword)
-        private val funcLabel: TextView = itemView.findViewById(R.id.function_label)
+        private val label: TextView = itemView.findViewById(R.id.label)
+        private val defList: ListView = itemView.findViewById(R.id.definition_list)
+        private val listAdapter = ArrayAdapter<String>(
+                itemView.context, R.layout.definition_list_item
+        )
 
-        fun bind(result: DictionaryWord) {
-            headword.text = result.text
-            funcLabel.text = result.functionalLabel
+        init {
+            defList.adapter = listAdapter
+        }
+
+        fun bind(item: Homograph) {
+            label.text = item.label
+            listAdapter.clear()
+            listAdapter.addAll(item.definitions)
+            listAdapter.notifyDataSetChanged()
         }
     }
 
-    class ResultComparator : DiffUtil.ItemCallback<DictionaryWord>() {
+    class ResultComparator : DiffUtil.ItemCallback<Homograph>() {
 
-        override fun areContentsTheSame(oldItem: DictionaryWord, newItem: DictionaryWord): Boolean {
+        override fun areContentsTheSame(oldItem: Homograph, newItem: Homograph): Boolean {
             return oldItem == newItem
         }
 
-        override fun areItemsTheSame(oldItem: DictionaryWord, newItem: DictionaryWord): Boolean {
+        override fun areItemsTheSame(oldItem: Homograph, newItem: Homograph): Boolean {
             return oldItem == newItem
         }
     }

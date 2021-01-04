@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rv_results"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.DictionaryResultFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    tools:context=".fragments.DictionaryResultFragment"/>
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/result_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/cardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/gutter">
+
+            <TextView
+                android:id="@+id/headword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/card_body"
+                app:layout_constraintTop_toTopOf="@id/card_body"
+                app:layout_constraintEnd_toEndOf="@id/card_body"
+                android:text="@string/placeholder"
+                android:textAppearance="@style/cardHeader"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_results"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/card_body"
+                app:layout_constraintTop_toBottomOf="@id/headword"
+                app:layout_constraintEnd_toEndOf="@id/card_body"
+                android:padding="8dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

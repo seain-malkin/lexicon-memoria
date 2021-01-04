@@ -12,4 +12,11 @@ class Word(
         return head
     }
 
+    override fun equals(other: Any?): Boolean {
+        return when (other is Word) {
+            true -> head == other.head
+            else -> false
+        }
+    }
+
 }
