@@ -49,8 +49,9 @@ class DictionaryResultFragment :
         recycler.layoutManager = LinearLayoutManager(activity)
 
         // Update recycler list when search results change
-        dictionarySearchVM.searchResults.observe(viewLifecycleOwner, { results ->
-            adapter.submitList(results)
+        dictionarySearchVM.lookupResult.observe(viewLifecycleOwner, { result ->
+            //adapter.submitList(result)
+            Log.i("Lookup", "$result")
         })
 
         return view

@@ -61,7 +61,7 @@
                     android:id="@+id/word_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/cardSubtitle"
+                    style="@style/cardSubHeader"
                     android:text="30 words"/>
 
             </LinearLayout>

@@ -11,6 +11,12 @@
         <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="iconTint">?attr/actionMenuTextColor</item>
     </style>
+    <style name="cardHeader" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">@dimen/textTitle</item>
+    </style>
+    <style name="cardSubHeader" parent="TextAppearance.MaterialComponents.Subtitle1">
+
+    </style>
     <style name="view">
         <item name="android:background">?attr/color</item>
     </style>
@@ -18,9 +24,6 @@
         <item name="android:layout_margin">4dp</item>
     </style>
     <style name="cardTitle" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:padding">4dp</item>
-    </style>
-    <style name="cardSubtitle" parent="TextAppearance.AppCompat.Caption">
         <item name="android:padding">4dp</item>
     </style>
     <style name="toolbarTitle" parent="TextAppearance.MaterialComponents.Headline3">

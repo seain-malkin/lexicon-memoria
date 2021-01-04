@@ -1,13 +1,13 @@
 package com.example.lexicon_memoria.repository
 
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
-import com.example.lexicon_memoria.dictionary.DictionaryWord
+import com.example.lexicon_memoria.dictionary.Word
 import kotlinx.coroutines.flow.Flow
 
 class DictionaryRepository(
         private val remote: DictionaryRemoteDataSource
 ) {
-    fun search(word: String) : Flow<List<DictionaryWord>> {
+    fun getWord(word: String) : Flow<Word> {
         return remote.search(word)
     }
 }

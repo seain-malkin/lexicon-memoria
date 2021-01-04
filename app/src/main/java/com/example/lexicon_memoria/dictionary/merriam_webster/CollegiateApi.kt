@@ -1,6 +1,6 @@
 package com.example.lexicon_memoria.dictionary.merriam_webster
 
-import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
+import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource.DictionaryApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -9,7 +9,7 @@ import retrofit2.http.Path
 /**
  * Provides access to the Merriam Webster dictionary api
  */
-interface CollegiateApi : DictionaryRemoteDataSource.DictionaryApi {
+interface CollegiateApi : DictionaryApi {
 
     /**
      * Search the dictionary for a word. Multiple results may be returned
@@ -17,7 +17,7 @@ interface CollegiateApi : DictionaryRemoteDataSource.DictionaryApi {
      * @return A list of results
      */
     @GET("{word}?key=$KEY")
-    override suspend fun search(@Path("word") word: String) : List<DictionaryResponse>
+    override suspend fun get(@Path("word") word: String) : List<CollegiateResponse>
 
     companion object {
 

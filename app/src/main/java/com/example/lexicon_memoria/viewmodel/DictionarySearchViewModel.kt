@@ -5,7 +5,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.dictionary.DictionaryWord
-import com.example.lexicon_memoria.dictionary.merriam_webster.DictionaryResponse
+import com.example.lexicon_memoria.dictionary.Word
+import com.example.lexicon_memoria.dictionary.merriam_webster.CollegiateResponse
 import com.example.lexicon_memoria.repository.DictionaryRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -25,8 +26,8 @@ class DictionarySearchViewModel(
 ) : ViewModel() {
 
     /** The result of the dictionary lookup */
-    private val _searchResults = MutableLiveData<List<DictionaryWord>>()
-    val searchResults: LiveData<List<DictionaryWord>> get() = _searchResults
+    private val _lookupResult = MutableLiveData<Word>()
+    val lookupResult: LiveData<Word> get() = _lookupResult
 
     /** Whether a search request is still waiting for a result */
     val searchInProgress: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -36,7 +37,7 @@ class DictionarySearchViewModel(
      * @param[word] The word to lookup
      */
     fun search(word: String) = viewModelScope.launch {
-        repository.search(word)
+        repository.getWord(word)
                 .onStart { searchInProgress.value = true }
                 .onCompletion { cause ->
                     searchInProgress.value = false
@@ -45,11 +46,7 @@ class DictionarySearchViewModel(
                     }
                 }
                 .catch { e -> Log.i("Search Exception", "$e") }
-                .collect { results ->
-                    _searchResults.value = results.filter {
-                        (it as DictionaryResponse).homograph != null
-                    }
-                }
+                .collect { result -> _lookupResult.value = result }
     }
 }
 
