@@ -18,5 +18,4 @@ class Word(
             else -> false
         }
     }
-
 }

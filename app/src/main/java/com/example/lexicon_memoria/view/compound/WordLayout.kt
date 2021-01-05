@@ -2,7 +2,6 @@ package com.example.lexicon_memoria.view.compound
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.lexicon_memoria.R
@@ -23,7 +22,7 @@ class WordLayout(
             // Only update if the word is different to current value
             if (!(field != null && field!! == value)) {
                 field = value
-                updateView()
+                updateView(value!!)
             }
         }
 
@@ -36,16 +35,22 @@ class WordLayout(
     /**
      * Displays the custom view inside the linear layout
      */
-    private fun updateView() {
+    private fun updateView(wordItem: Word) {
         // First delete any current child views
         removeAllViews()
 
         // Inflate the layout view
         val view = inflate(context, R.layout.view_compound_word_layout, this)
 
-        // Find and update view elements
-        view.findViewById<TextView>(R.id.headword).apply {
-            text = "$word"
+        // Bind the headword
+        view.findViewById<TextView>(R.id.headword).text = "$wordItem"
+
+        // Find the homograph container
+        val llHomograph: LinearLayout = view.findViewById(R.id.homographs)
+
+        // Attach each homograph to the container
+        wordItem.homographs.forEach {
+            llHomograph.addView(HomographLayout(it, context))
         }
 
         // Force the view to redraw by invalidating it

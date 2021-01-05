@@ -1,7 +1,6 @@
 package com.example.lexicon_memoria.dictionary.merriam_webster
 
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource.DictionaryApiResponse
-import com.example.lexicon_memoria.dictionary.DictionaryWord
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -33,7 +32,7 @@ class CollegiateResponse : DictionaryApiResponse {
     override val definitions: ArrayList<String> get() = _definitions
 
     /**
-     * @see[DictionaryWord.toString]
+     * @see[DictionaryApiResponse.toString]
      */
     override fun toString(): String {
         return headword.toString()

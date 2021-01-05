@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.lexicon_memoria.dictionary.DictionaryWord
 import com.example.lexicon_memoria.dictionary.Word
-import com.example.lexicon_memoria.dictionary.merriam_webster.CollegiateResponse
 import com.example.lexicon_memoria.repository.DictionaryRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect

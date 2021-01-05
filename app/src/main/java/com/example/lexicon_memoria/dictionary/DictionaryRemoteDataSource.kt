@@ -43,7 +43,11 @@ class DictionaryRemoteDataSource(
              * @return The word object created from the responses
              */
             fun buildResult(results: List<DictionaryApiResponse>): Word {
-                return Word(results[0].text, results.map { Homograph(it.text, it.definitions) })
+                return Word(results[0].text, results.filter {
+                    it.homograph > 0
+                }.map {
+                    Homograph(it.label, it.definitions)
+                })
             }
         }
     }
