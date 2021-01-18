@@ -19,7 +19,6 @@ class WordLayout(
     /** @property[word] The word object that the view binds to */
     var word: Word? = null
         set(value) {
-            // Only update if the word is different to current value
             if (!(field != null && field!! == value)) {
                 field = value
                 updateView(value!!)
@@ -54,6 +53,11 @@ class WordLayout(
         }
 
         // Force the view to redraw by invalidating it
+        invalidate()
+    }
+
+    fun showPlaceholder() {
+        removeAllViews()
         invalidate()
     }
 }

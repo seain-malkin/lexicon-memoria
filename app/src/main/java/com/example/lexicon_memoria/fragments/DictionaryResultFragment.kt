@@ -18,7 +18,7 @@ class DictionaryResultFragment : Fragment() {
     private lateinit var wordLayout: WordLayout
 
     /** Shared View Model */
-    private val dictionarySearchVM: DictionarySearchViewModel by activityViewModels {
+    private val dsVM: DictionarySearchViewModel by activityViewModels {
         DictionarySearchViewModelFactory(
             (requireActivity().application as LexmemApplication).dictionary,
             requireActivity(),
@@ -40,8 +40,15 @@ class DictionaryResultFragment : Fragment() {
         wordLayout = view.findViewById(R.id.word_layout)
 
         // Update recycler list when search results change
-        dictionarySearchVM.lookupResult.observe(viewLifecycleOwner, { result ->
+        dsVM.lookupResult.observe(viewLifecycleOwner, { result ->
             wordLayout.word = result
+        })
+
+        // Remove the last search result when search key changes
+        dsVM.searchKeyChanged.observe(viewLifecycleOwner, { changed ->
+            if (changed) {
+                wordLayout.showPlaceholder()
+            }
         })
 
         return view

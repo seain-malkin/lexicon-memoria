@@ -2,12 +2,14 @@ package com.example.lexicon_memoria.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
@@ -17,7 +19,7 @@ import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModelFactory
 class DictionarySearchFragment : Fragment() {
 
     /** Shared view model */
-    private val dictionarySearchVM: DictionarySearchViewModel by activityViewModels {
+    private val dsVM: DictionarySearchViewModel by activityViewModels {
         DictionarySearchViewModelFactory(
             (requireActivity().application as LexmemApplication).dictionary,
             requireActivity(),
@@ -42,12 +44,15 @@ class DictionarySearchFragment : Fragment() {
         searchButton.setOnClickListener {
             // Only search if not empty field
             if (!TextUtils.isEmpty(searchText.text)) {
-                dictionarySearchVM.search(searchText.text.toString())
+                dsVM.search(searchText.text.toString())
             }
         }
 
+        // When user changes search key, remove last search result
+        searchText.addTextChangedListener { dsVM.searchKeyChanged.value = true }
+
         // Update UI when search status changes
-        dictionarySearchVM.searchInProgress.observe(viewLifecycleOwner, { inProgress ->
+        dsVM.searchInProgress.observe(viewLifecycleOwner, { inProgress ->
             searchButton.isEnabled = !inProgress
         })
 

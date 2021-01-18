@@ -30,13 +30,18 @@ class DictionarySearchViewModel(
     /** Whether a search request is still waiting for a result */
     val searchInProgress: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    /** Whether user has changed the search key since last result */
+    val searchKeyChanged: MutableLiveData<Boolean> = MutableLiveData(false)
+
     /**
      * Requests the word from the dictionary and updates the result
      * @param[word] The word to lookup
      */
     fun search(word: String) = viewModelScope.launch {
         repository.getWord(word)
-                .onStart { searchInProgress.value = true }
+                .onStart {
+                    searchInProgress.value = true
+                }
                 .onCompletion { cause ->
                     searchInProgress.value = false
                     if (cause != null) {
