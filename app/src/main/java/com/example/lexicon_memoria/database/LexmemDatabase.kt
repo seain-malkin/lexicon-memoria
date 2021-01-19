@@ -11,6 +11,7 @@ import com.example.lexicon_memoria.database.dao.UserDao
 import com.example.lexicon_memoria.database.dao.WordDao
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.database.entity.UserEntity
+import com.example.lexicon_memoria.database.entity.WordDefinitionEntity
 import com.example.lexicon_memoria.database.entity.WordEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -20,8 +21,11 @@ import kotlinx.coroutines.launch
  * @author Seain Malkin (dev@seain.me)
  */
 @Database(
-    entities = [LexiconEntity::class, UserEntity::class, WordEntity::class],
-    version = 3,
+    entities = [LexiconEntity::class,
+                UserEntity::class,
+                WordEntity::class,
+                WordDefinitionEntity::class],
+    version = 4,
     exportSchema = false
 )
 abstract class LexmemDatabase : RoomDatabase() {
