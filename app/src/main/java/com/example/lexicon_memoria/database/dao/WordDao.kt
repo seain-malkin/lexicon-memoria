@@ -2,6 +2,7 @@ package com.example.lexicon_memoria.database.dao
 
 import androidx.room.*
 import com.example.lexicon_memoria.database.entity.WordEntity
+import com.example.lexicon_memoria.database.entity.WordWithFunctionalDefinitions
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -25,4 +26,8 @@ interface WordDao {
 
     @Query("DELETE FROM words")
     suspend fun deleteAll()
+
+    @Transaction
+    @Query("SELECT * FROM words WHERE label = :word")
+    fun selectWithDefinitions(word: String) : Flow<List<WordWithFunctionalDefinitions>>
 }
