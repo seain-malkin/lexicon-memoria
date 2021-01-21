@@ -6,8 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class DefinitionEntity(
-    /** The id of the speech function the definition belongs to */
-    @ColumnInfo(name = "function_id") val functionId: Int,
     /** The definition of the function */
     val definition: String,
     /** The order in which to display the definition */
@@ -15,4 +13,7 @@ data class DefinitionEntity(
 ) {
     /** A unique id identifying the definition */
     @PrimaryKey var id: Long = 0
+
+    /** The id of the speech function the definition belongs to */
+    @ColumnInfo(name = "function_id") var functionId: Long = 0
 }

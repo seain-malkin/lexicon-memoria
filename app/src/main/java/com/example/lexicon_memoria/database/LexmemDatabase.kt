@@ -4,15 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.lexicon_memoria.database.dao.DictionaryDao
 import com.example.lexicon_memoria.database.dao.LexiconDao
 import com.example.lexicon_memoria.database.dao.UserDao
-import com.example.lexicon_memoria.database.dao.WordDao
-import com.example.lexicon_memoria.database.entity.LexiconEntity
-import com.example.lexicon_memoria.database.entity.UserEntity
-import com.example.lexicon_memoria.database.entity.WordDefinitionEntity
-import com.example.lexicon_memoria.database.entity.WordEntity
+import com.example.lexicon_memoria.database.entity.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -23,16 +19,17 @@ import kotlinx.coroutines.launch
 @Database(
     entities = [LexiconEntity::class,
                 UserEntity::class,
-                WordEntity::class,
-                WordDefinitionEntity::class],
-    version = 4,
+                HeadWordEntity::class,
+                SpeechFunctionEntity::class,
+                DefinitionEntity::class],
+    version = 5,
     exportSchema = false
 )
 abstract class LexmemDatabase : RoomDatabase() {
 
     abstract fun lexiconDao(): LexiconDao
 
-    abstract fun wordDao() : WordDao
+    abstract fun dictionaryDao() : DictionaryDao
 
     abstract fun userDao(): UserDao
 

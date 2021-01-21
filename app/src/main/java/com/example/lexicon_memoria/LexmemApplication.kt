@@ -2,6 +2,7 @@ package com.example.lexicon_memoria
 
 import android.app.Application
 import com.example.lexicon_memoria.database.LexmemDatabase
+import com.example.lexicon_memoria.database.dao.DictionaryDao
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
 import com.example.lexicon_memoria.repository.DictionaryRepository
 import com.example.lexicon_memoria.repository.LexiconRepository
@@ -24,14 +25,14 @@ class LexmemApplication : Application() {
 
     /** Reference to the dictionary repository */
     val dictionary by lazy {
-        DictionaryRepository(DictionaryRemoteDataSource(CollegiateApi.request))
+        DictionaryRepository(
+            DictionaryRemoteDataSource(CollegiateApi.request),
+            database.dictionaryDao()
+        )
     }
 
     /** Reference to the lexicon repository */
     val lexicons by lazy { LexiconRepository(database.lexiconDao()) }
-
-    /** Reference to the word repository */
-    val words by lazy { WordRepository(database.wordDao()) }
 
     /** Reference to the users repository */
     val users by lazy { UserRepository(database.userDao()) }

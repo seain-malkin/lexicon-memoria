@@ -13,5 +13,5 @@ data class SpeechFunctionEntity(
         val epoch: String
 ) {
     /** A unique id to represent this speech function */
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
+    @PrimaryKey(autoGenerate = true) var id: Long = 0
 }
