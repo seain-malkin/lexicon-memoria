@@ -4,21 +4,24 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class DictionaryRemoteDataSource(
-    private val api: DictionaryApi
+    val api: DictionaryApi
 ) {
 
     /**
      * Searchs for a word and returns a list of results
      * @param[word] The word to search for
-     * @return The list as a flow
+     * @return The api result as a single word object
      */
-    fun search(word: String) : Flow<Word> {
-        return flow {
-            // Fetch api results
-            val results = api.get(word)
-
-            // Transform results into a single word
-            emit(DictionaryApi.buildResult(results))
+    suspend fun search(word: String) : Word? {
+        val wordList = api.get(word)
+        // Return null on empty result or a dictionary word object
+        return when (wordList.isEmpty()) {
+            true -> null
+            false -> Word(wordList[0].text, wordList.filter {
+                it.homograph > 0
+            }.map {
+                Homograph(it.label, it.definitions)
+            })
         }
     }
 
@@ -30,26 +33,9 @@ class DictionaryRemoteDataSource(
         /**
          * Function to be implemented by all dictionary apis.
          * @param[word] The word to find
-         * @return A list of words
+         * @return A list of word homographs
          */
         suspend fun get(word: String) : List<DictionaryApiResponse>
-
-        companion object {
-
-            /**
-             * Takes a list of responses from the api call and consolidates them into one
-             * word object
-             * @param[results] The list of responses
-             * @return The word object created from the responses
-             */
-            fun buildResult(results: List<DictionaryApiResponse>): Word {
-                return Word(results[0].text, results.filter {
-                    it.homograph > 0
-                }.map {
-                    Homograph(it.label, it.definitions)
-                })
-            }
-        }
     }
 
     /**

@@ -22,7 +22,7 @@ class LexiconViewFragment : Fragment() {
 
     private val lexiconViewModel: LexiconViewModel by activityViewModels {
         LexiconViewModelFactory(
-                (requireActivity().application as LexmemApplication).words,
+                (requireActivity().application as LexmemApplication).dictionary,
                 requireActivity(),
                 arguments
         )

@@ -5,11 +5,11 @@ import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.database.entity.WordEntity
 import com.example.lexicon_memoria.fragments.LexiconViewFragment
-import com.example.lexicon_memoria.repository.WordRepository
+import com.example.lexicon_memoria.repository.DictionaryRepository
 import kotlinx.coroutines.launch
 
 class LexiconViewModel(
-    private val repository: WordRepository,
+    private val repository: DictionaryRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     /** The username of the data owner */
@@ -21,14 +21,15 @@ class LexiconViewModel(
         throw IllegalArgumentException("Missing lexicon label")
 
     /** Retrieve all words in a given lexicon */
-    val all: LiveData<List<WordEntity>> = repository.select(username, lexiconLabel).asLiveData()
+    //val all: LiveData<List<WordEntity>> = repository.select(username, lexiconLabel).asLiveData()
 
     /**
      * Inserts a word
      * @param[word] The word object to insert
      */
     fun insert(word: WordEntity) = viewModelScope.launch {
-        repository.insert(word)
+        //repository.insert(word)
+        // TODO: Add word to lexicon
     }
 }
 
@@ -39,7 +40,7 @@ class LexiconViewModel(
  * @property[repository] The lexicon repository object
  */
 class LexiconViewModelFactory(
-        private val repository: WordRepository,
+        private val repository: DictionaryRepository,
         owner: SavedStateRegistryOwner,
         defaultArgs: Bundle?
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {

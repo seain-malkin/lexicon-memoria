@@ -7,10 +7,11 @@ import androidx.room.OnConflictStrategy.IGNORE
 import com.example.lexicon_memoria.database.entity.*
 import com.example.lexicon_memoria.database.entity.HeadWordEntity.Companion as Table
 
+@Dao
 interface DictionaryDao {
 
-    @Query("SELECT label FROM ${Table.NAME} WHERE label = :word")
-    fun get(word: String) : List<WordWithFunctionalDefinitions>
+    @Query("SELECT * FROM ${Table.NAME} WHERE label = :word LIMIT 1")
+    suspend fun get(word: String) : List<WordWithFunctionalDefinitions>
 
     /**
      * Insert for [HeadWordEntity]. Exception triggered on failure.

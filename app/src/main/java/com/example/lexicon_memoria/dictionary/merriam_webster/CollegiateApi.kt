@@ -4,6 +4,7 @@ import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource.Diction
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.OPTIONS
 import retrofit2.http.Path
 
 /**
@@ -20,6 +21,8 @@ interface CollegiateApi : DictionaryApi {
     override suspend fun get(@Path("word") word: String) : List<CollegiateResponse>
 
     companion object {
+
+        const val source = "collegiate"
 
         /** The API key */
         private const val KEY = "f08d5a23-3852-489f-885b-ebd9134c1d00"

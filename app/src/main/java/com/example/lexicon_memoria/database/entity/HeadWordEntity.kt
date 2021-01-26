@@ -11,8 +11,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = HeadWordEntity.NAME)
 data class HeadWordEntity(
     @PrimaryKey val label: String,
-    val source: String?,
-    val sourceId: String?
+    val source: String? = null,
+    val sourceId: String? = null
 ) {
     var created: Long = System.currentTimeMillis()
 
