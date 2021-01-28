@@ -15,4 +15,8 @@ data class UserEntity(
 
         @ColumnInfo(name = "creation_timestamp")
         val creationTimestamp: Int
-)
+) {
+        companion object {
+                const val tableName = "users"
+        }
+}
