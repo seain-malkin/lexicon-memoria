@@ -4,19 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "users")
+@Entity(tableName = UserEntity.tableName)
 data class UserEntity(
+    val username: String,
+    val email: String,
+    @ColumnInfo(name = "creation_date") val creationDate: Int
+) : BaseEntity() {
+    @PrimaryKey(autoGenerate = true) override var id: Long = 0
 
-        @PrimaryKey @ColumnInfo(name = "username")
-        val username: String,
-
-        @ColumnInfo(name = "email")
-        val email: String,
-
-        @ColumnInfo(name = "creation_timestamp")
-        val creationTimestamp: Int
-) {
-        companion object {
-                const val tableName = "users"
-        }
+    companion object {
+        const val tableName = "users"
+    }
 }

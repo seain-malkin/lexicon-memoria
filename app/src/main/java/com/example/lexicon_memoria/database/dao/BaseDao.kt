@@ -9,6 +9,13 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import java.lang.StringBuilder
 
+/**
+ * Data Access Object base implementing basic access methods.
+ * Influenced by: https://medium.com/@berryhuang/android-room-generic-dao-27cfc21a4912
+ * Implementation database table must have an 'id' column of type 'Long'.
+ * @param tableName The name of the database table
+ * @param roomDatabase The [Room] database object
+ */
 @Dao
 abstract class BaseDao<E>(
     private val tableName: String,

@@ -5,8 +5,11 @@ import androidx.room.*
 import androidx.room.OnConflictStrategy.ABORT
 import androidx.room.OnConflictStrategy.IGNORE
 import com.example.lexicon_memoria.database.entity.*
-import com.example.lexicon_memoria.database.entity.HeadWordEntity.Companion as Table
+import com.example.lexicon_memoria.database.entity.HeadwordEntity.Companion as Table
 
+/**
+ * Data Access Object for the persistent local dictionary
+ */
 @Dao
 interface DictionaryDao {
 
@@ -14,18 +17,18 @@ interface DictionaryDao {
     suspend fun get(word: String) : List<WordWithFunctionalDefinitions>
 
     /**
-     * Insert for [HeadWordEntity]. Exception triggered on failure.
+     * Insert for [HeadwordEntity]. Exception triggered on failure.
      * @param entity The new entity to insert
      */
     @Insert(onConflict = ABORT)
-    fun insert(entity: HeadWordEntity)
+    fun insert(entity: HeadwordEntity)
 
     /**
-     * Update for [HeadWordEntity].
+     * Update for [HeadwordEntity].
      * @param entity The entity to update
      */
     @Update(onConflict = IGNORE)
-    fun update(entity: HeadWordEntity)
+    fun update(entity: HeadwordEntity)
 
     /**
      * Insert for [SpeechFunctionEntity].

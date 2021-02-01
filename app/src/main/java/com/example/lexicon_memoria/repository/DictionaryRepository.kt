@@ -3,8 +3,6 @@ package com.example.lexicon_memoria.repository
 import com.example.lexicon_memoria.database.dao.DictionaryDao
 import com.example.lexicon_memoria.database.entity.*
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
-import com.example.lexicon_memoria.dictionary.Homograph
-import com.example.lexicon_memoria.dictionary.Word
 import kotlinx.coroutines.flow.*
 
 class DictionaryRepository(
@@ -33,7 +31,7 @@ class DictionaryRepository(
         return when (remWord == null) {
             true -> null
             false -> WordWithFunctionalDefinitions(
-                    HeadWordEntity(remWord.head),
+                    HeadwordEntity(remWord.head),
                     remWord.homographs.map {
                         FunctionWithDefinitions(
                                 SpeechFunctionEntity(remWord.head, it.label),

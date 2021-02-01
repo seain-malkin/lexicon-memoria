@@ -2,16 +2,32 @@ package com.example.lexicon_memoria.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
-@Entity(tableName = "lexicons", primaryKeys = ["created_by", "label"])
-data class LexiconEntity(
-
-    @ColumnInfo(name = "created_by") // username
-    val createdBy: String,
-
-    @ColumnInfo(name = "label")
-    val label: String,
-
-    @ColumnInfo(name = "creation_timestamp")
-    val creationTimestamp: Int
+/**
+ * Table representing a lexicon belonging to a user
+ * @property userId The foreign user id of the creator
+ * @property name The name of the lexicon
+ * @property creationDate The timestamp the lexicon was created
+ */
+@Entity(
+    tableName = LexiconEntity.tableName,
+    foreignKeys = [ForeignKey(
+        entity = UserEntity::class,
+        parentColumns = ["id"],
+        childColumns = ["user_id"],
+        onDelete = ForeignKey.CASCADE
+    )]
 )
+data class LexiconEntity(
+        @ColumnInfo(name="user_id") val userId: Long,
+        val name: String,
+        @ColumnInfo(name = "creation_date") val creationDate: Int
+) : BaseEntity() {
+    @PrimaryKey(autoGenerate = true) override var id: Long = 0
+
+    companion object {
+        const val tableName = "lexicons"
+    }
+}
