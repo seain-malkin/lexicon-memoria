@@ -23,7 +23,7 @@ import androidx.room.PrimaryKey
 data class LexiconEntity(
         @ColumnInfo(name="user_id") val userId: Long,
         val name: String,
-        @ColumnInfo(name = "creation_date") val creationDate: Int
+        @ColumnInfo(name = "creation_date") val creationDate: Long
 ) : BaseEntity() {
     @PrimaryKey(autoGenerate = true) override var id: Long = 0
 

@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.lexicon_memoria.database.dao.DictionaryDao
 import com.example.lexicon_memoria.database.dao.LexiconDao
 import com.example.lexicon_memoria.database.dao.UserDao
 import com.example.lexicon_memoria.database.entity.*
@@ -20,20 +21,22 @@ import kotlinx.coroutines.launch
                 UserEntity::class,
                 HeadwordEntity::class,
                 DefinitionEntity::class],
-    version = 6,
+    version = 1,
     exportSchema = false
 )
 abstract class LexmemDatabase : RoomDatabase() {
 
+    abstract fun userDao(): UserDao
+
     abstract fun lexiconDao(): LexiconDao
 
-    abstract fun userDao(): UserDao
+    abstract fun dictionaryDao(): DictionaryDao
 
     companion object {
         /** Name of database to use on device */
-        private const val DATABASE_NAME = "lexmem_database2"
+        private const val DATABASE_NAME = "lexmem_db"
 
-        /** Object reference for singleton implemention */
+        /** Object reference for singleton implementation */
         @Volatile
         private var INSTANCE: LexmemDatabase? = null
 
@@ -89,10 +92,10 @@ abstract class LexmemDatabase : RoomDatabase() {
         suspend fun populateDatabase(lexiconDao: LexiconDao) {
             lexiconDao.deleteAll()
 
-            var lexicon = LexiconEntity("sjam", "General", System.currentTimeMillis().toInt())
+            var lexicon = LexiconEntity(1, "General", System.currentTimeMillis())
             lexiconDao.insert(lexicon)
 
-            lexicon = LexiconEntity("sjam", "Computer Science", System.currentTimeMillis().toInt())
+            lexicon = LexiconEntity(1, "Computer Science", System.currentTimeMillis())
             lexiconDao.insert(lexicon)
         }
     }

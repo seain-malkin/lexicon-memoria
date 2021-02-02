@@ -15,10 +15,10 @@ data class Lexicon(
             parentColumn = "lexicon_id",
             entityColumn = "headword_id"
         )
-    ) val words: List<Homographs>
+    ) val words: List<DictionaryWord>
 )
 
-data class Homographs(
+data class DictionaryWord(
     @Embedded val headword: HeadwordEntity,
     @Relation(
         entity = WordFunctionEntity::class,
