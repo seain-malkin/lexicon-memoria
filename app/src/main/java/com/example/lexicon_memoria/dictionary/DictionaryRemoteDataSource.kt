@@ -1,29 +1,19 @@
 package com.example.lexicon_memoria.dictionary
 
+import com.example.lexicon_memoria.database.entity.DictionaryWord
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class DictionaryRemoteDataSource(
-    val api: DictionaryApi
+    private val api: DictionaryApi
 ) {
 
     /**
-     * Searchs for a word and returns a list of results
-     * @param[word] The word to search for
-     * @return The api result as a single word object
+     * Searches the remote data source for the key
+     * @param[key] The word to search for
+     * @return The api result object
      */
-    suspend fun search(word: String) : Word? {
-        val wordList = api.get(word)
-        // Return null on empty result or a dictionary word object
-        return when (wordList.isEmpty()) {
-            true -> null
-            false -> Word(wordList[0].text, wordList.filter {
-                it.homograph > 0
-            }.map {
-                Homograph(it.label, it.definitions)
-            })
-        }
-    }
+    fun find(key: String) = api.find(key)
 
     /**
      * The api dependency must implement this interface
@@ -32,37 +22,30 @@ class DictionaryRemoteDataSource(
 
         /**
          * Function to be implemented by all dictionary apis.
-         * @param[word] The word to find
-         * @return A list of word homographs
+         * @param[key] The word to find
+         * @return A formatted result. Throws an exception if not found
          */
-        suspend fun get(word: String) : List<DictionaryApiResponse>
+        fun find(key: String) : DictionaryApiResult
     }
 
     /**
      * API responses must implement this interface
      */
-    interface DictionaryApiResponse {
+    interface DictionaryApiResult {
 
-        /** A unique ID representing the word in the api source */
-        var id: String
+        var headword: Headword
+        var homographs: List<Homograph>
 
-        /** The text string representing the word */
-        var text: String
+        interface Headword {
+            var name: String
+            var source: String
+            var sourceId: String?
+            var sortIndex: String?
+        }
 
-        /** The homograph index of the homograph list */
-        var homograph: Int
-
-        /** The functional label of the word */
-        var label: String
-
-        /** An array of definitions of the word */
-        val definitions: ArrayList<String>
-
-        /**
-         * Determines if this object equals the given one
-         * @param[other] The object to compare to
-         * @return The equality
-         */
-        override fun equals(other: Any?) : Boolean
+        interface Homograph {
+            var name: String
+            var definitions: List<String>
+        }
     }
 }
