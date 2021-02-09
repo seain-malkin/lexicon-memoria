@@ -21,7 +21,7 @@ interface CollegiateApi : DictionaryApi {
      * @return A list of results
      */
     @GET("{word}?key=$KEY")
-    override suspend fun get(@Path("word") word: String) : List<CollegiateResponse>
+    override fun find(@Path("word") word: String): CollegiateResponse
 
     companion object {
 
@@ -36,7 +36,10 @@ interface CollegiateApi : DictionaryApi {
 
         /** @property source The built [Retrofit] object */
         val source: CollegiateApi by lazy {
-            RetrofitHelper.create(URL)
+            RetrofitHelper.create(URL, listOf(RetrofitHelper.TypeAdapter(
+                CollegiateResponse::class.java,
+                CollegiateResponseDeserializer()
+            )))
         }
     }
 }

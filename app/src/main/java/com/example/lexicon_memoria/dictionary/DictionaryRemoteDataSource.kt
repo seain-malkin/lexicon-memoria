@@ -36,16 +36,16 @@ class DictionaryRemoteDataSource(
         var headword: Headword
         var homographs: List<Homograph>
 
-        interface Headword {
-            var name: String
-            var source: String
-            var sourceId: String?
-            var sortIndex: String?
-        }
+        data class Headword(
+            var name: String,
+            var source: String,
+            var sourceId: String? = null,
+            var sortIndex: String? = null,
+        )
 
-        interface Homograph {
-            var name: String
-            var definitions: List<String>
-        }
+        data class Homograph (
+            var name: String,
+            var definitions: List<String>,
+        )
     }
 }
