@@ -42,7 +42,7 @@ class LexiconListAdapter(
 
     /** @see[ListAdapter.onBindViewHolder] */
     override fun onBindViewHolder(holder: LexiconViewHolder, position: Int) {
-        holder.bind(getItem(position).label)
+        holder.bind(getItem(position).name)
     }
 
     /**
@@ -84,7 +84,7 @@ class LexiconListAdapter(
 
         /** @see[DiffUtil.ItemCallback.areContentsTheSame] */
         override fun areContentsTheSame(oldItem: LexiconEntity, newItem: LexiconEntity): Boolean {
-            return oldItem.label == newItem.label
+            return oldItem.name == newItem.name
         }
     }
 }

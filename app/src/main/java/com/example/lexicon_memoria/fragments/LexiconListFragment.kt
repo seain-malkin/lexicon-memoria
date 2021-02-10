@@ -21,7 +21,7 @@ import com.example.lexicon_memoria.viewmodel.LexiconListViewModelFactory
  * create an instance of this fragment.
  */
 class LexiconListFragment : Fragment() {
-    private var username: String? = null
+    private var userId: Long = 0
 
     /** View Model for displaying list of lexicons */
     private val lexiconListViewModel: LexiconListViewModel by activityViewModels {
@@ -35,7 +35,7 @@ class LexiconListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            username = it.getString(ARG_USERNAME)
+            userId = it.getLong(ARG_USERNAME)
         }
     }
 
@@ -56,7 +56,7 @@ class LexiconListFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(activity)
 
         // Define an observer on the lexicon list
-        lexiconListViewModel.all.observe(viewLifecycleOwner, { lexicons ->
+        lexiconListViewModel.lexicons.observe(viewLifecycleOwner, { lexicons ->
             lexicons?.let { adapter.submitList(it) }
         })
 
@@ -69,14 +69,14 @@ class LexiconListFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param[username] The username associated with displayed lexicons
+         * @param[userId] The user id
          * @return A new instance of fragment LexiconListFragment.
          */
         @JvmStatic
-        fun newInstance(username: String) =
+        fun newInstance(userId: Long) =
             LexiconListFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_USERNAME, username)
+                    putLong(ARG_USERNAME, userId)
                 }
             }
     }

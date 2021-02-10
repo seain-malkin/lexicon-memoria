@@ -2,12 +2,10 @@ package com.example.lexicon_memoria
 
 import android.app.Application
 import com.example.lexicon_memoria.database.LexmemDatabase
-import com.example.lexicon_memoria.database.dao.DictionaryDao
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
 import com.example.lexicon_memoria.repository.DictionaryRepository
 import com.example.lexicon_memoria.repository.LexiconRepository
 import com.example.lexicon_memoria.repository.UserRepository
-import com.example.lexicon_memoria.repository.WordRepository
 import com.example.lexicon_memoria.dictionary.merriam_webster.CollegiateApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -26,8 +24,8 @@ class LexmemApplication : Application() {
     /** Reference to the dictionary repository */
     val dictionary by lazy {
         DictionaryRepository(
-            DictionaryRemoteDataSource(CollegiateApi.request),
-            database.dictionaryDao()
+            database.dictionaryDao(),
+            DictionaryRemoteDataSource(CollegiateApi.source)
         )
     }
 

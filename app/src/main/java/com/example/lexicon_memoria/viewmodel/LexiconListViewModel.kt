@@ -1,11 +1,14 @@
 package com.example.lexicon_memoria.viewmodel
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.database.entity.LexiconEntity
 import com.example.lexicon_memoria.fragments.LexiconListFragment
 import com.example.lexicon_memoria.repository.LexiconRepository
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -19,11 +22,16 @@ class LexiconListViewModel(
 ) : ViewModel() {
 
     /** The username who owns the lexicons retrieved */
-    private val username: String = savedStateHandle[LexiconListFragment.ARG_USERNAME] ?:
+    private val userId: Long = savedStateHandle[LexiconListFragment.ARG_USERNAME] ?:
         throw IllegalArgumentException("Missing username")
 
     /** Reference to an observed list of lexicon objects */
-    val all: LiveData<List<LexiconEntity>> = repository.select(username).asLiveData()
+    var _lexicons = MutableLiveData<List<LexiconEntity>>()
+    val lexicons: LiveData<List<LexiconEntity>> get() = _lexicons
+
+    init {
+        updateList(userId)
+    }
 
     /**
      * Inserts a lexicon object asynchronously
@@ -31,6 +39,18 @@ class LexiconListViewModel(
      */
     fun insert(lexicon: LexiconEntity) = viewModelScope.launch {
         repository.insert(lexicon)
+    }
+
+    fun updateList(userId: Long) {
+        viewModelScope.launch {
+            repository.getUserLexicons(userId)
+                .catch { e ->
+                    Log.i("Update List", "$e")
+                }
+                .collect {
+                    _lexicons.value = it
+                }
+        }
     }
 }
 

@@ -63,6 +63,6 @@ class CollegiateResponseDeserializer : JsonDeserializer<CollegiateResponse> {
         val defs = mutableListOf<String>()
         json.get("shortdef").asJsonArray.forEach { defs.add(it.asString) }
 
-        return Homograph(json.get("hwi").asJsonObject.get("hw").asString, defs.toList())
+        return Homograph(json.get("fl").asString, defs.toList())
     }
 }

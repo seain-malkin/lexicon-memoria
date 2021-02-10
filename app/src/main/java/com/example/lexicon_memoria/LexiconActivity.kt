@@ -24,7 +24,7 @@ private const val REQUEST_CODE_DICTIONARY_SEARCH = 2
 
 class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
 
-    private lateinit var username: String
+    private var userId: Long = 0
 
     /** The fragment visible to the user */
     private var visibleFragment = TAG_LEXICON_LIST
@@ -52,7 +52,7 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
                     if (it is LexiconListFragment) {
                         show(it)
                     } else {
-                        add(R.id.content, LexiconListFragment.newInstance(username),
+                        add(R.id.content, LexiconListFragment.newInstance(userId),
                                 TAG_LEXICON_LIST)
                     }
                 }
@@ -78,7 +78,7 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
                     if (it is LexiconViewFragment) {
                         show(it)
                     } else {
-                        add(R.id.content, LexiconViewFragment.newInstance(username, lexiconLabel),
+                        add(R.id.content, LexiconViewFragment.newInstance(userId, lexiconLabel),
                                 TAG_LEXICON_VIEW)
                     }
                 }
@@ -100,9 +100,9 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         // This will be replaced by login on flash activity
-        username = "sjam"
+        userId = 1
         if (savedInstanceState == null) {
-            intent.putExtra("username", username)
+            intent.putExtra("userId", userId)
             displayLexiconList()
         }
 
@@ -134,7 +134,7 @@ class LexiconActivity : LexiconListAdapterListener, AppCompatActivity() {
 
         if (requestCode == REQUEST_CODE_CREATE_LEXICON && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(CreateLexiconActivity.EXTRA_LABEL)?.let {
-                val lexicon = LexiconEntity("sjam", it, System.currentTimeMillis().toInt())
+                val lexicon = LexiconEntity(userId, it, System.currentTimeMillis())
                 lexiconListViewModel.insert(lexicon)
             }
         } else if (requestCode == REQUEST_CODE_DICTIONARY_SEARCH && resultCode == Activity.RESULT_OK) {

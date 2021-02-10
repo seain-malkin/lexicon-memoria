@@ -17,8 +17,8 @@ interface DictionaryDao {
      * @return A list of matches
      */
     @Transaction
-    @Query("SELECT * FROM ${HeadwordEntity.tableName} WHERE name LIKE :key")
-    fun find(key: String): List<DictionaryWord>
+    @Query("SELECT * FROM ${HeadwordEntity.tableName} WHERE name = :key")
+    fun find(key: String): DictionaryWord?
 
     /**
      * Saves the word to database

@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.lexicon_memoria.database.entity.WordWithFunctionalDefinitions
-import com.example.lexicon_memoria.dictionary.Word
+import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.repository.DictionaryRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -25,8 +24,8 @@ class DictionarySearchViewModel(
 ) : ViewModel() {
 
     /** The result of the dictionary lookup */
-    private val _lookupResult = MutableLiveData<WordWithFunctionalDefinitions?>()
-    val lookupResult: LiveData<WordWithFunctionalDefinitions?> get() = _lookupResult
+    private val _lookupResult = MutableLiveData<DictionaryWord>()
+    val lookupResult: LiveData<DictionaryWord> get() = _lookupResult
 
     /** Whether a search request is still waiting for a result */
     val searchInProgress: MutableLiveData<Boolean> = MutableLiveData(false)

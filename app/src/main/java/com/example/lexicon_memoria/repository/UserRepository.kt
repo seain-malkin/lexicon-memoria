@@ -4,13 +4,14 @@ import androidx.annotation.WorkerThread
 import com.example.lexicon_memoria.database.dao.UserDao
 import com.example.lexicon_memoria.database.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class UserRepository(
         private val userDao: UserDao
 ) {
 
-    fun get(username: String) : Flow<List<UserEntity>> {
-        return userDao.get(username)
+    fun get(username: String) : Flow<UserEntity?> {
+        return flow { userDao.get(username) }
     }
 
     /**

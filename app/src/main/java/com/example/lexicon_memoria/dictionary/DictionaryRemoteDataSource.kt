@@ -13,7 +13,9 @@ class DictionaryRemoteDataSource(
      * @param[key] The word to search for
      * @return The api result object
      */
-    fun find(key: String) = api.find(key)
+    fun find(key: String): DictionaryApiResult {
+        return api.find(key)
+    }
 
     /**
      * The api dependency must implement this interface

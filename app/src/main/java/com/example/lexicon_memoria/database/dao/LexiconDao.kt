@@ -11,7 +11,15 @@ abstract class LexiconDao(
 ) : BaseDao<LexiconEntity>(Table.tableName, roomDatabase) {
 
     /**
-     * Retrieves the Lexicon relation which contains a list of it's words
+     * Retrieves a list of lexicon entities owned by the given user
+     * @param userId The database id of the user
+     * @return A list of entities
+     */
+    @Query("SELECT * FROM ${Table.tableName} WHERE user_id = :userId")
+    abstract fun getByUser(userId: Long): List<LexiconEntity>
+
+    /**
+     * Retrieves the Lexicon relation which contains a list of its words
      * @param lexiconId The primary id key for the [LexiconEntity]
      */
     @Transaction

@@ -17,7 +17,7 @@ import com.example.lexicon_memoria.viewmodel.LexiconViewModelFactory
  * create an instance of this fragment.
  */
 class LexiconViewFragment : Fragment() {
-    private var username: String? = null
+    private var userId: Long = 0
     private var lexiconLabel: String? = null
 
     private val lexiconViewModel: LexiconViewModel by activityViewModels {
@@ -31,7 +31,7 @@ class LexiconViewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            username = it.getString(ARG_USERNAME)
+            userId = it.getLong(ARG_USERNAME)
             lexiconLabel = it.getString(ARG_LEXICON_LABEL)
         }
     }
@@ -55,10 +55,10 @@ class LexiconViewFragment : Fragment() {
          * @return A new instance of fragment LexiconFragment.
          */
         @JvmStatic
-        fun newInstance(username: String, lexiconLabel: String) =
+        fun newInstance(userId: Long, lexiconLabel: String) =
                 LexiconViewFragment().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_USERNAME, username)
+                        putLong(ARG_USERNAME, userId)
                         putString(ARG_LEXICON_LABEL, lexiconLabel)
                     }
                 }
