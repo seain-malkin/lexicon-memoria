@@ -26,8 +26,8 @@ import androidx.room.ForeignKey
     ]
 )
 data class LexiconWordEntity(
-    @ColumnInfo(name = "lexicon_id") val lexiconId: Long,
-    @ColumnInfo(name = "headword_id") val headwordId: Long
+    @ColumnInfo(name = "lexicon_id", index = true) val lexiconId: Long,
+    @ColumnInfo(name = "headword_id", index = true) val headwordId: Long
 ) : BaseEntity() {
 
     override var id: Long = 0

@@ -21,7 +21,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class WordFunctionEntity(
-    @ColumnInfo(name = "headword_id") var headwordId: Long,
+    @ColumnInfo(name = "headword_id", index = true) var headwordId: Long,
     var name: String
 ) : BaseEntity() {
 

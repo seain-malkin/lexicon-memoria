@@ -19,8 +19,10 @@ import kotlinx.coroutines.launch
 @Database(
     entities = [LexiconEntity::class,
                 UserEntity::class,
+                LexiconWordEntity::class,
                 HeadwordEntity::class,
-                DefinitionEntity::class],
+                DefinitionEntity::class,
+                WordFunctionEntity::class],
     version = 1,
     exportSchema = false
 )

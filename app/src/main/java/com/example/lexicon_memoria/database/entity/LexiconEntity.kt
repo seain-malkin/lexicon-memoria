@@ -21,7 +21,7 @@ import androidx.room.PrimaryKey
     )]
 )
 data class LexiconEntity(
-        @ColumnInfo(name="user_id") val userId: Long,
+        @ColumnInfo(name="user_id", index = true) val userId: Long,
         val name: String,
         @ColumnInfo(name = "creation_date") val creationDate: Long
 ) : BaseEntity() {

@@ -43,8 +43,8 @@ class DictionaryRepository(
         val wordBuilder = WordBuilder(
             result.headword.name,
             result.headword.source,
-            result.headword?.sourceId,
-            result.headword?.sortIndex
+            result.headword.sourceId,
+            result.headword.sortIndex
         )
 
         result.homographs.forEach {

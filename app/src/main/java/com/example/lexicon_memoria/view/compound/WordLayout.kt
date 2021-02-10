@@ -5,8 +5,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.lexicon_memoria.R
-import com.example.lexicon_memoria.database.entity.WordWithFunctionalDefinitions
-import com.example.lexicon_memoria.dictionary.Word
+import com.example.lexicon_memoria.database.entity.DictionaryWord
 
 /**
  * Custom layout for displaying a word along with its homographs
@@ -18,7 +17,7 @@ class WordLayout(
 ) : LinearLayout(context, attr) {
 
     /** @property[word] The word object that the view binds to */
-    var word: WordWithFunctionalDefinitions? = null
+    var word: DictionaryWord? = null
         set(value) {
             if (!(field != null && field!! == value)) {
                 field = value
@@ -35,7 +34,7 @@ class WordLayout(
     /**
      * Displays the custom view inside the linear layout
      */
-    private fun updateView(wordItem: WordWithFunctionalDefinitions) {
+    private fun updateView(wordItem: DictionaryWord) {
         // First delete any current child views
         removeAllViews()
 
@@ -43,7 +42,7 @@ class WordLayout(
         val view = inflate(context, R.layout.view_compound_word_layout, this)
 
         // Bind the headword
-        view.findViewById<TextView>(R.id.headword).text = "${wordItem.headword}"
+        view.findViewById<TextView>(R.id.headword).text = "${wordItem.headword.name}"
 
         // Find the homograph container
         val llHomograph: LinearLayout = view.findViewById(R.id.homographs)

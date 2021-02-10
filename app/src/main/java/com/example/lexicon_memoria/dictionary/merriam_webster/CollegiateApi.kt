@@ -21,7 +21,7 @@ interface CollegiateApi : DictionaryApi {
      * @return A list of results
      */
     @GET("{word}?key=$KEY")
-    override fun find(@Path("word") word: String): CollegiateResponse
+    override fun find(@Path("word") key: String): CollegiateResponse
 
     companion object {
 

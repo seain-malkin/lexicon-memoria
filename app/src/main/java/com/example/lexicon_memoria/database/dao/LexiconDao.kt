@@ -25,16 +25,4 @@ abstract class LexiconDao(
     @Transaction
     @Query("SELECT * FROM ${Table.tableName} WHERE id = :lexiconId")
     abstract fun getWords(lexiconId: Long): Lexicon
-
-    @Transaction
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    abstract fun insert(lexicon: Lexicon): Long
-
-    @Transaction
-    @Update(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun update(lexicon: Lexicon)
-
-    @Transaction
-    @Delete
-    abstract fun delete(lexicon: Lexicon)
 }

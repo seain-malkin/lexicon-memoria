@@ -19,28 +19,4 @@ interface DictionaryDao {
     @Transaction
     @Query("SELECT * FROM ${HeadwordEntity.tableName} WHERE name = :key")
     fun find(key: String): DictionaryWord?
-
-    /**
-     * Saves the word to database
-     * @param word The word to save
-     */
-    @Transaction
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insert(vararg word: DictionaryWord)
-
-    /**
-     * Updates the word in the database
-     * @param word THe word to update
-     */
-    @Transaction
-    @Update(onConflict = OnConflictStrategy.IGNORE)
-    fun update(vararg word: DictionaryDao)
-
-    /**
-     * Deletes the word from the database
-     * @param word The word to delete
-     */
-    @Transaction
-    @Delete
-    fun delete(vararg word: DictionaryWord)
 }

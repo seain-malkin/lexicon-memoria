@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
     )]
 )
 data class DefinitionEntity(
-    @ColumnInfo(name = "word_function_id") var wordFunctionId: Long,
+    @ColumnInfo(name = "word_function_id", index = true) var wordFunctionId: Long,
     var definition: String,
     @ColumnInfo(name = "order_index") var orderIndex: Int = 0
 ) : BaseEntity() {

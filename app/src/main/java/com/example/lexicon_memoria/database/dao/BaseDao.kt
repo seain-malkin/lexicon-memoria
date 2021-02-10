@@ -16,7 +16,6 @@ import java.lang.StringBuilder
  * @param tableName The name of the database table
  * @param roomDatabase The [Room] database object
  */
-@Dao
 abstract class BaseDao<E>(
     private val tableName: String,
     private val roomDatabase: RoomDatabase
@@ -81,7 +80,7 @@ abstract class BaseDao<E>(
     abstract fun insert(e: List<E>)
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun update(e: E): Long
+    abstract fun update(e: E): Int
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     abstract fun update(e: List<E>)
@@ -93,7 +92,7 @@ abstract class BaseDao<E>(
     abstract fun delete(e: List<E>)
 
     @RawQuery
-    abstract fun deleteAll(q: SupportSQLiteQuery)
+    abstract fun deleteAll(q: SupportSQLiteQuery): Int
 
     fun deleteAll() = deleteAll(SimpleSQLiteQuery("DELETE FROM $tableName"))
 }
