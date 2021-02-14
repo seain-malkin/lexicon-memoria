@@ -5,9 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.lexicon_memoria.database.dao.DictionaryDao
-import com.example.lexicon_memoria.database.dao.LexiconDao
-import com.example.lexicon_memoria.database.dao.UserDao
+import com.example.lexicon_memoria.database.dao.*
 import com.example.lexicon_memoria.database.entity.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -28,10 +26,12 @@ import kotlinx.coroutines.launch
 )
 abstract class LexmemDatabase : RoomDatabase() {
 
+    abstract fun definitionDao(): DefinitionDao
+    abstract fun headWordDao(): HeadWordDao
+    abstract fun lexiconWordDao(): LexiconWordDao
+    abstract fun wordFunctionDao(): WordFunctionDao
     abstract fun userDao(): UserDao
-
     abstract fun lexiconDao(): LexiconDao
-
     abstract fun dictionaryDao(): DictionaryDao
 
     companion object {

@@ -3,6 +3,7 @@ package com.example.lexicon_memoria.database.dao
 import androidx.room.*
 import com.example.lexicon_memoria.database.entity.Lexicon
 import com.example.lexicon_memoria.database.entity.LexiconEntity
+import kotlinx.coroutines.flow.Flow
 import com.example.lexicon_memoria.database.entity.LexiconEntity.Companion as Table
 
 @Dao
@@ -16,7 +17,7 @@ abstract class LexiconDao(
      * @return A list of entities
      */
     @Query("SELECT * FROM ${Table.tableName} WHERE user_id = :userId")
-    abstract fun getByUser(userId: Long): List<LexiconEntity>
+    abstract fun getByUser(userId: Long): Flow<List<LexiconEntity>>
 
     /**
      * Retrieves the Lexicon relation which contains a list of its words
@@ -24,5 +25,5 @@ abstract class LexiconDao(
      */
     @Transaction
     @Query("SELECT * FROM ${Table.tableName} WHERE id = :lexiconId")
-    abstract fun getWords(lexiconId: Long): Lexicon
+    abstract fun getWords(lexiconId: Long): Flow<Lexicon>
 }

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class UserEntity(
     val username: String,
     val email: String,
-    @ColumnInfo(name = "creation_date") val creationDate: Int
+    @ColumnInfo(name = "creation_date") val creationDate: Long = System.currentTimeMillis()
 ) : BaseEntity() {
     @PrimaryKey(autoGenerate = true) override var id: Long = 0
 

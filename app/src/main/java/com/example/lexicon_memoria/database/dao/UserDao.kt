@@ -15,9 +15,9 @@ abstract class UserDao(
      * @param username The username to retrieve
      * @return The user object or null
      */
-    fun get(username: String) : UserEntity? {
+    fun get(username: String) : Flow<UserEntity> {
         return get(SimpleSQLiteQuery(
                 "SELECT * FROM ${Table.tableName} WHERE username = $username"
-        ))?.firstOrNull()
+        ))
     }
 }

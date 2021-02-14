@@ -18,5 +18,5 @@ interface DictionaryDao {
      */
     @Transaction
     @Query("SELECT * FROM ${HeadwordEntity.tableName} WHERE name = :key")
-    fun find(key: String): DictionaryWord?
+    fun find(key: String): Flow<DictionaryWord>
 }

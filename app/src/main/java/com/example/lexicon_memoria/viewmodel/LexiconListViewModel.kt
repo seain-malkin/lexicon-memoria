@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 /**
  * View Model implementation for accessing lexicon objects
  * @author Seain Malkin (dev@seain.me)
- * @property[repository] The lexicon repository object
+ * @property repository The lexicon repository object
+ * @param savedStateHandle
  */
 class LexiconListViewModel(
     private val repository: LexiconRepository,
@@ -67,7 +68,7 @@ class LexiconListViewModelFactory(
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
         if (!modelClass.isAssignableFrom(LexiconListViewModel::class.java)) {
-            throw IllegalArgumentException("Unkown ViewMdel class")
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
         @Suppress("UNCHECKED_CAST")
         return LexiconListViewModel(repository, handle) as T
