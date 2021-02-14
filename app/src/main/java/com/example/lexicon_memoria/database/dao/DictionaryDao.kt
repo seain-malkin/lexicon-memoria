@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
  * Data Access Object for the persistent local dictionary
  */
 @Dao
-interface DictionaryDao {
+abstract class DictionaryDao(val roomDatabase: RoomDatabase) {
 
     /**
      * Returns the complete dictionary word with all headwords and definitions
@@ -18,5 +18,7 @@ interface DictionaryDao {
      */
     @Transaction
     @Query("SELECT * FROM ${HeadwordEntity.tableName} WHERE name = :key")
-    fun find(key: String): Flow<DictionaryWord>
+    abstract fun find(key: String): Flow<DictionaryWord>
+
+
 }
