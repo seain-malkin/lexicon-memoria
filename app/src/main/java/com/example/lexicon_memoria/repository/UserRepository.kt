@@ -16,11 +16,15 @@ class UserRepository(
      * @return List of user entities as flow
      */
     fun get(): Flow<List<UserEntity>> {
-        return userDao.get()
+        return flow {
+            emit(userDao.get())
+        }
     }
 
     fun get(username: String): Flow<UserEntity?> {
-        return userDao.get(username)
+        return flow {
+            emit(userDao.get(username))
+        }
     }
 
     /**

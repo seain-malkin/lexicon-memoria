@@ -23,16 +23,16 @@ abstract class BaseDao<E>(
 ) {
 
     @RawQuery
-    abstract fun getList(q: SupportSQLiteQuery): Flow<List<E>>
+    abstract fun getList(q: SupportSQLiteQuery): List<E>
 
     @RawQuery
-    abstract fun get(q: SupportSQLiteQuery): Flow<E>
+    abstract fun get(q: SupportSQLiteQuery): E
 
     /**
      * Returns the entire table
      * @return A list of entity rows
      */
-    fun get(): Flow<List<E>> {
+    fun get(): List<E> {
         return getList(SimpleSQLiteQuery("SELECT * FROM $tableName"))
     }
 
@@ -41,7 +41,7 @@ abstract class BaseDao<E>(
      * @param id The row id
      * @return The table row entity
      */
-    fun get(id: Long): Flow<E> {
+    fun get(id: Long): E {
         return get(SimpleSQLiteQuery("SELECT * FROM $tableName WHERE id = $id"))
     }
 
@@ -51,7 +51,7 @@ abstract class BaseDao<E>(
      * @return id or -1 on update
      */
     @Transaction
-    suspend fun upsert(e: E): Long {
+    open fun upsert(e: E): Long {
         val rowId = insert(e)
         if (rowId == -1L) {
             update(e)
@@ -66,7 +66,7 @@ abstract class BaseDao<E>(
      * @return List of ids or -1 on update
      */
     @Transaction
-    suspend fun upsert(e: List<E>): List<Long> {
+    open fun upsert(e: List<E>): List<Long> {
         val rowIds = insert(e)
         // Filter to list of failed inserts and update
         val updateList = rowIds.mapIndexedNotNull { i, id -> if (id == -1L) e[i] else null }
@@ -78,25 +78,25 @@ abstract class BaseDao<E>(
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insert(e: E): Long
+    abstract fun insert(e: E): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insert(e: List<E>): List<Long>
+    abstract fun insert(e: List<E>): List<Long>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun update(e: E): Int
+    abstract fun update(e: E): Int
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun update(e: List<E>)
+    abstract fun update(e: List<E>)
 
     @Delete
-    abstract suspend fun delete(e: E)
+    abstract fun delete(e: E)
 
     @Delete
-    abstract suspend fun delete(e: List<E>)
+    abstract fun delete(e: List<E>)
 
     @RawQuery
-    abstract suspend fun deleteAll(q: SupportSQLiteQuery): Int
+    abstract fun deleteAll(q: SupportSQLiteQuery): Int
 
-    suspend fun deleteAll() = deleteAll(SimpleSQLiteQuery("DELETE FROM $tableName"))
+    fun deleteAll() = deleteAll(SimpleSQLiteQuery("DELETE FROM $tableName"))
 }

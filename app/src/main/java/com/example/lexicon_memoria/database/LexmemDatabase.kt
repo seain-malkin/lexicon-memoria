@@ -35,6 +35,9 @@ abstract class LexmemDatabase : RoomDatabase() {
     abstract fun dictionaryDao(): DictionaryDao
 
     companion object {
+        /** Set to true to use in memory database for testing */
+        var TEST_MODE = false
+
         /** Name of database to use on device */
         private const val DATABASE_NAME = "lexmem_db"
 
@@ -49,56 +52,28 @@ abstract class LexmemDatabase : RoomDatabase() {
          * @return Object reference of the database
          */
         fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
+            context: Context
         ): LexmemDatabase {
             // Return instance or create instance when null
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    LexmemDatabase::class.java,
-                    DATABASE_NAME
-                )
-                        .fallbackToDestructiveMigration()
-                        .addCallback(LexmemDatabaseCallback(scope))
-                        .build()
-
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }
-
-    /**
-     * Injects test data into the database
-     * @property[scope] The scope to run the coroutine in
-     */
-    private class LexmemDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-
-        /** @see[onCreate] */
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTANCE?.let { database ->
-                scope.launch {
-                    populateDatabase(database.lexiconDao())
+                INSTANCE = when(TEST_MODE) {
+                    false -> Room.databaseBuilder(
+                        context.applicationContext,
+                        LexmemDatabase::class.java,
+                        DATABASE_NAME
+                    ).fallbackToDestructiveMigration().build()
+                    true -> Room.inMemoryDatabaseBuilder(
+                        context.applicationContext,
+                        LexmemDatabase::class.java
+                    ).allowMainThreadQueries().build()
                 }
+
+                return INSTANCE!!
             }
         }
 
-        /**
-         * Creates test data and inserts into the database
-         * @param[lexiconDao] The lexicon dao
-         */
-        suspend fun populateDatabase(lexiconDao: LexiconDao) {
-            lexiconDao.deleteAll()
-
-            var lexicon = LexiconEntity(1, "General", System.currentTimeMillis())
-            lexiconDao.insert(lexicon)
-
-            lexicon = LexiconEntity(1, "Computer Science", System.currentTimeMillis())
-            lexiconDao.insert(lexicon)
+        fun close() {
+            INSTANCE?.close()
         }
     }
 }

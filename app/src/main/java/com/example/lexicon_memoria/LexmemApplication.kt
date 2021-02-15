@@ -19,7 +19,7 @@ class LexmemApplication : Application() {
     val applicationScope = CoroutineScope(SupervisorJob())
 
     /** Reference to application database */
-    val database by lazy { LexmemDatabase.getDatabase(this, applicationScope) }
+    val database by lazy { LexmemDatabase.getDatabase(this.applicationContext) }
 
     /** Reference to the dictionary repository */
     val dictionary by lazy {

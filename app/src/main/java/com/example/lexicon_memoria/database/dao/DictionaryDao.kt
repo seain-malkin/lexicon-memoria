@@ -20,7 +20,7 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
      */
     @Transaction
     @Query("SELECT * FROM ${HeadwordEntity.tableName} WHERE name = :key")
-    abstract fun find(key: String): Flow<DictionaryWord>
+    abstract fun find(key: String): DictionaryWord?
 
     /**
      * Inserts into or updates the database by breaking the object apart and invoking the DAO
@@ -28,7 +28,7 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
      * @param word The object to insert
      */
     @Transaction
-    suspend fun save(word: DictionaryWord) {
+    open fun save(word: DictionaryWord) {
         roomDatabase.headWordDao().upsert(word.headword)
 
         // Save each homograph and link the headword id
@@ -41,7 +41,7 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
      * @param homograph The object to insert
      */
     @Transaction
-    suspend fun save(headwordId: Long, homograph: Homograph) {
+    open fun save(headwordId: Long, homograph: Homograph) {
         homograph.function.headwordId = headwordId
 
         // Save the word function

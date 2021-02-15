@@ -22,10 +22,5 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        authViewModel.user.observe(this, { user ->
-            user?.let {
-                Log.i("User Found", "${user.id}:${user.username}")
-            }
-        })
     }
 }
