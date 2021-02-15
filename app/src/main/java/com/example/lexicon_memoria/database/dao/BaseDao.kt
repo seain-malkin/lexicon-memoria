@@ -45,11 +45,43 @@ abstract class BaseDao<E>(
         return get(SimpleSQLiteQuery("SELECT * FROM $tableName WHERE id = $id"))
     }
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    /**
+     * Inserts or updates the table row. Returns the row id of the insert. On update, -1
+     * @param e Object to insert
+     * @return id or -1 on update
+     */
+    @Transaction
+    suspend fun upsert(e: E): Long {
+        val rowId = insert(e)
+        if (rowId == -1L) {
+            update(e)
+        }
+
+        return rowId
+    }
+
+    /**
+     * Inserts or updates a list of rows.
+     * @param e List of objects
+     * @return List of ids or -1 on update
+     */
+    @Transaction
+    suspend fun upsert(e: List<E>): List<Long> {
+        val rowIds = insert(e)
+        // Filter to list of failed inserts and update
+        val updateList = rowIds.mapIndexedNotNull { i, id -> if (id == -1L) e[i] else null }
+        if (updateList.isNotEmpty()) {
+            update(updateList)
+        }
+
+        return rowIds
+    }
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insert(e: E): Long
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    abstract suspend fun insert(e: List<E>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insert(e: List<E>): List<Long>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun update(e: E): Int
