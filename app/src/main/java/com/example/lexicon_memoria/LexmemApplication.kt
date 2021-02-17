@@ -24,14 +24,14 @@ class LexmemApplication : Application() {
     /** Reference to the dictionary repository */
     val dictionary by lazy {
         DictionaryRepository(
-            database.dictionaryDao(),
+            database.dictionary(),
             DictionaryRemoteDataSource(CollegiateApi.source)
         )
     }
 
     /** Reference to the lexicon repository */
-    val lexicons by lazy { LexiconRepository(database.lexiconDao()) }
+    val lexicons by lazy { LexiconRepository(database.lexicon()) }
 
     /** Reference to the users repository */
-    val users by lazy { UserRepository(database.userDao()) }
+    val users by lazy { UserRepository(database.user()) }
 }

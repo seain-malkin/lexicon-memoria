@@ -29,7 +29,7 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
      */
     @Transaction
     open fun save(word: DictionaryWord) {
-        roomDatabase.headWordDao().upsert(word.headword)
+        roomDatabase.headWord().upsert(word.headword)
 
         // Save each homograph and link the headword id
         word.functions.forEach { save(word.headword.id, it) }
@@ -45,12 +45,12 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
         homograph.function.headwordId = headwordId
 
         // Save the word function
-        roomDatabase.wordFunctionDao().upsert(homograph.function)
+        roomDatabase.wordFunction().upsert(homograph.function)
 
         // Update the word function id for each definition entity
         homograph.definitions.forEach { it.wordFunctionId = homograph.function.id }
 
         // Save the definitions
-        roomDatabase.definitionDao().upsert(homograph.definitions)
+        roomDatabase.definition().upsert(homograph.definitions)
     }
 }

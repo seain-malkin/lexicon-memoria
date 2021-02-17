@@ -12,7 +12,7 @@ import java.lang.Exception
 import kotlin.jvm.Throws
 
 @RunWith(AndroidJUnit4::class)
-class HeadWordTest {
+class HeadWordDaoTest {
 
     private lateinit var db: LexmemDatabase
 
@@ -32,10 +32,18 @@ class HeadWordTest {
     @Throws(Exception::class)
     fun writeHeadwordAndReadAsList() {
         val headword = HeadwordEntity("foobar", "test_class")
-        db.headWordDao().insert(headword)
+        db.headWord().insert(headword)
 
-        val asList = db.headWordDao().get("foobar")
+        val asList = db.headWord().get("foobar")
 
         assert(headword == asList[0])
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun selectNoEntityAndReadEmptyList() {
+        val emptyList = db.headWord().get("nomatch")
+
+        assert(emptyList.isEmpty())
     }
 }

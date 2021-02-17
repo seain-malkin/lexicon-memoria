@@ -26,13 +26,13 @@ import kotlinx.coroutines.launch
 )
 abstract class LexmemDatabase : RoomDatabase() {
 
-    abstract fun definitionDao(): DefinitionDao
-    abstract fun headWordDao(): HeadWordDao
-    abstract fun lexiconWordDao(): LexiconWordDao
-    abstract fun wordFunctionDao(): WordFunctionDao
-    abstract fun userDao(): UserDao
-    abstract fun lexiconDao(): LexiconDao
-    abstract fun dictionaryDao(): DictionaryDao
+    abstract fun definition(): DefinitionDao
+    abstract fun headWord(): HeadWordDao
+    abstract fun lexiconWord(): LexiconWordDao
+    abstract fun wordFunction(): WordFunctionDao
+    abstract fun user(): UserDao
+    abstract fun lexicon(): LexiconDao
+    abstract fun dictionary(): DictionaryDao
 
     companion object {
         /** Set to true to use in memory database for testing */

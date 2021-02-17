@@ -13,10 +13,10 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = HeadwordEntity.tableName)
 data class HeadwordEntity(
-    val name: String,
-    val source: String,
-    @ColumnInfo(name = "source_id") val sourceId: String? = null,
-    @ColumnInfo(name = "sort_index") val sortIndex: String? = null
+    var name: String,
+    var source: String,
+    @ColumnInfo(name = "source_id") var sourceId: String? = null,
+    @ColumnInfo(name = "sort_index") var sortIndex: String? = null
 ) : BaseEntity() {
 
     @PrimaryKey(autoGenerate = true) override var id: Long = 0

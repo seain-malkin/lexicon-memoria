@@ -26,7 +26,7 @@ abstract class BaseDao<E>(
     abstract fun getList(q: SupportSQLiteQuery): List<E>
 
     @RawQuery
-    abstract fun get(q: SupportSQLiteQuery): E
+    abstract fun get(q: SupportSQLiteQuery): E?
 
     /**
      * Returns the entire table
@@ -41,7 +41,7 @@ abstract class BaseDao<E>(
      * @param id The row id
      * @return The table row entity
      */
-    fun get(id: Long): E {
+    fun get(id: Long): E? {
         return get(SimpleSQLiteQuery("SELECT * FROM $tableName WHERE id = $id"))
     }
 
