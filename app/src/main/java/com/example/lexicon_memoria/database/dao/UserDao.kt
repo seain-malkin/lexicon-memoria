@@ -17,7 +17,7 @@ abstract class UserDao(
      */
     fun get(username: String): UserEntity? {
         return get(SimpleSQLiteQuery(
-                "SELECT * FROM ${Table.tableName} WHERE username = $username"
+                "SELECT * FROM ${Table.tableName} WHERE username = \"$username\""
         ))
     }
 }

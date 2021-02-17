@@ -41,7 +41,7 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
      * @param homograph The object to insert
      */
     @Transaction
-    open fun save(headwordId: Long, homograph: Homograph) {
+    protected open fun save(headwordId: Long, homograph: Homograph) {
         homograph.function.headwordId = headwordId
 
         // Save the word function
