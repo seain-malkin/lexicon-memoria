@@ -22,19 +22,13 @@ class HeadWordDaoTest {
         db = LexmemDatabase.getDatabase(ApplicationProvider.getApplicationContext())
     }
 
-    @After
-    @Throws(IOException::class)
-    fun closeDatabase() {
-        db.close()
-    }
-
     @Test
     @Throws(Exception::class)
     fun writeHeadwordAndReadAsList() {
-        val headword = HeadwordEntity("foobar", "test_class")
-        db.headWord().insert(headword)
+        val headword = HeadwordEntity("writeHeadwordAndReadAsList", "test_class")
+        db.headWord().upsert(headword)
 
-        val asList = db.headWord().get("foobar")
+        val asList = db.headWord().get("writeHeadwordAndReadAsList")
 
         assert(headword == asList[0])
     }

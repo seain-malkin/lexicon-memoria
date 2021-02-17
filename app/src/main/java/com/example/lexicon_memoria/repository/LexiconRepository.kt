@@ -28,6 +28,6 @@ class LexiconRepository(private val lexiconDao: LexiconDao) {
      */
     @WorkerThread
     suspend fun insert(lexicon: LexiconEntity) {
-        lexiconDao.insert(lexicon)
+        lexiconDao.upsert(lexicon)
     }
 }

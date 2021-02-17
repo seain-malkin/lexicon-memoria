@@ -34,6 +34,6 @@ class UserRepository(
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(user: UserEntity) {
-        userDao.insert(user)
+        userDao.upsert(user)
     }
 }

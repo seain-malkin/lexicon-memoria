@@ -22,47 +22,6 @@ class BaseDaoTest {
         db = LexmemDatabase.getDatabase(ApplicationProvider.getApplicationContext())
     }
 
-    @After
-    @Throws(IOException::class)
-    fun closeDatabase() {
-        db.close()
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun insertThenUpdateThenDelete() {
-        // Insert
-        val headword = HeadwordEntity("foobar", "testing")
-        headword.id = db.headWord().insert(headword)
-
-        var list = db.headWord().get("foobar")
-
-        assert(list.isNotEmpty())
-        assert(list[0] == headword)
-        assert(list[0].id == headword.id)
-
-        // Update should fail
-        headword.name = "barfoo"
-
-        db.headWord().insert(headword)
-
-        list = db.headWord().get("barfoo")
-        assert(list.isEmpty())
-
-        // Update should succeed
-        db.headWord().update(headword)
-        list = db.headWord().get("barfoo")
-
-        assert(list.isNotEmpty())
-        assert(list[0] == headword)
-
-        // Delete
-        db.headWord().delete(headword)
-        var entity = db.headWord().get(headword.id)
-
-        assert(entity == null)
-    }
-
     @Test
     @Throws(Exception::class)
     fun upsertSingleEntity() {
@@ -77,10 +36,9 @@ class BaseDaoTest {
         // Second insert
         db.headWord().upsert(headword)
 
-        // Check there is only one row
-        val getList = db.headWord().get()
+        val entity = db.headWord().get(headword.id)
 
-        assert(getList.size == 1)
+        assert(entity != null)
     }
 
     @Test
@@ -91,11 +49,12 @@ class BaseDaoTest {
             HeadwordEntity("barfoo", "resting")
         )
 
-        // Insert list and assign id to each object
-        var idList = db.headWord().upsert(listOfEntities)
+        // Insert list
+        db.headWord().upsert(listOfEntities)
 
-        assert(idList.size == listOfEntities.size)
-        idList.forEachIndexed { i, id -> listOfEntities[i].id = id }
+        var list = db.headWord().get()
+
+        assert(list.size == listOfEntities.size)
 
         listOfEntities.forEach { assert(it.id != -1L) }
 
@@ -103,10 +62,11 @@ class BaseDaoTest {
         listOfEntities.add(HeadwordEntity("rungrub", "testing"))
         listOfEntities[0].name = "starjump"
 
-        idList = db.headWord().upsert(listOfEntities)
+        db.headWord().upsert(listOfEntities)
 
-        assert(idList.size == listOfEntities.size)
-        idList.forEachIndexed { i, id -> if (id != -1L) listOfEntities[i].id = id }
+        list = db.headWord().get()
+
+        assert(list.size == listOfEntities.size)
 
         listOfEntities.forEach { assert(it.id != -1L) }
 

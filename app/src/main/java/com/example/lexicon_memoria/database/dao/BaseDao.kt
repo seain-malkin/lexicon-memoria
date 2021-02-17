@@ -24,10 +24,10 @@ abstract class BaseDao<E : BaseEntity>(
 ) {
 
     @RawQuery
-    abstract fun getList(q: SupportSQLiteQuery): List<E>
+    protected abstract fun getList(q: SupportSQLiteQuery): List<E>
 
     @RawQuery
-    abstract fun get(q: SupportSQLiteQuery): E?
+    protected abstract fun get(q: SupportSQLiteQuery): E?
 
     /**
      * Returns the entire table
@@ -47,9 +47,8 @@ abstract class BaseDao<E : BaseEntity>(
     }
 
     /**
-     * Inserts or updates the table row. Returns the row id of the insert. On update, -1
+     * Inserts or updates the table row. The objects id is also updated.
      * @param e Object to insert
-     * @return id or -1 on update
      */
     @Transaction
     open fun upsert(e: E) {
@@ -67,28 +66,27 @@ abstract class BaseDao<E : BaseEntity>(
      * @return List of ids or -1 on update
      */
     @Transaction
-    open fun upsert(e: List<E>): List<Long> {
-        val rowIds = insert(e)
-        // Filter to list of failed inserts and update
-        val updateList = rowIds.mapIndexedNotNull { i, id -> if (id == -1L) e[i] else null }
-        if (updateList.isNotEmpty()) {
-            update(updateList)
-        }
-
-        return rowIds
+    open fun upsert(e: List<E>) {
+        // Insert new rows. Apply row ids. Filter out inserted. Update remaining.
+        insert(e).mapIndexedNotNull { i, id ->
+            when (id == -1L) {
+                true -> e[i]
+                false -> { e[i].id = id; null }
+            }
+        }.let { if (it.isNotEmpty()) update(it) }
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insert(e: E): Long
+    protected abstract fun insert(e: E): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insert(e: List<E>): List<Long>
+    protected abstract fun insert(e: List<E>): List<Long>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun update(e: E): Int
+    protected abstract fun update(e: E): Int
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun update(e: List<E>)
+    protected abstract fun update(e: List<E>)
 
     @Delete
     abstract fun delete(e: E)
