@@ -7,6 +7,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.example.lexicon_memoria.database.entity.BaseEntity
 import kotlinx.coroutines.flow.Flow
 import java.lang.StringBuilder
 
@@ -17,7 +18,7 @@ import java.lang.StringBuilder
  * @param tableName The name of the database table
  * @param roomDatabase The [Room] database object
  */
-abstract class BaseDao<E>(
+abstract class BaseDao<E : BaseEntity>(
     private val tableName: String,
     private val roomDatabase: RoomDatabase
 ) {
@@ -51,13 +52,13 @@ abstract class BaseDao<E>(
      * @return id or -1 on update
      */
     @Transaction
-    open fun upsert(e: E): Long {
+    open fun upsert(e: E) {
         val rowId = insert(e)
         if (rowId == -1L) {
             update(e)
+        } else {
+            e.id = rowId
         }
-
-        return rowId
     }
 
     /**

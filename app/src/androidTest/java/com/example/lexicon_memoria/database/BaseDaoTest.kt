@@ -63,4 +63,57 @@ class BaseDaoTest {
         assert(entity == null)
     }
 
+    @Test
+    @Throws(Exception::class)
+    fun upsertSingleEntity() {
+        val headword = HeadwordEntity("foobar", "testing")
+
+        // First insert
+        db.headWord().upsert(headword)
+
+        // ID must a new row id
+        assert(headword.id != -1L)
+
+        // Second insert
+        db.headWord().upsert(headword)
+
+        // Check there is only one row
+        val getList = db.headWord().get()
+
+        assert(getList.size == 1)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun upsertListOfEntities() {
+        val listOfEntities = mutableListOf(
+            HeadwordEntity("foobar","testing"),
+            HeadwordEntity("barfoo", "resting")
+        )
+
+        // Insert list and assign id to each object
+        var idList = db.headWord().upsert(listOfEntities)
+
+        assert(idList.size == listOfEntities.size)
+        idList.forEachIndexed { i, id -> listOfEntities[i].id = id }
+
+        listOfEntities.forEach { assert(it.id != -1L) }
+
+        // Add new entity, modify another, then upsert list
+        listOfEntities.add(HeadwordEntity("rungrub", "testing"))
+        listOfEntities[0].name = "starjump"
+
+        idList = db.headWord().upsert(listOfEntities)
+
+        assert(idList.size == listOfEntities.size)
+        idList.forEachIndexed { i, id -> if (id != -1L) listOfEntities[i].id = id }
+
+        listOfEntities.forEach { assert(it.id != -1L) }
+
+        // Ensure modified entity was updated in database
+        val entity = db.headWord().get(listOfEntities[0].id)
+
+        assert(entity != null)
+        assert(entity?.name == "starjump")
+    }
 }
