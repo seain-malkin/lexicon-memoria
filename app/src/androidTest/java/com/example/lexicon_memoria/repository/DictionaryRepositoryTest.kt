@@ -6,6 +6,7 @@ import com.example.lexicon_memoria.database.LexmemDatabase
 import com.example.lexicon_memoria.database.entity.builder.WordBuilder
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
 import com.example.lexicon_memoria.dictionary.merriam_webster.CollegiateApi
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -40,9 +41,43 @@ class DictionaryRepositoryTest {
 
         // Search for word from dictionary repo
         runBlocking {
-            repository.get(uniqueWord).collect {
-                assert(it == builtWord)
-            }
+            repository.get(uniqueWord)
+                .catch { e ->
+                    assert(false)
+                }
+                .collect {
+                    assert(it == builtWord)
+                }
+        }
+    }
+
+    @Test
+    fun getNonExistingPersistentWord() {
+        val searchKey = "hello"
+
+        runBlocking {
+            repository.get(searchKey)
+                .catch { e ->
+                    assert(false)
+                }
+                .collect {
+                    assert(it.headword.name == searchKey)
+                }
+        }
+    }
+
+    @Test
+    fun getNonExistingPersistentWordThatDoesNotExist() {
+        val searchKey = "nonexistingwordfgskf"
+
+        runBlocking {
+            repository.get(searchKey)
+                .catch { e ->
+                    assert(true)
+                }
+                .collect {
+                    assert(false)
+                }
         }
     }
 }

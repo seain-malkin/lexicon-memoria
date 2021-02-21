@@ -1,19 +1,14 @@
 package com.example.lexicon_memoria.dictionary.merriam_webster
 
-import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource.DictionaryApi
 import com.example.lexicon_memoria.helper.RetrofitHelper
-import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.OPTIONS
 import retrofit2.http.Path
-import java.lang.reflect.Type
 
 /**
  * Provides access to the Merriam Webster dictionary api
  */
-interface CollegiateApi : DictionaryApi {
+interface CollegiateApi {
 
     /**
      * Search the dictionary for a word. Multiple results may be returned
@@ -21,7 +16,7 @@ interface CollegiateApi : DictionaryApi {
      * @return A list of results
      */
     @GET("{word}?key=$KEY")
-    override fun find(@Path("word") key: String): CollegiateResponse
+    suspend fun find(@Path("word") key: String): CollegiateResponse
 
     companion object {
 

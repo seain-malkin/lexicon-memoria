@@ -6,6 +6,8 @@ import com.example.lexicon_memoria.database.entity.builder.WordBuilder
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource.DictionaryApiResult
 import kotlinx.coroutines.flow.*
+import java.lang.IllegalStateException
+import kotlin.jvm.Throws
 
 /**
  * Retrieves, inserts and modifies word entity objects
@@ -23,14 +25,16 @@ class DictionaryRepository(
      * @return The word entity inside a flow
      */
     suspend fun get(key: String) : Flow<DictionaryWord> {
-        // Check local storage. Otherwise query remote source
-        val result = persistent.find(key) ?: transformResult(remote.find(key))
-
-        // TODO: Save word to database
-
-        // Return result as a flow even when null
+        // Check local storage. Otherwise query remote source, save to local storage and return
         return flow {
-            emit(result)
+            val result = persistent.find(key)
+
+            val word = when(result != null) {
+                true -> result
+                false -> transformResult(remote.find(key)).apply { persistent.save(this) }
+            }
+
+            emit(word)
         }
     }
 
