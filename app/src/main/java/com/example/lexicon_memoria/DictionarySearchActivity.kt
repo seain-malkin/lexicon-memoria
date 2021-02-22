@@ -27,7 +27,7 @@ class DictionarySearchActivity : AppCompatActivity() {
 
     companion object {
         @JvmStatic
-        fun getIntent(context: Context) : Intent {
+        fun getIntent(context: Context): Intent {
             return Intent(context, DictionarySearchActivity::class.java)
         }
     }

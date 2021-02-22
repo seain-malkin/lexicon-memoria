@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lexicon_memoria">
+        <activity android:name=".ModuleListActivity"></activity>
         <activity android:name=".AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".DictionarySearchActivity" />
-        <activity android:name=".CreateLexiconActivity" />
-        <activity android:name=".LexiconActivity"/>
     </application>
 
 </manifest>

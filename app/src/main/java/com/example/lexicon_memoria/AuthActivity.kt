@@ -23,7 +23,10 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_auth)
 
         authViewModel.user.observe(this, { user ->
-            Log.i("AuthActivity", "$user")
+            user?.let {
+                startActivity(ModuleListActivity.getIntent(this, it.username))
+                finish()
+            }
         })
     }
 }
