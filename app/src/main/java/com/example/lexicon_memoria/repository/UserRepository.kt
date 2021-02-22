@@ -2,6 +2,7 @@ package com.example.lexicon_memoria.repository
 
 import androidx.annotation.WorkerThread
 import com.example.lexicon_memoria.database.dao.UserDao
+import com.example.lexicon_memoria.database.entity.Lexicon
 import com.example.lexicon_memoria.database.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -24,6 +25,17 @@ class UserRepository(
     fun get(username: String): Flow<UserEntity?> {
         return flow {
             emit(userDao.get(username))
+        }
+    }
+
+    /**
+     * Gets the user and their owned words
+     * @param userId The user id
+     * @return The [Lexicon] object as a flow
+     */
+    fun getWords(userId: Long): Flow<Lexicon?> {
+        return flow {
+            emit(userDao.getWords(userId))
         }
     }
 

@@ -1,19 +1,18 @@
 package com.example.lexicon_memoria.database.entity
 
 import androidx.room.Embedded
-import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.Relation
 
 data class Lexicon(
-    @Embedded val lexicon: LexiconEntity,
+    @Embedded val user: UserEntity,
     @Relation(
         entity = HeadwordEntity::class,
         parentColumn = "id",
         entityColumn = "id",
         associateBy = Junction(
-            value = LexiconWordEntity::class,
-            parentColumn = "lexicon_id",
+            value = UserWordEntity::class,
+            parentColumn = "user_id",
             entityColumn = "headword_id"
         )
     ) val words: List<DictionaryWord>

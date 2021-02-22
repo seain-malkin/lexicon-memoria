@@ -4,34 +4,29 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.lexicon_memoria.database.dao.*
 import com.example.lexicon_memoria.database.entity.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 /**
  * Database class for the entire application
  * @author Seain Malkin (dev@seain.me)
  */
 @Database(
-    entities = [LexiconEntity::class,
-                UserEntity::class,
-                LexiconWordEntity::class,
+    entities = [UserEntity::class,
+                UserWordEntity::class,
                 HeadwordEntity::class,
                 DefinitionEntity::class,
                 WordFunctionEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class LexmemDatabase : RoomDatabase() {
 
     abstract fun definition(): DefinitionDao
     abstract fun headWord(): HeadWordDao
-    abstract fun lexiconWord(): LexiconWordDao
+    abstract fun userWord(): UserWordDao
     abstract fun wordFunction(): WordFunctionDao
     abstract fun user(): UserDao
-    abstract fun lexicon(): LexiconDao
     abstract fun dictionary(): DictionaryDao
 
     companion object {

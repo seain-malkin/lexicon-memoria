@@ -4,7 +4,6 @@ import android.app.Application
 import com.example.lexicon_memoria.database.LexmemDatabase
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
 import com.example.lexicon_memoria.repository.DictionaryRepository
-import com.example.lexicon_memoria.repository.LexiconRepository
 import com.example.lexicon_memoria.repository.UserRepository
 import com.example.lexicon_memoria.dictionary.merriam_webster.CollegiateApi
 import kotlinx.coroutines.CoroutineScope
@@ -28,9 +27,6 @@ class LexmemApplication : Application() {
             DictionaryRemoteDataSource(CollegiateApi.source)
         )
     }
-
-    /** Reference to the lexicon repository */
-    val lexicons by lazy { LexiconRepository(database.lexicon()) }
 
     /** Reference to the users repository */
     val users by lazy { UserRepository(database.user()) }
