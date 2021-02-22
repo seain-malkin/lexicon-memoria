@@ -4,27 +4,24 @@ import androidx.annotation.WorkerThread
 import com.example.lexicon_memoria.database.dao.UserDao
 import com.example.lexicon_memoria.database.entity.Lexicon
 import com.example.lexicon_memoria.database.entity.UserEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 
 class UserRepository(
         private val userDao: UserDao
 ) {
 
     /**
-     * Finds all uses. Should only be one on device.
-     * @return List of user entities as flow
+     * Gets local user
+     * @param username The name of the user
+     * @return The user entity
      */
-    fun get(): Flow<List<UserEntity>> {
-        return flow {
-            emit(userDao.get())
-        }
-    }
-
-    fun get(username: String): Flow<UserEntity?> {
-        return flow {
-            emit(userDao.get(username))
+    suspend fun get(username: String): UserEntity? {
+        return withContext(Dispatchers.IO) {
+            userDao.get(username)
         }
     }
 
@@ -46,6 +43,8 @@ class UserRepository(
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(user: UserEntity) {
-        userDao.upsert(user)
+        withContext(Dispatchers.IO) {
+            userDao.upsert(user)
+        }
     }
 }

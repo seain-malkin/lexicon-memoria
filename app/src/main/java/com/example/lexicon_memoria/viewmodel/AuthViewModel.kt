@@ -13,15 +13,35 @@ import kotlinx.coroutines.flow.flowOn
 
 /**
  * [ViewModel] associated with AuthActivity
- * @property userRepository
+ * @property userRepo
  * @param savedStateHandle
  */
 class AuthViewModel(
-    private val userRepository: UserRepository,
+    private val userRepo: UserRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val users: LiveData<List<UserEntity>> = userRepository.get().asLiveData()
+    var user = MutableLiveData<UserEntity?>()
+
+    init {
+        initUser()
+    }
+
+    private fun initUser() {
+        viewModelScope.launch {
+            val defaultUser = userRepo.get(DEFAULT_USERNAME)
+            if (defaultUser == null) {
+                userRepo.insert(UserEntity(DEFAULT_USERNAME))
+                user.value = userRepo.get(DEFAULT_USERNAME)
+            } else {
+                user.value = defaultUser
+            }
+        }
+    }
+
+    companion object {
+        const val DEFAULT_USERNAME = "default_user"
+    }
 }
 
 /**
