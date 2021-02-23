@@ -10,6 +10,7 @@ import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
+import com.example.lexicon_memoria.databinding.FragmentDictionaryResultBinding
 import com.example.lexicon_memoria.view.compound.WordLayout
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModel
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModelFactory
@@ -24,8 +25,7 @@ class DictionaryResultFragment : Fragment() {
 
     private var listener: DictionaryResultListener? = null
 
-    /** Displays the headword of the result */
-    private lateinit var wordLayout: WordLayout
+    private lateinit var binding: FragmentDictionaryResultBinding
 
     /** Shared View Model */
     private val dsVM: DictionarySearchViewModel by activityViewModels {
@@ -44,29 +44,26 @@ class DictionaryResultFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         // Inflate fragment view
-        val view = inflater.inflate(R.layout.fragment_dictionary_result, container, false)
-
-        // Find element references
-        wordLayout = view.findViewById(R.id.word_layout)
+        binding = FragmentDictionaryResultBinding.inflate(inflater, container, false)
 
         // Update recycler list when search results change
         dsVM.lookupResult.observe(viewLifecycleOwner, { result ->
-            wordLayout.word = result
+            binding.wordLayout.word = result
         })
 
         // Remove the last search result when search key changes
         dsVM.searchKeyChanged.observe(viewLifecycleOwner, { changed ->
             if (changed) {
-                wordLayout.showPlaceholder()
+                binding.wordLayout.showPlaceholder()
             }
         })
 
         // Attach click event to Save Button that informs activity of chosen word
-        view.findViewById<Button>(R.id.button_add).setOnClickListener {
+        binding.buttonAdd.setOnClickListener {
             dsVM.lookupResult.value?.let { listener?.onSaveWord(it.headword.id) }
         }
 
-        return view
+        return binding.root
     }
 
     override fun onAttach(context: Context) {

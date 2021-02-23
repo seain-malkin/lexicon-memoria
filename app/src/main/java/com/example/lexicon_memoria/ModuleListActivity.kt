@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.lexicon_memoria.databinding.ActivityModuleListBinding
 import com.example.lexicon_memoria.fragments.ModuleListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -14,6 +15,8 @@ class ModuleListActivity : AppCompatActivity() {
 
     /** @property username The logged in user */
     private lateinit var username: String
+
+    private lateinit var binding: ActivityModuleListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +30,14 @@ class ModuleListActivity : AppCompatActivity() {
             throw IllegalStateException("Username not set")
         }
 
-        setContentView(R.layout.activity_module_list)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        binding = ActivityModuleListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         // Attach click event for FAB
-        findViewById<FloatingActionButton>(R.id.fab)?.setOnClickListener { onFabClick() }
+        binding.fab.setOnClickListener { onFabClick() }
     }
 
     private fun onFabClick() {

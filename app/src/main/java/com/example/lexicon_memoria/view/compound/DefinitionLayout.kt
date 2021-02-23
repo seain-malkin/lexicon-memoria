@@ -2,9 +2,11 @@ package com.example.lexicon_memoria.view.compound
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.lexicon_memoria.R
+import com.example.lexicon_memoria.databinding.ViewCompoundDefinitionLayoutBinding
 
 /**
  * Displays the definition belonging to a homograph
@@ -19,17 +21,19 @@ class DefinitionLayout(
     attributeSet: AttributeSet?
 ) : LinearLayout(context, attributeSet) {
 
+    private val binding: ViewCompoundDefinitionLayoutBinding
+
     init {
         // Define layout params
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         orientation = HORIZONTAL
 
         // Inflate the definition view
-        val view = inflate(context, R.layout.view_compound_definition_layout, this)
+        binding = ViewCompoundDefinitionLayoutBinding.inflate(LayoutInflater.from(context), this)
 
         // Bind the data to the view
-        view.findViewById<TextView>(R.id.position_label).text = "$position"
-        view.findViewById<TextView>(R.id.definition_text).text = definition
+        binding.positionLabel.text = "$position"
+        binding.definitionText.text = definition
     }
 
     /**

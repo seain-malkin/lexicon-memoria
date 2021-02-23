@@ -14,10 +14,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
+import com.example.lexicon_memoria.databinding.FragmentDictionarySearchBinding
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModel
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModelFactory
 
 class DictionarySearchFragment : Fragment() {
+
+    private lateinit var binding: FragmentDictionarySearchBinding
 
     /** Shared view model */
     private val dsVM: DictionarySearchViewModel by activityViewModels {
@@ -36,29 +39,26 @@ class DictionarySearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_dictionary_search, container, false)
-
-        val searchText: EditText = view.findViewById(R.id.search_key)
-        val searchButton: Button = view.findViewById(R.id.button_search)
+        binding = FragmentDictionarySearchBinding.inflate(inflater, container, false)
 
         // Search button click
-        searchButton.setOnClickListener {
+        binding.buttonSearch.setOnClickListener {
             // Only search if not empty field
-            if (!TextUtils.isEmpty(searchText.text)) {
-                dsVM.search(searchText.text.toString())
+            if (!TextUtils.isEmpty(binding.searchKey.text)) {
+                dsVM.search(binding.searchKey.text.toString())
             }
         }
 
         // When user changes search key, remove last search result
-        searchText.addTextChangedListener {
+        binding.searchKey.addTextChangedListener {
             dsVM.searchKeyChanged.value = true
         }
 
         // Update UI when search status changes
         dsVM.searchInProgress.observe(viewLifecycleOwner, { inProgress ->
-            searchButton.isEnabled = !inProgress
+            binding.buttonSearch.isEnabled = !inProgress
         })
 
-        return view
+        return binding.root
     }
 }

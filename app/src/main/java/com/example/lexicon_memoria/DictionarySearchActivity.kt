@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.lexicon_memoria.databinding.ActivityDictionarySearchBinding
 import com.example.lexicon_memoria.fragments.DictionaryResultFragment
 import com.example.lexicon_memoria.fragments.DictionaryResultFragment.DictionaryResultListener
 
@@ -14,11 +15,15 @@ import com.example.lexicon_memoria.fragments.DictionaryResultFragment.Dictionary
  * @author Seain Malkin (dev@seain.me)
  */
 class DictionarySearchActivity : DictionaryResultListener, AppCompatActivity() {
+
+    private lateinit var binding: ActivityDictionarySearchBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_dictionary_search)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        binding = ActivityDictionarySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 

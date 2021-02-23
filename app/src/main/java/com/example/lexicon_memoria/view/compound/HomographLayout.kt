@@ -2,10 +2,12 @@ package com.example.lexicon_memoria.view.compound
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.database.entity.Homograph
+import com.example.lexicon_memoria.databinding.ViewCompoundHomographLayoutBinding
 
 /**
  * Custom compound view for displaying a homograph and its definitions
@@ -13,7 +15,7 @@ import com.example.lexicon_memoria.database.entity.Homograph
  * @see[LinearLayout]
  */
 class HomographLayout(
-    private val functions: Homograph,
+    functions: Homograph,
     context: Context,
     attrs: AttributeSet?
 ) : LinearLayout(context, attrs) {
@@ -24,17 +26,14 @@ class HomographLayout(
         orientation = VERTICAL
 
         // Inflate the homograph view
-        val view = inflate(context, R.layout.view_compound_homograph_layout, this)
+        val binding = ViewCompoundHomographLayoutBinding.inflate(LayoutInflater.from(context), this)
 
         // Bind the homograph label name
-        view.findViewById<TextView>(R.id.label).text = "${functions.function.name}"
-
-        // Find the container for displaying the definitions
-        val llDefinitions: LinearLayout = view.findViewById(R.id.definitions)
+        binding.label.text = "${functions.function.name}"
 
         // Inflate the view for each definition
         functions.definitions.forEachIndexed { i, d ->
-            llDefinitions.addView(DefinitionLayout(i + 1, d.definition, context))
+            binding.definitions.addView(DefinitionLayout(i + 1, d.definition, context))
         }
     }
 

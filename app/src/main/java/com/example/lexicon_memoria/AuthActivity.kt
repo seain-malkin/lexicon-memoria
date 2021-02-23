@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import com.example.lexicon_memoria.databinding.ActivityAuthBinding
 import com.example.lexicon_memoria.viewmodel.AuthViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 
@@ -14,13 +15,17 @@ import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
  */
 class AuthActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAuthBinding
+
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory((application as LexmemApplication).users, this, intent.extras)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
+
+        binding = ActivityAuthBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         authViewModel.user.observe(this, { user ->
             user?.let {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.lexicon_memoria.R
+import com.example.lexicon_memoria.databinding.FragmentModuleListBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -17,12 +18,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 class ModuleListFragment : Fragment() {
 
+    private lateinit var binding: FragmentModuleListBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_module_list, container, false)
+        binding = FragmentModuleListBinding.inflate(inflater, container, false)
 
-        return view
+        return binding.root
     }
 
     companion object {
