@@ -1,0 +1,31 @@
+package com.example.lexicon_memoria.database.entity
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = WordScoreEntity.tableName)
+data class WordScoreEntity(
+
+    @ColumnInfo(name = "daily_score") val dailyScore: Int = 0,
+
+    @ColumnInfo(name = "daily_next_ts") val dailyNextTs: Int = 0,
+
+    @ColumnInfo(name = "weekly_score") val weeklyScore: Int = 0,
+
+    @ColumnInfo(name = "weekly_next_ts") val weeklyNextTs: Int = 0,
+
+    @ColumnInfo(name = "monthly_score") val monthlyScore: Int = 0,
+
+    @ColumnInfo(name = "monthly_next_ts") val monthlyNextTs: Int = 0,
+
+    @ColumnInfo(name = "creation_date") val creationTs: Long = System.currentTimeMillis()
+) : BaseEntity() {
+
+    @PrimaryKey(autoGenerate = true)
+    override var id: Long = 0L
+
+    companion object {
+        const val tableName = "WordScore"
+    }
+}

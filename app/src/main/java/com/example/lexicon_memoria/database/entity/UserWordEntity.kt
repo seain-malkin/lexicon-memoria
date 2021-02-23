@@ -22,12 +22,18 @@ import androidx.room.ForeignKey
             entity = HeadwordEntity::class,
             parentColumns = ["id"],
             childColumns = ["headword_id"]
+        ),
+        ForeignKey(
+            entity = WordScoreEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["word_score_id"]
         )
     ]
 )
 data class UserWordEntity(
     @ColumnInfo(name = "user_id", index = true) val userId: Long,
-    @ColumnInfo(name = "headword_id", index = true) val headwordId: Long
+    @ColumnInfo(name = "headword_id", index = true) val headwordId: Long,
+    @ColumnInfo(name = "word_score_id", index = true) val wordScoreId: Long
 ) : BaseEntity() {
 
     override var id: Long = 0
