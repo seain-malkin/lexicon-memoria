@@ -36,11 +36,11 @@ class DictionaryRepositoryTest {
             attach("nount", listOf("def1", "def2"))
         }
         val builtWord = builder.build()
-        // Insert into local persistent storage
-        db.dictionary().save(builtWord)
 
         // Search for word from dictionary repo
         runBlocking {
+            // Insert into local persistent storage
+            db.dictionary().save(builtWord)
             repository.get(uniqueWord)
                 .catch { e ->
                     assert(false)

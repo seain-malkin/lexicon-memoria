@@ -3,6 +3,7 @@ package com.example.lexicon_memoria.database
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.lexicon_memoria.database.entity.UserEntity
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,7 +23,7 @@ class UserDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndSelectUser() {
+    fun insertAndSelectUser() = runBlocking {
         val username = "primeuser"
 
         // Select non-existent

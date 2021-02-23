@@ -1,7 +1,9 @@
 package com.example.lexicon_memoria.repository
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import com.example.lexicon_memoria.database.dao.UserDao
+import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.database.entity.Lexicon
 import com.example.lexicon_memoria.database.entity.UserEntity
 import kotlinx.coroutines.Dispatchers
@@ -20,20 +22,16 @@ class UserRepository(
      * @return The user entity
      */
     suspend fun get(username: String): UserEntity? {
-        return withContext(Dispatchers.IO) {
-            userDao.get(username)
-        }
+        return userDao.get(username)
     }
 
     /**
-     * Gets the user and their owned words
+     * Gets a list of all users words as live data
      * @param userId The user id
-     * @return The [Lexicon] object as a flow
+     * @return Live data with the word list
      */
-    fun getWords(userId: Long): Flow<Lexicon?> {
-        return flow {
-            emit(userDao.getWords(userId))
-        }
+    fun getWords(userId: Long): LiveData<List<Lexicon>> {
+        return userDao.getWords(userId)
     }
 
     /**
@@ -43,8 +41,6 @@ class UserRepository(
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(user: UserEntity) {
-        withContext(Dispatchers.IO) {
-            userDao.upsert(user)
-        }
+        userDao.upsert(user)
     }
 }

@@ -1,9 +1,12 @@
 package com.example.lexicon_memoria
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.fragments.ModuleListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -25,16 +28,8 @@ class ModuleListActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_module_list)
-
-        // Attach the fragment
-        supportFragmentManager.let { fm ->
-            if (fm.findFragmentById(R.id.module_list_container) == null) {
-                fm.beginTransaction().apply {
-                    replace(R.id.module_list_container, ModuleListFragment.newInstance())
-                    commit()
-                }
-            }
-        }
+        setSupportActionBar(findViewById(R.id.toolbar))
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         // Attach click event for FAB
         findViewById<FloatingActionButton>(R.id.fab)?.setOnClickListener { onFabClick() }
@@ -42,6 +37,17 @@ class ModuleListActivity : AppCompatActivity() {
 
     private fun onFabClick() {
         startActivityForResult(DictionarySearchActivity.getIntent(this), REQUEST_DICT_SEARCH)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_DICT_SEARCH) {
+            data?.let {
+                val headwordId = DictionarySearchActivity.getHeadwordId(it)
+                Log.i("HeadwordId", "$headwordId")
+            }
+        }
     }
 
     companion object {

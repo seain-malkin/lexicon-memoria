@@ -12,5 +12,5 @@ abstract class HeadWordDao(
 ) : BaseDao<HeadwordEntity>(Table.tableName, roomDatabase) {
 
     @Query("SELECT * FROM ${Table.tableName} WHERE name = :key")
-    abstract fun get(key: String): List<HeadwordEntity>
+    abstract suspend fun get(key: String): List<HeadwordEntity>
 }

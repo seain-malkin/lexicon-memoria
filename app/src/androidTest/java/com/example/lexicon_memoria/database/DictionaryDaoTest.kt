@@ -4,6 +4,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.database.entity.builder.WordBuilder
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,48 +25,54 @@ class DictionaryDaoTest {
     @Test
     @Throws(Exception::class)
     fun findExistingEntity() {
-        val wordName = "Testword_existing"
-        val word = buildWord(wordName)
-        db.dictionary().save(word)
+        runBlocking {
+            val wordName = "Testword_existing"
+            val word = buildWord(wordName)
+            db.dictionary().save(word)
 
-        // Search for non existing word
-        var entity = db.dictionary().find("gidjhty")
-        assert(entity == null)
+            // Search for non existing word
+            var entity = db.dictionary().find("gidjhty")
+            assert(entity == null)
 
-        // Search for existing word
-        entity = db.dictionary().find(wordName)
-        assert(entity != null && entity == word)
+            // Search for existing word
+            entity = db.dictionary().find(wordName)
+            assert(entity != null && entity == word)
+        }
     }
 
     @Test
     @Throws(Exception::class)
     fun saveNewEntity() {
-        val word = buildWord("Testword1")
-        db.dictionary().save(word)
+        runBlocking {
+            val word = buildWord("Testword1")
+            db.dictionary().save(word)
 
-        // Check ID set for each element of the word object
-        assert(word.headword.id != -1L)
-        word.functions.forEach {
-            assert(it.function.headwordId == word.headword.id)
-            it.definitions.forEach { def ->
-                assert(def.wordFunctionId == it.function.id)
-                assert(def.id != -1L)
+            // Check ID set for each element of the word object
+            assert(word.headword.id != -1L)
+            word.functions.forEach {
+                assert(it.function.headwordId == word.headword.id)
+                it.definitions.forEach { def ->
+                    assert(def.wordFunctionId == it.function.id)
+                    assert(def.id != -1L)
+                }
             }
         }
     }
 
     @Test
     fun saveExistingEntity() {
-        val wordName = "Testword2"
-        val wordNameMod = wordName + "_mod"
-        val word = buildWord(wordName)
-        db.dictionary().save(word)
+        runBlocking {
+            val wordName = "Testword2"
+            val wordNameMod = wordName + "_mod"
+            val word = buildWord(wordName)
+            db.dictionary().save(word)
 
-        word.headword.name = wordNameMod
-        db.dictionary().save(word)
+            word.headword.name = wordNameMod
+            db.dictionary().save(word)
 
-        val entity = db.dictionary().find(wordNameMod)
-        assert(entity != null && entity == word)
+            val entity = db.dictionary().find(wordNameMod)
+            assert(entity != null && entity == word)
+        }
     }
 
     private fun buildWord(wordName: String): DictionaryWord {

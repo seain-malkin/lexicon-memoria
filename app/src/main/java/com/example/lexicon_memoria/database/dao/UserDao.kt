@@ -1,11 +1,11 @@
 package com.example.lexicon_memoria.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
-import androidx.sqlite.db.SimpleSQLiteQuery
+import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.database.entity.Lexicon
 import com.example.lexicon_memoria.database.entity.UserEntity
 import com.example.lexicon_memoria.database.entity.UserEntity.Companion as Table
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class UserDao(
@@ -18,7 +18,7 @@ abstract class UserDao(
      * @return The user object or null
      */
     @Query("SELECT * FROM ${Table.tableName} WHERE username = :username")
-    abstract fun get(username: String): UserEntity?
+    abstract suspend fun get(username: String): UserEntity?
 
     /**
      * Returns the user entity and a list of words they own
@@ -27,5 +27,5 @@ abstract class UserDao(
      */
     @Transaction
     @Query("SELECT * FROM ${Table.tableName} WHERE id = :userId")
-    abstract fun getWords(userId: Long): Lexicon
+    abstract fun getWords(userId: Long): LiveData<List<Lexicon>>
 }

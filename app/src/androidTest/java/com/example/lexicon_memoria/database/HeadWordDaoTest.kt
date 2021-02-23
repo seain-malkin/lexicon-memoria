@@ -3,6 +3,7 @@ package com.example.lexicon_memoria.database
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.lexicon_memoria.database.entity.HeadwordEntity
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -25,17 +26,19 @@ class HeadWordDaoTest {
     @Test
     @Throws(Exception::class)
     fun writeHeadwordAndReadAsList() {
-        val headword = HeadwordEntity("writeHeadwordAndReadAsList", "test_class")
-        db.headWord().upsert(headword)
+        runBlocking {
+            val headword = HeadwordEntity("writeHeadwordAndReadAsList", "test_class")
+            db.headWord().upsert(headword)
 
-        val asList = db.headWord().get("writeHeadwordAndReadAsList")
+            val asList = db.headWord().get("writeHeadwordAndReadAsList")
 
-        assert(headword == asList[0])
+            assert(headword == asList[0])
+        }
     }
 
     @Test
     @Throws(Exception::class)
-    fun selectNoEntityAndReadEmptyList() {
+    fun selectNoEntityAndReadEmptyList() = runBlocking {
         val emptyList = db.headWord().get("nomatch")
 
         assert(emptyList.isEmpty())

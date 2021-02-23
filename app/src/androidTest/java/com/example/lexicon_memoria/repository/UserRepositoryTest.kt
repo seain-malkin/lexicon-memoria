@@ -28,21 +28,8 @@ class UserRepositoryTest {
         val username = "testuser"
         runBlocking {
             repository.insert(UserEntity(username, "user@domain.com"))
-            val entity = repository.get(username).collect {
-                assert(it != null && it.username == username )
-            }
-        }
-    }
-
-    @Test
-    fun insertAndGetList() {
-        val username = "testuser"
-        runBlocking {
-            repository.insert(UserEntity("${username}2", "user@domain.com"))
-            repository.insert(UserEntity("${username}3", "user@domain.com"))
-            val entityList = repository.get().collect {
-                assert(it.isNotEmpty() && it.size > 1)
-            }
+            val entity = repository.get(username)
+            assert(entity != null && entity.username == username )
         }
     }
 }

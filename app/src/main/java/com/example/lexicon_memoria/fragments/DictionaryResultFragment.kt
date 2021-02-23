@@ -1,18 +1,28 @@
 package com.example.lexicon_memoria.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.view.compound.WordLayout
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModel
 import com.example.lexicon_memoria.viewmodel.DictionarySearchViewModelFactory
+import java.lang.IllegalStateException
 
 class DictionaryResultFragment : Fragment() {
+
+    interface DictionaryResultListener {
+
+        fun onSaveWord(headwordId: Long)
+    }
+
+    private var listener: DictionaryResultListener? = null
 
     /** Displays the headword of the result */
     private lateinit var wordLayout: WordLayout
@@ -51,6 +61,27 @@ class DictionaryResultFragment : Fragment() {
             }
         })
 
+        // Attach click event to Save Button that informs activity of chosen word
+        view.findViewById<Button>(R.id.button_add).setOnClickListener {
+            dsVM.lookupResult.value?.let { listener?.onSaveWord(it.headword.id) }
+        }
+
         return view
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if (context is DictionaryResultListener) {
+            listener = context
+        } else {
+            throw IllegalStateException("$context must implement DictionaryResultListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        listener = null
     }
 }
