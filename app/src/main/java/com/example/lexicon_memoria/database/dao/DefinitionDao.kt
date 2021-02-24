@@ -8,4 +8,4 @@ import com.example.lexicon_memoria.database.entity.DefinitionEntity.Companion as
 @Dao
 abstract class DefinitionDao(
     roomDatabase: RoomDatabase
-) : BaseDao<DefinitionEntity>(Table.tableName, roomDatabase)
+) : BaseDao<DefinitionEntity>(Table.name, roomDatabase)

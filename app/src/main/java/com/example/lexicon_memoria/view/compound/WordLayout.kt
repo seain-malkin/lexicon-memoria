@@ -44,7 +44,7 @@ class WordLayout(
         val binding = ViewCompoundWordLayoutBinding.inflate(LayoutInflater.from(context), this, true)
 
         // Bind the headword
-        binding.headword.text = "${wordItem.headword.name}"
+        binding.headword.text = "${wordItem.headword.label}"
 
         // Attach each homograph to the container
         wordItem.functions.forEach {

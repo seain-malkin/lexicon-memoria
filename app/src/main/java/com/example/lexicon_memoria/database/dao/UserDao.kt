@@ -10,14 +10,14 @@ import com.example.lexicon_memoria.database.entity.UserEntity.Companion as Table
 @Dao
 abstract class UserDao(
     roomDatabase: RoomDatabase
-) : BaseDao<UserEntity>(Table.tableName, roomDatabase) {
+) : BaseDao<UserEntity>(Table.name, roomDatabase) {
 
     /**
      * Returns the user object for the given username
      * @param username The username to retrieve
      * @return The user object or null
      */
-    @Query("SELECT * FROM ${Table.tableName} WHERE username = :username")
+    @Query("SELECT * FROM ${Table.name} WHERE username = :username")
     abstract suspend fun get(username: String): UserEntity?
 
     /**
@@ -26,6 +26,6 @@ abstract class UserDao(
      * @return A [Lexicon] object
      */
     @Transaction
-    @Query("SELECT * FROM ${Table.tableName} WHERE id = :userId")
+    @Query("SELECT * FROM ${Table.name} WHERE id = :userId")
     abstract fun getWords(userId: Long): LiveData<List<Lexicon>>
 }

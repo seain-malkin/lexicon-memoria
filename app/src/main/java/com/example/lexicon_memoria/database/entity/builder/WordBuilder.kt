@@ -38,7 +38,7 @@ class WordBuilder(
     fun build(): DictionaryWord {
         /** Each word function is transformed into a [Homograph] with the definition list */
         return DictionaryWord(headword, functions.mapNotNull { fl ->
-            definitions[fl.name]?.let { Homograph(fl, it.toList()) }
+            definitions[fl.label]?.let { Homograph(fl, it.toList()) }
         })
     }
 

@@ -8,4 +8,4 @@ import com.example.lexicon_memoria.database.entity.WordFunctionEntity.Companion 
 @Dao
 abstract class WordFunctionDao(
     roomDatabase: RoomDatabase
-) : BaseDao<WordFunctionEntity>(Table.tableName, roomDatabase)
+) : BaseDao<WordFunctionEntity>(Table.name, roomDatabase)

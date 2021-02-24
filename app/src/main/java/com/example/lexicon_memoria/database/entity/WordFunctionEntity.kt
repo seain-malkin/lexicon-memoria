@@ -11,23 +11,39 @@ import androidx.room.PrimaryKey
  * @param name The speech function name
  */
 @Entity(
-    tableName = WordFunctionEntity.tableName,
+    tableName = WordFunctionEntity.name,
     foreignKeys = [
         ForeignKey(
             entity = HeadwordEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["headword_id"]
+            parentColumns = [HeadwordEntity.Columns.id],
+            childColumns = [WordFunctionEntity.Columns.headWordId]
         )
     ]
 )
 data class WordFunctionEntity(
-    @ColumnInfo(name = "headword_id", index = true) var headwordId: Long,
-    var name: String
+
+    @ColumnInfo(name = Columns.headWordId, index = true)
+    var headwordId: Long,
+
+    @ColumnInfo(name = Columns.name)
+    var label: String
+
 ) : BaseEntity() {
 
-    @PrimaryKey(autoGenerate = true) override var id: Long = 0
+    @ColumnInfo(name = Columns.id)
+    @PrimaryKey(autoGenerate = true)
+    override var id: Long = 0
 
     companion object {
-        const val tableName = "WordFunction"
+        const val name = "WordFunction"
+        const val foreignKey = "word_function_id"
+    }
+
+    class Columns {
+        companion object {
+            const val id = BaseEntity.id
+            const val headWordId = HeadwordEntity.foreignKey
+            const val name = "name"
+        }
     }
 }

@@ -19,7 +19,7 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
      * @return A list of matches
      */
     @Transaction
-    @Query("SELECT * FROM ${HeadwordEntity.tableName} WHERE name = :key")
+    @Query("SELECT * FROM ${HeadwordEntity.name} WHERE name = :key")
     abstract suspend fun find(key: String): DictionaryWord?
 
     /**

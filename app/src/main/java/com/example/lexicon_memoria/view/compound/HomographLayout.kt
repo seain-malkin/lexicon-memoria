@@ -29,7 +29,7 @@ class HomographLayout(
         val binding = ViewCompoundHomographLayoutBinding.inflate(LayoutInflater.from(context), this)
 
         // Bind the homograph label name
-        binding.label.text = "${functions.function.name}"
+        binding.label.text = "${functions.function.label}"
 
         // Inflate the view for each definition
         functions.definitions.forEachIndexed { i, d ->

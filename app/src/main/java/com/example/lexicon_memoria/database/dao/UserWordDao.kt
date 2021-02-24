@@ -8,5 +8,5 @@ import com.example.lexicon_memoria.database.entity.UserWordEntity.Companion as T
 @Dao
 abstract class UserWordDao(
     roomDatabase: RoomDatabase
-) : BaseDao<UserWordEntity>(Table.tableName, roomDatabase) {
+) : BaseDao<UserWordEntity>(Table.name, roomDatabase) {
 }

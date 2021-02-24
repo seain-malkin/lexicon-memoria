@@ -8,12 +8,12 @@ data class Lexicon(
     @Embedded val user: UserEntity,
     @Relation(
         entity = HeadwordEntity::class,
-        parentColumn = "id",
-        entityColumn = "id",
+        parentColumn = UserEntity.Columns.id,
+        entityColumn = HeadwordEntity.Columns.id,
         associateBy = Junction(
             value = UserWordEntity::class,
-            parentColumn = "user_id",
-            entityColumn = "headword_id"
+            parentColumn = UserEntity.foreignKey,
+            entityColumn = HeadwordEntity.foreignKey
         )
     ) val words: List<DictionaryWord>
 )
@@ -22,16 +22,16 @@ data class DictionaryWord(
     @Embedded val headword: HeadwordEntity,
     @Relation(
         entity = WordFunctionEntity::class,
-        parentColumn = "id",
-        entityColumn = "headword_id"
+        parentColumn = HeadwordEntity.Columns.id,
+        entityColumn = WordFunctionEntity.Columns.headWordId
     ) val functions: List<Homograph>
 )
 
 data class Homograph(
     @Embedded val function: WordFunctionEntity,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "word_function_id"
+        parentColumn = WordFunctionEntity.Columns.id,
+        entityColumn = DefinitionEntity.Columns.wordFunctionId
     )
     val definitions: List<DefinitionEntity>
 )

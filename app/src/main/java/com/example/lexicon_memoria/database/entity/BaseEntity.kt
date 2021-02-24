@@ -5,4 +5,8 @@ package com.example.lexicon_memoria.database.entity
  */
 abstract class BaseEntity {
     abstract var id: Long
+
+    companion object {
+        const val id = "id"
+    }
 }

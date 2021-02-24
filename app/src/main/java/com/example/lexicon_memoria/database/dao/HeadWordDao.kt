@@ -9,8 +9,8 @@ import com.example.lexicon_memoria.database.entity.HeadwordEntity.Companion as T
 @Dao
 abstract class HeadWordDao(
     roomDatabase: RoomDatabase
-) : BaseDao<HeadwordEntity>(Table.tableName, roomDatabase) {
+) : BaseDao<HeadwordEntity>(Table.name, roomDatabase) {
 
-    @Query("SELECT * FROM ${Table.tableName} WHERE name = :key")
+    @Query("SELECT * FROM ${Table.name} WHERE name = :key")
     abstract suspend fun get(key: String): List<HeadwordEntity>
 }
