@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.databinding.ActivityModuleListBinding
 
@@ -28,11 +29,13 @@ class ModuleListActivity : AppCompatActivity() {
             throw IllegalStateException("Username not set")
         }
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
         binding = ActivityModuleListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up the action bar
         setSupportActionBar(binding.toolbar.appToolbar)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         // Attach click event for FAB
         binding.fab.setOnClickListener { onFabClick() }
@@ -40,6 +43,12 @@ class ModuleListActivity : AppCompatActivity() {
 
     private fun onFabClick() {
         startActivityForResult(DictionarySearchActivity.getIntent(this), REQUEST_DICT_SEARCH)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

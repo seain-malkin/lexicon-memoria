@@ -6,6 +6,9 @@
     <string name="empty_not_saved">Lexicon not created: Blank label</string>
     <string name="placeholder">Placeholder</string>
 
+    <string name="search_hint">Search dictionary</string>
+    <string name="action_search">Search</string>
+
     <string name="key_merriam_webster_dictionary">f08d5a23-3852-489f-885b-ebd9134c1d00</string>
     <string name="key_merriam_webster_thesaurus">5ff04b8c-85d6-40c1-81a8-ae5480706cf9</string>
     <!-- TODO: Remove or change this placeholder text -->

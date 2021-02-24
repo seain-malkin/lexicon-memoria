@@ -1,10 +1,12 @@
 package com.example.lexicon_memoria
 
 import android.app.Activity
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.databinding.ActivityDictionarySearchBinding
 import com.example.lexicon_memoria.fragments.DictionaryResultFragment.DictionaryResultListener
@@ -24,6 +26,12 @@ class DictionarySearchActivity : DictionaryResultListener, AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar.appToolbar)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+        if (intent.action == Intent.ACTION_SEARCH) {
+            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+                Log.i("Search Query", "$query")
+            }
+        }
     }
 
     override fun onSaveWord(headwordId: Long) {
