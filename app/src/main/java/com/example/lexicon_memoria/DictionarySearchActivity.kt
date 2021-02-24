@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.databinding.ActivityDictionarySearchBinding
-import com.example.lexicon_memoria.fragments.DictionaryResultFragment
 import com.example.lexicon_memoria.fragments.DictionaryResultFragment.DictionaryResultListener
 
 /**
@@ -23,7 +22,7 @@ class DictionarySearchActivity : DictionaryResultListener, AppCompatActivity() {
 
         binding = ActivityDictionarySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.root)
+        setSupportActionBar(binding.toolbar.appToolbar)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 

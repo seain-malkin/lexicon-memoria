@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.databinding.ActivityModuleListBinding
-import com.example.lexicon_memoria.fragments.ModuleListFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ModuleListActivity : AppCompatActivity() {
 
@@ -33,7 +31,7 @@ class ModuleListActivity : AppCompatActivity() {
         binding = ActivityModuleListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar.root)
+        setSupportActionBar(binding.toolbar.appToolbar)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         // Attach click event for FAB

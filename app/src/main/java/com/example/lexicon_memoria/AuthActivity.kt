@@ -2,7 +2,6 @@ package com.example.lexicon_memoria
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import com.example.lexicon_memoria.databinding.ActivityAuthBinding
 import com.example.lexicon_memoria.viewmodel.AuthViewModel
