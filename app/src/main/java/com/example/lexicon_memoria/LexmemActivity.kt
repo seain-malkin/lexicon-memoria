@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.databinding.ActivityLexmemBinding
 import com.example.lexicon_memoria.fragments.SearchFragment
 import com.example.lexicon_memoria.viewmodel.AuthViewModel
@@ -17,7 +19,7 @@ import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 
-class LexmemActivity : AppCompatActivity() {
+class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity() {
 
     private lateinit var binding: ActivityLexmemBinding
 
@@ -26,7 +28,21 @@ class LexmemActivity : AppCompatActivity() {
     }
 
     private val lexmemViewModel: LexmemViewModel by viewModels {
-        LexmemViewModelFactory((application as LexmemApplication).userWords, this, intent.extras)
+        LexmemViewModelFactory((application as LexmemApplication).userWords, this)
+    }
+
+    override fun onAddWord(word: DictionaryWord) {
+        supportFragmentManager.let { fm ->
+            val fragment = fm.findFragmentById(R.id.content_frame)
+            fragment?.let {
+                fm.beginTransaction().apply {
+                    remove(it)
+                    commit()
+                }
+            }
+        }
+
+        Toast.makeText(applicationContext, "${word.headword.label} added", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

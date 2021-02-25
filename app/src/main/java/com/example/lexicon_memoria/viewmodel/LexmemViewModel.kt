@@ -20,7 +20,7 @@ class LexmemViewModel(
      * Assigns a word to the user lexicon
      * @param word The word to add
      */
-    fun onAddWord(userId: Long, word: DictionaryWord) {
+    fun addWord(word: DictionaryWord) {
         viewModelScope.launch {
             userWordRepo.addWord(userId, word)
         }
@@ -30,7 +30,7 @@ class LexmemViewModel(
 class LexmemViewModelFactory(
     private val repository: UserWordRepository,
     owner: SavedStateRegistryOwner,
-    defaultArgs: Bundle?
+    defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(
         key: String,

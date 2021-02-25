@@ -15,6 +15,8 @@ class SearchViewModel(
     private val dict: DictionaryRepository
 ) : ViewModel() {
 
+    var searchResult = MutableLiveData<DictionaryWord?>()
+
     @Throws(InvalidParameterException::class)
     fun search(query: String): LiveData<DictionaryWord?> {
         val result = MutableLiveData<DictionaryWord?>()
@@ -35,7 +37,7 @@ class SearchViewModel(
 class SearchViewModelFactory(
     private val repository: DictionaryRepository,
     owner: SavedStateRegistryOwner,
-    defaultArgs: Bundle?
+    defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(
         key: String,
