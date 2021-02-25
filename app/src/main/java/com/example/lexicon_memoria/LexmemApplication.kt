@@ -6,6 +6,7 @@ import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
 import com.example.lexicon_memoria.repository.DictionaryRepository
 import com.example.lexicon_memoria.repository.UserRepository
 import com.example.lexicon_memoria.dictionary.merriam_webster.CollegiateApi
+import com.example.lexicon_memoria.repository.UserWordRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -30,4 +31,6 @@ class LexmemApplication : Application() {
 
     /** Reference to the users repository */
     val users by lazy { UserRepository(database.user()) }
+
+    val userWords by lazy { UserWordRepository(database.userWord()) }
 }

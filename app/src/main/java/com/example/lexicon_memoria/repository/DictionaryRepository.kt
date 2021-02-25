@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.*
  * @property remote Remote data source
  */
 class DictionaryRepository(
-        private val persistent: DictionaryDao,
-        private val remote: DictionaryRemoteDataSource
+    private val persistent: DictionaryDao,
+    private val remote: DictionaryRemoteDataSource
 ) {
 
     /**

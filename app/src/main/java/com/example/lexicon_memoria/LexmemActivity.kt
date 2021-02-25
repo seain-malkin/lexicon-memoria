@@ -14,6 +14,8 @@ import com.example.lexicon_memoria.databinding.ActivityLexmemBinding
 import com.example.lexicon_memoria.fragments.SearchFragment
 import com.example.lexicon_memoria.viewmodel.AuthViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
+import com.example.lexicon_memoria.viewmodel.LexmemViewModel
+import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 
 class LexmemActivity : AppCompatActivity() {
 
@@ -21,6 +23,10 @@ class LexmemActivity : AppCompatActivity() {
 
     private val authViewModel: AuthViewModel by viewModels {
         AuthViewModelFactory((application as LexmemApplication).users, this, intent.extras)
+    }
+
+    private val lexmemViewModel: LexmemViewModel by viewModels {
+        LexmemViewModelFactory((application as LexmemApplication).userWords, this, intent.extras)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +39,11 @@ class LexmemActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        // Set the user id in view models
+        authViewModel.user.observe(this, { user ->
+            user?.let { lexmemViewModel.userId = it.id }
+        })
+
         // Check for a search request
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
@@ -40,7 +51,7 @@ class LexmemActivity : AppCompatActivity() {
                     replace(R.id.content_frame, SearchFragment.newInstance(query))
                     commit()
                 }
-            }
+            } ?: throw IllegalStateException("Expected extra not set")
         }
     }
 
