@@ -11,6 +11,7 @@ import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.databinding.ActivityLexmemBinding
+import com.example.lexicon_memoria.fragments.SearchFragment
 import com.example.lexicon_memoria.viewmodel.AuthViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 
@@ -35,7 +36,10 @@ class LexmemActivity : AppCompatActivity() {
         // Check for a search request
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                Log.i("Query", "$query")
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.content_frame, SearchFragment.newInstance(query))
+                    commit()
+                }
             }
         }
     }
