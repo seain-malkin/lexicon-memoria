@@ -10,6 +10,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
+import kotlin.jvm.Throws
 
 /**
  * [ViewModel] associated with AuthActivity
@@ -24,23 +25,54 @@ class AuthViewModel(
     var user = MutableLiveData<UserEntity?>()
 
     init {
-        initUser()
+        // Load the local user or create a new one
+        viewModelScope.launch {
+            try {
+                loadUser(savedStateHandle.get(ARG_USER_ID) ?: 0L)
+            } catch (e: IllegalStateException) {
+                createDefaultUser()
+            }
+        }
     }
 
-    private fun initUser() {
-        viewModelScope.launch {
-            val defaultUser = userRepo.get(DEFAULT_USERNAME)
-            if (defaultUser == null) {
-                userRepo.insert(UserEntity(DEFAULT_USERNAME))
-                user.value = userRepo.get(DEFAULT_USERNAME)
-            } else {
-                user.value = defaultUser
-            }
+    /**
+     * Sets the user property value based on the user id given
+     * Throws an exception if the user id doesn't exist
+     * @param userId The user id to load
+     */
+    @Throws(IllegalStateException::class)
+    private suspend fun loadUser(userId: Long) {
+        // If user id set, try and load it. Otherwise, try select any user
+        val localUser = if (userId > 0) userRepo.get(userId) else userRepo.getLocal()
+
+        // If not found throw exception, otherwise set the user value
+        when (localUser == null) {
+            true -> throw IllegalStateException("The local user id doesn't exist.")
+            false -> user.value = localUser
+        }
+    }
+
+    /**
+     * Creates a default local user and saves to database. The user value is then updated.
+     * Throws an exception if the user still doesn't exist. (Shouldn't happen)
+     */
+    @Throws(IllegalStateException::class)
+    private suspend fun createDefaultUser() {
+        // Create and insert the new user
+        userRepo.insert(UserEntity(DEFAULT_USERNAME))
+
+        // Retrieve the new user and set the user property value
+        val localUser = userRepo.getLocal()
+
+        when(localUser == null) {
+            true -> throw IllegalStateException("Unable to create a default user.")
+            false -> user.value = localUser
         }
     }
 
     companion object {
         const val DEFAULT_USERNAME = "default_user"
+        const val ARG_USER_ID = "auth_view_model:user_id"
     }
 }
 

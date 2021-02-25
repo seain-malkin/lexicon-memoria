@@ -17,7 +17,23 @@ class UserRepository(
 ) {
 
     /**
-     * Gets local user
+     * Returns the local user. Assumes only one per local table
+     * @return The user object or null
+     */
+    suspend fun getLocal(): UserEntity? {
+        return userDao.getLocal()
+    }
+
+    /**
+     * Returns the user based on their user id
+     * @return The user object or null
+     */
+    suspend fun get(userId: Long): UserEntity? {
+        return userDao.get(userId)
+    }
+
+    /**
+     * Gets a user based on their username
      * @param username The name of the user
      * @return The user entity
      */

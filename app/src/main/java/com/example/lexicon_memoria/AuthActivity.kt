@@ -28,7 +28,7 @@ class AuthActivity : AppCompatActivity() {
 
         authViewModel.user.observe(this, { user ->
             user?.let {
-                startActivity(ModuleListActivity.getIntent(this, it.username))
+                startActivity(LexmemActivity.getIntent(this))
                 finish()
             }
         })

@@ -2,6 +2,7 @@
   <dictionary name="seain">
     <words>
       <w>gson</w>
+      <w>lexmem</w>
       <w>upsert</w>
     </words>
   </dictionary>

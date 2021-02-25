@@ -17,7 +17,7 @@ import com.example.lexicon_memoria.database.entity.*
                 HeadwordEntity::class,
                 DefinitionEntity::class,
                 WordFunctionEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class LexmemDatabase : RoomDatabase() {
