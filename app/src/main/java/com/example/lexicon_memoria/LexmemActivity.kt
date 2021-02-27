@@ -39,10 +39,9 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
                     remove(it)
                     commit()
                 }
+                showToast("${word.headword.label} added")
             }
         }
-
-        Toast.makeText(applicationContext, "${word.headword.label} added", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +80,10 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
         }
 
         return true
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
     }
 
     companion object {
