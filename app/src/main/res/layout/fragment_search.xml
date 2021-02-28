@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     tools:context=".fragments.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/test_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_create" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SearchFragment.ResultContainer">
 
-</LinearLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/headWordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_blank_fragment"
+                android:layout_centerHorizontal="true"
+                android:textAppearance="@style/Headline.Light"
+                android:paddingBottom="@dimen/gutter"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/wordActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/headWordText"
+                android:layout_centerHorizontal="true"
+                android:text="@string/action_add_word"
+                android:drawableLeft="@drawable/ic_library_add"
+                android:src="@drawable/ic_library_add"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

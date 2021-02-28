@@ -14,8 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/image_view_loading"
-        android:textAppearance="@style/h1"/>
+        app:layout_constraintBottom_toTopOf="@id/image_view_loading"/>
 
     <ImageView
         android:id="@+id/image_view_loading"

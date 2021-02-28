@@ -56,7 +56,7 @@ class SearchFragment : Fragment() {
 
         binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
 
-        binding.testView.text = query
+        binding.headWordText.text = query
 
         // When search complete, display results
         searchViewModel.search(query).observe(viewLifecycleOwner, { response ->
@@ -64,7 +64,7 @@ class SearchFragment : Fragment() {
         })
 
         // When add button clicked, add word to user list
-        binding.testButton.setOnClickListener {
+        binding.wordActionButton.setOnClickListener {
             searchViewModel.searchResult.value?.let {
                 lexmemViewModel.addWord(it)
                 listener?.onAddWord(it)
