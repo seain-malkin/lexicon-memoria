@@ -79,9 +79,6 @@ class SearchFragment : Fragment() {
         // Hide search progress bar and display action button
         binding.progressSearch.visibility = View.GONE
         binding.wordActionButton.visibility = View.VISIBLE
-
-        // Display the definitions
-        binding.definitionContainer.visibility = View.VISIBLE
     }
 
     /**
