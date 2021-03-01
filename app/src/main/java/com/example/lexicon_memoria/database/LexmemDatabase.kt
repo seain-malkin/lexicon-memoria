@@ -16,14 +16,16 @@ import com.example.lexicon_memoria.database.entity.*
                 UserWordEntity::class,
                 HeadwordEntity::class,
                 DefinitionEntity::class,
-                WordFunctionEntity::class],
-    version = 5,
+                WordFunctionEntity::class,
+                PronunciationEntity::class],
+    version = 6,
     exportSchema = false
 )
 abstract class LexmemDatabase : RoomDatabase() {
 
     abstract fun definition(): DefinitionDao
     abstract fun headWord(): HeadWordDao
+    abstract fun pronunciation(): PronunciationDao
     abstract fun userWord(): UserWordDao
     abstract fun wordFunction(): WordFunctionDao
     abstract fun user(): UserDao

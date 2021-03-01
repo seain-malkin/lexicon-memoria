@@ -73,10 +73,15 @@ class SearchFragment : Fragment() {
     private fun displayResult(result: DictionaryWord) {
         binding.textWord.text = result.headword.label
 
+        // Display pronunciation
+        binding.textPronounce.text = result.pronunciation?.spoken ?: ""
+        binding.textPronounce.visibility = View.VISIBLE
+
         // Display word definitions
         result.functions.forEach { displayResultFunction(it) }
 
         // Hide search progress bar and display action button
+        binding.textSearch.visibility = View.GONE
         binding.progressSearch.visibility = View.GONE
         binding.wordActionButton.visibility = View.VISIBLE
     }
@@ -96,7 +101,7 @@ class SearchFragment : Fragment() {
         // Add a text view element for each definition
         homograph.definitions.forEachIndexed { i, def ->
             (layoutInflater.inflate(R.layout.text_view_body, null) as MaterialTextView).apply {
-                text = resources.getString(R.string.definition, i, def.definition)
+                text = resources.getString(R.string.definition, i + 1, def.definition)
                 binding.definitionContainer.addView(this)
             }
         }

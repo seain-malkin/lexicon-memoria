@@ -29,7 +29,14 @@ abstract class DictionaryDao(private val roomDatabase: LexmemDatabase) {
      */
     @Transaction
     open suspend fun save(word: DictionaryWord) {
+        // Update the headword
         roomDatabase.headWord().upsert(word.headword)
+
+        word.pronunciation?.let {
+            // Get headwordId reference and save pronunciation
+            it.headwordId = word.headword.id
+            roomDatabase.pronunciation().upsert(it)
+        }
 
         // Save each homograph and link the headword id
         word.functions.forEach { save(word.headword.id, it) }

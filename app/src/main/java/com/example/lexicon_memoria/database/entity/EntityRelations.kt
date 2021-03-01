@@ -24,7 +24,12 @@ data class DictionaryWord(
         entity = WordFunctionEntity::class,
         parentColumn = HeadwordEntity.Columns.id,
         entityColumn = WordFunctionEntity.Columns.headWordId
-    ) val functions: List<Homograph>
+    ) val functions: List<Homograph>,
+    @Relation(
+        entity = PronunciationEntity::class,
+        parentColumn = HeadwordEntity.Columns.id,
+        entityColumn = PronunciationEntity.Columns.headwordId
+    ) val pronunciation: PronunciationEntity? = null
 )
 
 data class Homograph(

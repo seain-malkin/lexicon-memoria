@@ -5,10 +5,12 @@ import java.util.*
 
 /**
  * Helper class for building a DictionaryWord object
- * @param headword The headword object
+ * @property headword The headword object
+ * @property pronunciation The pronunciation object
  */
 class WordBuilder(
-    var headword: HeadwordEntity
+    var headword: HeadwordEntity,
+    var pronunciation: PronunciationEntity? = null
 ) {
     /**
      * Secondary constructor
@@ -37,9 +39,13 @@ class WordBuilder(
      */
     fun build(): DictionaryWord {
         /** Each word function is transformed into a [Homograph] with the definition list */
-        return DictionaryWord(headword, functions.mapNotNull { fl ->
-            definitions[fl.label]?.let { Homograph(fl, it.toList()) }
-        })
+        return DictionaryWord(
+            headword,
+            functions.mapNotNull { fl ->
+                definitions[fl.label]?.let { Homograph(fl, it.toList()) }
+            },
+            pronunciation
+        )
     }
 
     /**

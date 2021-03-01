@@ -28,6 +28,17 @@
                 android:id="@+id/textPronounce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:visibility="invisible"
+                android:layout_below="@id/textWord"
+                android:layout_centerHorizontal="true"
+                android:textAppearance="@style/Text.Subtitle1.Light"
+                style="@style/TextView"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/action_searching"
                 android:layout_below="@id/textWord"
                 android:layout_centerHorizontal="true"
@@ -62,6 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:padding="@dimen/gutter"
                 style="@style/Container">
 
             </LinearLayout>

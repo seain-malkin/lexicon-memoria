@@ -53,6 +53,10 @@ class DictionaryRepository(
             wordBuilder.attach(it.name, it.definitions)
         }
 
+        result.pronunciation?.let {
+            wordBuilder.pronunciation = PronunciationEntity(it.spoken, it.audio)
+        }
+
         return wordBuilder.build()
     }
 }

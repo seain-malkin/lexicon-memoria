@@ -22,6 +22,7 @@ class DictionaryRemoteDataSource(
 
         var headword: Headword
         var homographs: List<Homograph>
+        var pronunciation: Pronunciation?
 
         data class Headword(
             var name: String,
@@ -33,6 +34,11 @@ class DictionaryRemoteDataSource(
         data class Homograph (
             var name: String,
             var definitions: List<String>,
+        )
+
+        data class Pronunciation(
+            var spoken: String,
+            var audio: String? = null
         )
     }
 }

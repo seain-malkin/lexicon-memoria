@@ -22,7 +22,8 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
     <style name="Text.Headline2" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">24sp</item>
     </style>
     <style name="Text.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textSize">22sp</item>
@@ -32,7 +33,7 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
     <style name="Text.Body" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
     <!-- End Text Appearance -->
 
@@ -44,7 +45,7 @@
         <item name="android:background">@color/blue_light</item>
         <item name="android:padding">@dimen/gutterDouble</item>
     </style>
-    <style name="TextView" parent="ThemeOverlay.MaterialComponents">
+    <style name="TextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:layout_marginBottom">@dimen/gutter</item>
     </style>
     <!-- End Containers -->
