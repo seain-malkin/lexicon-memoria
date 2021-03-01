@@ -1,6 +1,7 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+
     <style name="Theme.Lexicon_memoria" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/grey</item>
         <item name="android:colorBackground">@color/grey</item>
@@ -28,5 +29,7 @@
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
     </style>
+
 </resources>

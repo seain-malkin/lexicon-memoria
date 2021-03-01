@@ -56,11 +56,18 @@ class SearchFragment : Fragment() {
 
         binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
 
-        binding.headWordText.text = query
+        binding.textWord.text = query
 
         // When search complete, display results
         searchViewModel.search(query).observe(viewLifecycleOwner, { response ->
             searchViewModel.searchResult.value = response
+        })
+
+        searchViewModel.searchResult.observe(viewLifecycleOwner, { result ->
+            result?.let {
+                binding.textWord.text = result.headword.label
+                binding.textFunction.text = result.functions[0].function.label
+            }
         })
 
         // When add button clicked, add word to user list

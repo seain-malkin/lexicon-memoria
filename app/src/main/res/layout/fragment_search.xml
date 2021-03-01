@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,22 +14,32 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/SearchFragment.ResultContainer">
+            style="@style/Container.Highlight">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/headWordText"
+                android:id="@+id/textWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hello_blank_fragment"
+                android:text="@string/placeholder"
                 android:layout_centerHorizontal="true"
-                android:textAppearance="@style/Headline.Light"
-                android:paddingBottom="@dimen/gutter"/>
+                android:textAppearance="@style/Text.Headline1.Light"
+                style="@style/TextView"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textPronounce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:layout_below="@id/textWord"
+                android:layout_centerHorizontal="true"
+                android:textAppearance="@style/Text.Subtitle1.Light"
+                style="@style/TextView"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/wordActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/headWordText"
+                android:layout_below="@id/textPronounce"
                 android:layout_centerHorizontal="true"
                 android:text="@string/action_add_word"
                 android:drawableLeft="@drawable/ic_library_add"
@@ -37,6 +47,42 @@
 
         </RelativeLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                style="@style/Container">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textFunction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:textAppearance="@style/Text.Headline2"
+                    style="@style/TextView"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_long"
+                    android:textAppearance="@style/Text.Body"
+                    style="@style/TextView"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_long"
+                    android:textAppearance="@style/Text.Body"
+                    style="@style/TextView"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
     </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>
