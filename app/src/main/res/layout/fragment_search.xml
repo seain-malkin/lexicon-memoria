@@ -6,7 +6,6 @@
     tools:context=".fragments.SearchFragment">
 
     <LinearLayout
-        android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -29,7 +28,7 @@
                 android:id="@+id/textPronounce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
+                android:text="@string/action_searching"
                 android:layout_below="@id/textWord"
                 android:layout_centerHorizontal="true"
                 android:textAppearance="@style/Text.Subtitle1.Light"
@@ -43,7 +42,14 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/action_add_word"
                 android:drawableLeft="@drawable/ic_library_add"
-                android:src="@drawable/ic_library_add"/>
+                android:src="@drawable/ic_library_add"
+                android:visibility="gone"/>
+
+            <ProgressBar
+                android:id="@+id/progressSearch"
+                android:layout_below="@id/textPronounce"
+                android:layout_centerHorizontal="true"
+                style="@style/ProgressBar"/>
 
         </RelativeLayout>
 
@@ -52,32 +58,12 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/definitionContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="invisible"
                 style="@style/Container">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textFunction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/placeholder"
-                    android:textAppearance="@style/Text.Headline2"
-                    style="@style/TextView"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/placeholder_long"
-                    android:textAppearance="@style/Text.Body"
-                    style="@style/TextView"/>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/placeholder_long"
-                    android:textAppearance="@style/Text.Body"
-                    style="@style/TextView"/>
 
             </LinearLayout>
 

@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.lexicon_memoria.LexmemApplication
+import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.database.entity.DictionaryWord
+import com.example.lexicon_memoria.database.entity.Homograph
 import com.example.lexicon_memoria.databinding.FragmentSearchBinding
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 import com.example.lexicon_memoria.viewmodel.SearchViewModel
 import com.example.lexicon_memoria.viewmodel.SearchViewModelFactory
+import com.google.android.material.textview.MaterialTextView
 
 /**
  * A simple [Fragment] subclass.
@@ -63,6 +66,46 @@ class SearchFragment : Fragment() {
     }
 
     /**
+     * Updates view elements to represent search result
+     *
+     * @param result The word object to display
+     */
+    private fun displayResult(result: DictionaryWord) {
+        binding.textWord.text = result.headword.label
+
+        // Display word definitions
+        result.functions.forEach { displayResultFunction(it) }
+
+        // Hide search progress bar and display action button
+        binding.progressSearch.visibility = View.GONE
+        binding.wordActionButton.visibility = View.VISIBLE
+
+        // Display the definitions
+        binding.definitionContainer.visibility = View.VISIBLE
+    }
+
+    /**
+     * Displays each function label and its definitions
+     *
+     * @param homograph The function to display
+     */
+    private fun displayResultFunction(homograph: Homograph) {
+        // Add a text view element for the function label
+        (layoutInflater.inflate(R.layout.text_view_headline2, null) as MaterialTextView).apply {
+            text = homograph.function.label
+            binding.definitionContainer.addView(this)
+        }
+
+        // Add a text view element for each definition
+        homograph.definitions.forEachIndexed { i, def ->
+            (layoutInflater.inflate(R.layout.text_view_body, null) as MaterialTextView).apply {
+                text = resources.getString(R.string.definition, i, def.definition)
+                binding.definitionContainer.addView(this)
+            }
+        }
+    }
+
+    /**
      * @see [Fragment.onCreate]
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,8 +133,7 @@ class SearchFragment : Fragment() {
         // When search complete, display results
         searchViewModel.searchResult.observe(viewLifecycleOwner, { result ->
             result?.let {
-                binding.textWord.text = result.headword.label
-                binding.textFunction.text = result.functions[0].function.label
+                displayResult(it)
             }
         })
 
