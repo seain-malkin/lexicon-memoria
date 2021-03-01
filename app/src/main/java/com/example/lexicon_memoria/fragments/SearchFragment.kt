@@ -22,14 +22,30 @@ import com.example.lexicon_memoria.viewmodel.SearchViewModelFactory
  */
 class SearchFragment : Fragment() {
 
+    /**
+     * Interface for Fragment->Activity communication. The interface must be implemented by the
+     * calling activity
+     */
     interface SearchFragmentListener {
+
+        /**
+         * Triggered when the user clicks the button to add a word to their lexicon.
+         *
+         * @param word The word object to add
+         */
         fun onAddWord(word: DictionaryWord)
     }
 
+    /** @property listener Reference to context that implements [SearchFragmentListener] */
     private var listener: SearchFragmentListener? = null
+
+    /** @property binding Reference to view binding object */
     private lateinit var binding: FragmentSearchBinding
+
+    /** @property query The search term passed from the activity */
     private lateinit var query: String
 
+    /** @property searchViewModel */
     private val searchViewModel: SearchViewModel by activityViewModels {
         SearchViewModelFactory(
             (requireActivity().application as LexmemApplication).dictionary,
@@ -38,6 +54,7 @@ class SearchFragment : Fragment() {
         )
     }
 
+    /** @property lexmemViewModel  */
     private val lexmemViewModel: LexmemViewModel by activityViewModels {
         LexmemViewModelFactory(
             (requireActivity().application as LexmemApplication).userWords,
@@ -45,12 +62,19 @@ class SearchFragment : Fragment() {
         )
     }
 
+    /**
+     * @see [Fragment.onCreate]
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Retrieve the search query
         query = arguments?.getString(ARG_QUERY) ?: throw IllegalStateException("Query must be set")
     }
 
+    /**
+     * @see [Fragment.onCreateView]
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -58,11 +82,12 @@ class SearchFragment : Fragment() {
 
         binding.textWord.text = query
 
-        // When search complete, display results
+        // Search for query and store results on response
         searchViewModel.search(query).observe(viewLifecycleOwner, { response ->
             searchViewModel.searchResult.value = response
         })
 
+        // When search complete, display results
         searchViewModel.searchResult.observe(viewLifecycleOwner, { result ->
             result?.let {
                 binding.textWord.text = result.headword.label
@@ -81,6 +106,13 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * @see [Fragment.onAttach]
+     * Attaches the calling context as a listener. Forces the context to implement
+     * [SearchFragmentListener]
+     *
+     * @param context Calling context
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -91,6 +123,11 @@ class SearchFragment : Fragment() {
         }
     }
 
+    /**
+     * @see [Fragment.onDetach]
+     *
+     * Release resources
+     */
     override fun onDetach() {
         super.onDetach()
 
@@ -98,7 +135,10 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
+
+        /** Parameter Arguments */
         private const val ARG_QUERY = "search_fragment:query"
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
