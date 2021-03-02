@@ -76,7 +76,10 @@ class SearchFragment : Fragment() {
 
         // Display pronunciation
         binding.textPronounce.text = result.pronunciation?.spoken ?: ""
-        binding.textPronounce.visibility = View.VISIBLE
+        result.pronunciation?.audio?.let {
+            binding.buttonPlayAudio.visibility = View.VISIBLE
+        }
+        binding.pronounceContainer.visibility = View.VISIBLE
 
         // Display word definitions
         result.functions.forEach { displayResultFunction(it) }

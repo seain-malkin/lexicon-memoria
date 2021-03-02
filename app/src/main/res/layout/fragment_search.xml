@@ -24,16 +24,34 @@
                 android:textAppearance="@style/Text.Headline1.Light"
                 style="@style/TextView"/>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textPronounce"
+            <RelativeLayout
+                android:id="@+id/pronounceContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholder"
-                android:visibility="invisible"
                 android:layout_below="@id/textWord"
                 android:layout_centerHorizontal="true"
-                android:textAppearance="@style/Text.Subtitle1.Light"
-                style="@style/TextView"/>
+                android:visibility="invisible">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textPronounce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:textAppearance="@style/Text.Subtitle1.Light"
+                    style="@style/TextView"/>
+
+                <ImageButton
+                    android:id="@+id/buttonPlayAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_play"
+                    android:background="@android:color/transparent"
+                    android:layout_toRightOf="@id/textPronounce"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/gutter"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textSearch"
@@ -49,16 +67,16 @@
                 android:id="@+id/wordActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textPronounce"
+                android:layout_below="@id/pronounceContainer"
                 android:layout_centerHorizontal="true"
                 android:text="@string/action_add_word"
                 android:drawableLeft="@drawable/ic_library_add"
                 android:src="@drawable/ic_library_add"
-                android:visibility="gone"/>
+                android:visibility="invisible"/>
 
             <ProgressBar
                 android:id="@+id/progressSearch"
-                android:layout_below="@id/textPronounce"
+                android:layout_below="@id/pronounceContainer"
                 android:layout_centerHorizontal="true"
                 style="@style/ProgressBar"/>
 
