@@ -12,6 +12,7 @@ import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.database.entity.Homograph
 import com.example.lexicon_memoria.databinding.FragmentSearchBinding
+import com.example.lexicon_memoria.service.AudioService
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 import com.example.lexicon_memoria.viewmodel.SearchViewModel
@@ -84,6 +85,10 @@ class SearchFragment : Fragment() {
         binding.textSearch.visibility = View.GONE
         binding.progressSearch.visibility = View.GONE
         binding.wordActionButton.visibility = View.VISIBLE
+
+        result.pronunciation?.audio?.let {
+            requireContext().startService(AudioService.getIntent(it, requireContext()))
+        }
     }
 
     /**

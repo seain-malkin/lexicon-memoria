@@ -5,6 +5,7 @@ import com.example.lexicon_memoria.database.entity.*
 import com.example.lexicon_memoria.database.entity.builder.WordBuilder
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource
 import com.example.lexicon_memoria.dictionary.DictionaryRemoteDataSource.DictionaryApiResult
+import com.example.lexicon_memoria.dictionary.merriam_webster.Pronunciation
 import kotlinx.coroutines.flow.*
 
 /**
@@ -54,7 +55,10 @@ class DictionaryRepository(
         }
 
         result.pronunciation?.let {
-            wordBuilder.pronunciation = PronunciationEntity(it.spoken, it.audio)
+            wordBuilder.pronunciation = PronunciationEntity(
+                it.spoken,
+                it.audio?.let { file -> Pronunciation.buildAudioUrl(file) }
+            )
         }
 
         return wordBuilder.build()
