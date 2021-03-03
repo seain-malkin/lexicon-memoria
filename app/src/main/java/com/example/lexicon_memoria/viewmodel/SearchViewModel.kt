@@ -22,7 +22,7 @@ class SearchViewModel(
         val result = MutableLiveData<DictionaryWord?>()
         viewModelScope.launch {
             dict.get(query)
-                .catch { e ->
+                .catch { _ ->
                     throw InvalidParameterException("Query not found in dictionary.")
                 }
                 .collect {

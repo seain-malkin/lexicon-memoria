@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
+import com.example.lexicon_memoria.database.entity.Lexicon
 import com.example.lexicon_memoria.database.entity.UserEntity
 import com.example.lexicon_memoria.repository.UserRepository
 import kotlinx.coroutines.*
@@ -17,12 +18,15 @@ import kotlin.jvm.Throws
  * @property userRepo
  * @param savedStateHandle
  */
-class AuthViewModel(
+class UserViewModel(
     private val userRepo: UserRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     var user = MutableLiveData<UserEntity?>()
+
+    private val _lexicon = MutableLiveData<Lexicon?>()
+    val lexicon: LiveData<Lexicon?> get() = _lexicon
 
     init {
         // Load the local user or create a new one
@@ -31,8 +35,14 @@ class AuthViewModel(
                 loadUser(savedStateHandle.get(ARG_USER_ID) ?: 0L)
             } catch (e: IllegalStateException) {
                 createDefaultUser()
+            } finally {
+                loadLexicon()
             }
         }
+    }
+
+    suspend fun loadLexicon() {
+        user.value?.let { _lexicon.value = userRepo.getWords(it.id) }
     }
 
     /**
@@ -89,10 +99,10 @@ class AuthViewModelFactory(
         modelClass: Class<T>,
         handle: SavedStateHandle
     ): T {
-        if (!modelClass.isAssignableFrom(AuthViewModel::class.java)) {
+        if (!modelClass.isAssignableFrom(UserViewModel::class.java)) {
             throw IllegalArgumentException("Unknown ViewModel class")
         }
         @Suppress("UNCHECKED_CAST")
-        return AuthViewModel(userRepository, handle) as T
+        return UserViewModel(userRepository, handle) as T
     }
 }

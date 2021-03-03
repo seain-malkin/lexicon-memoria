@@ -19,8 +19,7 @@ import kotlinx.coroutines.launch
  * @param[savedStateHandle] The callers saved state
  */
 class DictionarySearchViewModel(
-    private val repository: DictionaryRepository,
-    savedStateHandle: SavedStateHandle
+    private val repository: DictionaryRepository
 ) : ViewModel() {
 
     /** The result of the dictionary lookup */
@@ -72,6 +71,6 @@ class DictionarySearchViewModelFactory(
             throw IllegalArgumentException("Unkown ViewMdel class")
         }
         @Suppress("UNCHECKED_CAST")
-        return DictionarySearchViewModel(repository, handle) as T
+        return DictionarySearchViewModel(repository) as T
     }
 }

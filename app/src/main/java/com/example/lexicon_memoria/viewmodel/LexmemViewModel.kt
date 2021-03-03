@@ -25,6 +25,8 @@ class LexmemViewModel(
             userWordRepo.addWord(userId, word)
         }
     }
+
+
 }
 
 class LexmemViewModelFactory(

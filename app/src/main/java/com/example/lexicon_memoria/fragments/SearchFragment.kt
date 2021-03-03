@@ -60,14 +60,6 @@ class SearchFragment : Fragment() {
         )
     }
 
-    /** @property lexmemViewModel  */
-    private val lexmemViewModel: LexmemViewModel by activityViewModels {
-        LexmemViewModelFactory(
-            (requireActivity().application as LexmemApplication).userWords,
-            requireActivity()
-        )
-    }
-
     /**
      * Updates view elements to represent search result
      *
@@ -78,7 +70,7 @@ class SearchFragment : Fragment() {
 
         // Display pronunciation
         binding.textPronounce.text = result.pronunciation?.spoken ?: ""
-        result.pronunciation?.audio?.let { url ->
+        result.pronunciation?.audio?.let {
             binding.buttonPlayAudio.visibility = View.VISIBLE
         }
         binding.pronounceContainer.visibility = View.VISIBLE
@@ -148,7 +140,6 @@ class SearchFragment : Fragment() {
         // When add button clicked, add word to user list
         binding.wordActionButton.setOnClickListener {
             searchViewModel.searchResult.value?.let {
-                lexmemViewModel.addWord(it)
                 listener?.onAddWord(it)
             }
         }

@@ -14,7 +14,7 @@ class AudioService : Service(), MediaPlayer.OnErrorListener, MediaPlayer.OnPrepa
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val uri = intent?.getStringExtra(ARG_DATA) ?: throw IllegalStateException("URI not set.")
-        val action = intent?.getIntExtra(ARG_ACTION, 0)
+        val action = intent.getIntExtra(ARG_ACTION, 0)
 
         if (ACTION_PLAY == action) {
             mediaPlayer = MediaPlayer().apply {

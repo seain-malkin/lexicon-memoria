@@ -13,17 +13,21 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.databinding.ActivityLexmemBinding
+import com.example.lexicon_memoria.fragments.ModuleListFragment
 import com.example.lexicon_memoria.fragments.SearchFragment
-import com.example.lexicon_memoria.viewmodel.AuthViewModel
+import com.example.lexicon_memoria.viewmodel.UserViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 
+/**
+ * Main activity that displays the module list and search results
+ */
 class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity() {
 
     private lateinit var binding: ActivityLexmemBinding
 
-    private val authViewModel: AuthViewModel by viewModels {
+    private val userViewModel: UserViewModel by viewModels {
         AuthViewModelFactory((application as LexmemApplication).users, this, intent.extras)
     }
 
@@ -31,12 +35,17 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
         LexmemViewModelFactory((application as LexmemApplication).userWords, this)
     }
 
+    /**
+     * @see [SearchFragment.SearchFragmentListener.onAddWord]
+     */
     override fun onAddWord(word: DictionaryWord) {
+        lexmemViewModel.addWord(word)
+
         supportFragmentManager.let { fm ->
             val fragment = fm.findFragmentById(R.id.content_frame)
             fragment?.let {
                 fm.beginTransaction().apply {
-                    remove(it)
+                    replace(R.id.content_frame, ModuleListFragment.newInstance())
                     commit()
                 }
                 showToast("${word.headword.label} added")
@@ -44,6 +53,9 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
         }
     }
 
+    /**
+     * @see [AppCompatActivity.onCreate]
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,7 +67,7 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
         setContentView(binding.root)
 
         // Set the user id in view models
-        authViewModel.user.observe(this, { user ->
+        userViewModel.user.observe(this, { user ->
             user?.let { lexmemViewModel.userId = it.id }
         })
 
@@ -67,9 +79,17 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
                     commit()
                 }
             } ?: throw IllegalStateException("Expected extra not set")
+        } else { // Display the module list fragment
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.content_frame, ModuleListFragment.newInstance())
+                commit()
+            }
         }
     }
 
+    /**
+     * @see [AppCompatActivity.onCreateOptionsMenu]
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
 
@@ -82,6 +102,10 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
         return true
     }
 
+    /**
+     * Displays a toast message
+     * @param msg The message to display
+     */
     private fun showToast(msg: String) {
         Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
     }

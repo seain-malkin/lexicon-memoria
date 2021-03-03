@@ -28,11 +28,11 @@ abstract class UserDao(
     abstract suspend fun get(username: String): UserEntity?
 
     /**
-     * Returns the user entity and a list of words they own
+     * Returns the users lexicon list
      * @param userId The user id who owns the words
      * @return A [Lexicon] object
      */
     @Transaction
     @Query("SELECT * FROM ${Table.name} WHERE id = :userId")
-    abstract fun getWords(userId: Long): LiveData<List<Lexicon>>
+    abstract suspend fun getWords(userId: Long): Lexicon?
 }

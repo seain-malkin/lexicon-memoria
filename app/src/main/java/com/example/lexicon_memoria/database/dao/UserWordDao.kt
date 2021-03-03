@@ -1,5 +1,6 @@
 package com.example.lexicon_memoria.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.RoomDatabase
 import com.example.lexicon_memoria.database.entity.UserWordEntity
@@ -8,5 +9,4 @@ import com.example.lexicon_memoria.database.entity.UserWordEntity.Companion as T
 @Dao
 abstract class UserWordDao(
     roomDatabase: RoomDatabase
-) : BaseDao<UserWordEntity>(Table.name, roomDatabase) {
-}
+) : BaseDao<UserWordEntity>(Table.name, roomDatabase)

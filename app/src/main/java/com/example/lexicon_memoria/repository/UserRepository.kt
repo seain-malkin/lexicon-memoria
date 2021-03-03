@@ -46,7 +46,7 @@ class UserRepository(
      * @param userId The user id
      * @return Live data with the word list
      */
-    fun getWords(userId: Long): LiveData<List<Lexicon>> {
+    suspend fun getWords(userId: Long): Lexicon? {
         return userDao.getWords(userId)
     }
 
