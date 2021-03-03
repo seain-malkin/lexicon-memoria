@@ -1,7 +1,9 @@
 package com.example.lexicon_memoria.fragments
 
 import android.content.Context
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -76,7 +78,7 @@ class SearchFragment : Fragment() {
 
         // Display pronunciation
         binding.textPronounce.text = result.pronunciation?.spoken ?: ""
-        result.pronunciation?.audio?.let {
+        result.pronunciation?.audio?.let { url ->
             binding.buttonPlayAudio.visibility = View.VISIBLE
         }
         binding.pronounceContainer.visibility = View.VISIBLE
@@ -88,10 +90,6 @@ class SearchFragment : Fragment() {
         binding.textSearch.visibility = View.GONE
         binding.progressSearch.visibility = View.GONE
         binding.wordActionButton.visibility = View.VISIBLE
-
-        result.pronunciation?.audio?.let {
-            requireContext().startService(AudioService.getIntent(it, requireContext()))
-        }
     }
 
     /**
@@ -152,6 +150,17 @@ class SearchFragment : Fragment() {
             searchViewModel.searchResult.value?.let {
                 lexmemViewModel.addWord(it)
                 listener?.onAddWord(it)
+            }
+        }
+
+        // When audio button clicked, play pronunciation audio
+        binding.buttonPlayAudio.setOnClickListener {
+            searchViewModel.searchResult.value?.let {
+                it.pronunciation?.audio?.let { url ->
+                    requireContext().startService(
+                        AudioService.getIntent(requireContext(), url, AudioService.ACTION_PLAY)
+                    )
+                }
             }
         }
 

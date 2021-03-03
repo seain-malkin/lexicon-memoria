@@ -13,19 +13,24 @@ class AudioService : Service(), MediaPlayer.OnErrorListener, MediaPlayer.OnPrepa
     private var mediaPlayer: MediaPlayer? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val uri = intent?.getStringExtra(ARG_URI) ?: throw IllegalStateException("URI not set.")
+        val uri = intent?.getStringExtra(ARG_DATA) ?: throw IllegalStateException("URI not set.")
+        val action = intent?.getIntExtra(ARG_ACTION, 0)
 
-        mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-            setDataSource(uri)
-            setOnPreparedListener(this@AudioService)
-            prepareAsync()
+        if (ACTION_PLAY == action) {
+            mediaPlayer = MediaPlayer().apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
+                )
+                setDataSource(uri)
+                setOnPreparedListener(this@AudioService)
+                setOnErrorListener(this@AudioService)
+                prepareAsync()
+            }
         }
+        Log.i("Service", "$action")
 
         return START_STICKY
     }
@@ -55,12 +60,16 @@ class AudioService : Service(), MediaPlayer.OnErrorListener, MediaPlayer.OnPrepa
 
     companion object {
 
-        private const val ARG_URI = "audio_service:uri"
+
+        private const val ARG_ACTION = "audio_service:arg_action"
+        private const val ARG_DATA = "audio_service:arg_data"
+        const val ACTION_PLAY = 1
 
         @JvmStatic
-        fun getIntent(uri: String, context: Context): Intent {
+        fun getIntent(context: Context, uri: String, action: Int): Intent {
             return Intent(context, AudioService::class.java).apply {
-                putExtra(ARG_URI, uri)
+                putExtra(ARG_ACTION, action)
+                putExtra(ARG_DATA, uri)
             }
         }
     }
