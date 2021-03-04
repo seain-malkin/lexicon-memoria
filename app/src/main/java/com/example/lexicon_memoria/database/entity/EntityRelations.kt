@@ -18,6 +18,15 @@ data class Lexicon(
     ) val words: List<DictionaryWord>
 )
 
+data class WordWithScore(
+    @Relation(
+        entity = HeadwordEntity::class,
+        parentColumn = UserWordEntity.Columns.headWordId,
+        entityColumn = HeadwordEntity.Columns.id
+    ) val word: DictionaryWord,
+    @Embedded val userWord: UserWordEntity
+)
+
 data class DictionaryWord(
     @Embedded val headword: HeadwordEntity,
     @Relation(
