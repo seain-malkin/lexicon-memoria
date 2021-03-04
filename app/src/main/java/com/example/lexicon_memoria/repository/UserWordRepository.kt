@@ -8,7 +8,7 @@ class UserWordRepository(
     private val userWordDao: UserWordDao
 ) {
 
-
+    fun getDaily(userId: Long) = userWordDao.getDaily(userId)
 
     /**
      * Assigns a word to a user

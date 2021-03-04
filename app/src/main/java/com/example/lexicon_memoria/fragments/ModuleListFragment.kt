@@ -13,7 +13,10 @@ import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.databinding.FragmentModuleListBinding
 import com.example.lexicon_memoria.databinding.ViewholderAllWordsBinding
+import com.example.lexicon_memoria.module.BaseModule
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
+import com.example.lexicon_memoria.viewmodel.LexmemViewModel
+import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 import com.example.lexicon_memoria.viewmodel.UserViewModel
 
 /**
@@ -23,20 +26,25 @@ import com.example.lexicon_memoria.viewmodel.UserViewModel
  */
 class ModuleListFragment : Fragment() {
 
-    private val userViewModel: UserViewModel by viewModels {
-        AuthViewModelFactory(
-            (requireActivity().application as LexmemApplication).users, this, arguments
-        )
+    private val lexmemVM: LexmemViewModel by viewModels {
+        LexmemViewModelFactory((requireActivity().application as LexmemApplication).userWords, this)
     }
 
     private lateinit var binding: FragmentModuleListBinding
+    private lateinit var adapter: ModuleListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentModuleListBinding.inflate(layoutInflater, container, false)
 
+        adapter = ModuleListAdapter()
         binding.moduleListContainer.layoutManager = LinearLayoutManager(requireContext())
-        binding.moduleListContainer.adapter = ModuleListAdapter(mutableListOf("one", "two"))
+        binding.moduleListContainer.adapter = adapter
+
+        lexmemVM.modules.observe(viewLifecycleOwner, { modules ->
+            adapter.data = modules
+            adapter.notifyDataSetChanged()
+        })
 
         return binding.root
     }
@@ -55,7 +63,7 @@ class ModuleListFragment : Fragment() {
     }
 
     inner class ModuleListAdapter(
-        var data: MutableList<String>
+        var data: List<BaseModule> = listOf()
     ) : RecyclerView.Adapter<ModuleViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {
@@ -84,7 +92,7 @@ class ModuleListFragment : Fragment() {
     ) : RecyclerView.ViewHolder(
         itemView
     ) {
-        abstract fun bind(module: String)
+        abstract fun bind(module: BaseModule)
     }
 
     private inner class AllWordsViewHolder(
@@ -92,8 +100,8 @@ class ModuleListFragment : Fragment() {
     ) : ModuleViewHolder(binding.root) {
 
 
-        override fun bind(module: String) {
-            binding.titleText.text = module
+        override fun bind(module: BaseModule) {
+            binding.titleText.text = module.title
         }
     }
 }
