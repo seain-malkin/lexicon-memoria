@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Toolbar -->
-    <style name="Theme.Lexicon_memoria.Toolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
-        <item name="android:textColorPrimary">?attr/actionMenuTextColor</item>
-        <item name="android:actionMenuTextColor">?attr/actionMenuTextColor</item>
-        <item name="android:colorAccent">?attr/colorAccent</item>
-        <item name="android:colorControlNormal">?attr/colorControlNormal</item>
-        <item name="android:colorControlActivated">?attr/colorControlActivated</item>
-        <item name="android:colorControlHighlight">?attr/colorControlHighlight</item>
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:textColorHint">?attr/hintTextColor</item>
-        <item name="iconTint">?attr/actionMenuTextColor</item>
+    <style name="Theme.Lexicon_memoria.Toolbar">
+
     </style>
     <!-- End Toolbar -->
 
@@ -35,6 +27,13 @@
     <style name="Text.Body" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="CardTitleText" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="CardSectionTitleText" parent="CardTitleText">
+        <item name="android:textSize">16sp</item>
+    </style>
     <!-- End Text Appearance -->
 
     <!-- Containers -->
@@ -46,13 +45,25 @@
         <item name="android:padding">@dimen/gutterDouble</item>
     </style>
     <style name="TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_margin">@dimen/gutter</item>
+    </style>
+    <style name="CardContainer">
+        <item name="android:layout_marginStart">@dimen/gutter</item>
+        <item name="android:layout_marginEnd">@dimen/gutter</item>
         <item name="android:layout_marginBottom">@dimen/gutter</item>
+        <item name="android:layout_marginTop">0dp</item>
     </style>
     <!-- End Containers -->
     <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
 
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
 

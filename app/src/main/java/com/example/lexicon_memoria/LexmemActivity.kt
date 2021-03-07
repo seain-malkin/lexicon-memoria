@@ -60,7 +60,7 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
         super.onCreate(savedInstanceState)
 
         // Setup night mode, binding, and app bar
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         binding = ActivityLexmemBinding.inflate(layoutInflater)
         setSupportActionBar(binding.toolbar.appToolbar)
 

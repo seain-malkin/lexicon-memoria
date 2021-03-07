@@ -38,8 +38,10 @@ class ModuleListFragment : Fragment() {
         binding = FragmentModuleListBinding.inflate(layoutInflater, container, false)
 
         adapter = ModuleListAdapter()
-        binding.moduleListContainer.layoutManager = LinearLayoutManager(requireContext())
         binding.moduleListContainer.adapter = adapter
+        binding.moduleListContainer.layoutManager = LinearLayoutManager(
+            binding.root.context, LinearLayoutManager.VERTICAL, false
+        )
 
         lexmemVM.modules.observe(viewLifecycleOwner, { modules ->
             adapter.data = modules
@@ -101,7 +103,7 @@ class ModuleListFragment : Fragment() {
 
 
         override fun bind(module: BaseModule) {
-            binding.titleText.text = module.title
+            binding.moduleTitle.text = module.title
         }
     }
 }

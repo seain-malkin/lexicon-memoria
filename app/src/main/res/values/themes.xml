@@ -3,8 +3,9 @@
     <!-- Base application theme. -->
 
     <style name="Theme.Lexicon_memoria" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@color/grey</item>
-        <item name="android:colorBackground">@color/grey</item>
+        <item name="android:windowBackground">@color/grey_light</item>
+        <item name="android:colorBackground">@color/grey_light</item>
+        <item name="android:textColor">@color/blue_darker</item>
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue</item>
@@ -26,6 +27,7 @@
 
         <!-- Surface -->
         <item name="colorSurface">@color/white</item>
+        <item name="android:listDivider">@color/grey</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
