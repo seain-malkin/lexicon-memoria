@@ -5,8 +5,26 @@
 
     </style>
     <!-- End Toolbar -->
+    
+    <style name="TextAppearance.MyTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">32sp</item>
+    </style>
 
-    <!-- Text Appearance -->
+    <style name="TextAppearance.MyTheme.Headline2" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Widget.MyTheme.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">0dp</item>
+    </style>
+
+    <!-- Text Appearance
     <style name="Text.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
         <item name="android:textSize">32sp</item>
     </style>
@@ -34,9 +52,7 @@
     <style name="CardSectionTitleText" parent="CardTitleText">
         <item name="android:textSize">16sp</item>
     </style>
-    <!-- End Text Appearance -->
 
-    <!-- Containers -->
     <style name="Container" parent="ThemeOverlay.MaterialComponents">
         <item name="android:padding">@dimen/gutter</item>
     </style>
@@ -53,18 +69,9 @@
         <item name="android:layout_marginBottom">@dimen/gutter</item>
         <item name="android:layout_marginTop">0dp</item>
     </style>
-    <!-- End Containers -->
-    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-
-    </style>
-
-    <style name="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">?android:attr/listDivider</item>
-    </style>
 
 
+
+
+    -->
 </resources>

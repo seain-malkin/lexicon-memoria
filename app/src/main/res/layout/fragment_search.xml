@@ -12,17 +12,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Container.Highlight">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder"
-                android:layout_centerHorizontal="true"
-                android:textAppearance="@style/Text.Headline1.Light"
-                style="@style/TextView"/>
+                android:layout_centerHorizontal="true"/>
 
             <RelativeLayout
                 android:id="@+id/pronounceContainer"
@@ -36,9 +33,7 @@
                     android:id="@+id/textPronounce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/placeholder"
-                    android:textAppearance="@style/Text.Subtitle1.Light"
-                    style="@style/TextView"/>
+                    android:text="@string/placeholder"/>
 
                 <ImageButton
                     android:id="@+id/buttonPlayAudio"
@@ -59,9 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_searching"
                 android:layout_below="@id/textWord"
-                android:layout_centerHorizontal="true"
-                android:textAppearance="@style/Text.Subtitle1.Light"
-                style="@style/TextView"/>
+                android:layout_centerHorizontal="true"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/wordActionButton"
@@ -91,8 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/gutter"
-                style="@style/Container">
+                android:padding="@dimen/gutter">
 
             </LinearLayout>
 

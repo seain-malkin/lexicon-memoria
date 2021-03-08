@@ -4,6 +4,7 @@
     <dimen name="textParagraph">14sp</dimen>
     <dimen name="textListItem">16sp</dimen>
 
+    <dimen name="gutterHalf">4dp</dimen>
     <dimen name="gutter">8dp</dimen>
     <dimen name="gutterDouble">16dp</dimen>
 </resources>

@@ -3,8 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/placeholder"
-    android:textAppearance="@style/Text.Headline2"
-    style="@style/TextView">
+    android:text="@string/placeholder">
 
 </com.google.android.material.textview.MaterialTextView>

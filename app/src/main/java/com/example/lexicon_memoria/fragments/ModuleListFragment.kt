@@ -69,9 +69,10 @@ class ModuleListFragment : Fragment() {
     ) : RecyclerView.Adapter<ModuleViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {
-            val li = layoutInflater
             return when(viewType) {
-                VIEW_ALL_WORDS -> AllWordsViewHolder(ViewholderAllWordsBinding.inflate(li))
+                VIEW_ALL_WORDS -> AllWordsViewHolder(ViewholderAllWordsBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                ))
                 else -> throw IllegalStateException("View type with no view holder.")
             }
         }
