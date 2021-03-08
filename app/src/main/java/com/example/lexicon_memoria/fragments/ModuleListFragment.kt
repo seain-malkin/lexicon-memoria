@@ -1,11 +1,13 @@
 package com.example.lexicon_memoria.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,7 @@ import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.databinding.FragmentModuleListBinding
 import com.example.lexicon_memoria.databinding.ViewholderAllWordsBinding
+import com.example.lexicon_memoria.module.AllWordsModule
 import com.example.lexicon_memoria.module.BaseModule
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
@@ -26,7 +29,7 @@ import com.example.lexicon_memoria.viewmodel.UserViewModel
  */
 class ModuleListFragment : Fragment() {
 
-    private val lexmemVM: LexmemViewModel by viewModels {
+    private val lexmemVM: LexmemViewModel by activityViewModels {
         LexmemViewModelFactory((requireActivity().application as LexmemApplication).userWords, this)
     }
 
@@ -102,9 +105,13 @@ class ModuleListFragment : Fragment() {
         val binding: ViewholderAllWordsBinding
     ) : ModuleViewHolder(binding.root) {
 
-
         override fun bind(module: BaseModule) {
-            binding.moduleTitle.text = module.title
+            if (module !is AllWordsModule) {
+                throw IllegalStateException("Module type conflict.")
+            } else {
+                binding.moduleTitle.text = module.title
+                binding.moduleSubtitle.text = "${module.numWords} words"
+            }
         }
     }
 }

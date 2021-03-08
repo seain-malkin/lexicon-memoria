@@ -1,5 +1,6 @@
 package com.example.lexicon_memoria.repository
 
+import android.util.Log
 import com.example.lexicon_memoria.database.dao.UserWordDao
 import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.database.entity.UserWordEntity
@@ -7,6 +8,8 @@ import com.example.lexicon_memoria.database.entity.UserWordEntity
 class UserWordRepository(
     private val userWordDao: UserWordDao
 ) {
+
+    suspend fun numWords(userId: Long) = userWordDao.countWords(userId)
 
     fun getDaily(userId: Long) = userWordDao.getDaily(userId)
 

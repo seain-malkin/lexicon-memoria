@@ -14,6 +14,9 @@ abstract class UserWordDao(
     roomDatabase: RoomDatabase
 ) : BaseDao<UserWordEntity>(Table.name, roomDatabase) {
 
+    @Query("SELECT COUNT(${Columns.id}) FROM ${Table.name} WHERE ${Columns.userId} = :userId")
+    abstract suspend fun countWords(userId: Long): Int
+
     @Query("""
             SELECT * FROM ${Table.name} 
             WHERE ${Columns.userId} = :userId 

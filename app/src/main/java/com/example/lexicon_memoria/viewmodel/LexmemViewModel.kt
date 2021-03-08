@@ -1,6 +1,7 @@
 package com.example.lexicon_memoria.viewmodel
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.database.entity.DictionaryWord
@@ -8,6 +9,7 @@ import com.example.lexicon_memoria.fragments.ModuleListFragment
 import com.example.lexicon_memoria.module.AllWordsModule
 import com.example.lexicon_memoria.module.BaseModule
 import com.example.lexicon_memoria.repository.UserWordRepository
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class LexmemViewModel(
@@ -15,15 +17,29 @@ class LexmemViewModel(
 ) : ViewModel() {
 
     var userId: Long = 0L
+    set(value) {
+        field = value
+        loadModules()
+    }
 
     private var _modules = MutableLiveData<List<BaseModule>>()
     val modules: LiveData<List<BaseModule>> get() = _modules
 
-    init {
-        _modules.value = listOf(AllWordsModule(), AllWordsModule())
-    }
 
     fun getDaily() = userWordRepo.getDaily(userId)
+
+    /**
+     * Creates the modules to be displayed in the module list
+     */
+    private fun loadModules() {
+        viewModelScope.launch {
+            val moduleList = mutableListOf<BaseModule>()
+
+            moduleList.add(AllWordsModule(userWordRepo.numWords(userId)))
+
+            _modules.value = moduleList
+        }
+    }
 
     /**
      * Assigns a word to the user lexicon
