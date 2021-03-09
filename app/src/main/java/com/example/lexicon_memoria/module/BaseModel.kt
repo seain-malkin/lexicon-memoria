@@ -6,8 +6,8 @@ package com.example.lexicon_memoria.module
  * @property viewType The associated view type constant value
  */
 interface BaseModel {
-    var title: String
-    var viewType: Int
+    val title: String
+    val viewType: Int
 
     companion object {
         const val VIEW_LIST = 0

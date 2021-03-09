@@ -9,7 +9,7 @@ import com.example.lexicon_memoria.module.wordlist.WordListViewHolder
  * @property modules The data to display
  */
 class ModuleListAdapter(
-    var modules: List<BaseModel> = listOf()
+    var modules: MutableList<BaseModel> = mutableListOf()
 ) : RecyclerView.Adapter<ModuleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {

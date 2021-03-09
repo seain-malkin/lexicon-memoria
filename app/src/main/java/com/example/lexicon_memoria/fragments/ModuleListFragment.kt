@@ -14,6 +14,7 @@ import com.example.lexicon_memoria.databinding.FragmentModuleListBinding
 import com.example.lexicon_memoria.databinding.ViewholderWordListBinding
 import com.example.lexicon_memoria.module.BaseModel
 import com.example.lexicon_memoria.module.ModuleListAdapter
+import com.example.lexicon_memoria.module.wordlist.WordListModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 
@@ -40,9 +41,20 @@ class ModuleListFragment : Fragment() {
             binding.root.context, LinearLayoutManager.VERTICAL, false
         )
 
-        vm.totalWords.observe(viewLifecycleOwner, { count ->
-            Log.i("Total Words", "$count")
-        })
+        WordListModel.awaitData("View all words", vm.totalWords, vm.recentWords)
+            .observe(viewLifecycleOwner, { model ->
+                val index = adapter.modules.indexOfFirst { it.viewType == BaseModel.VIEW_LIST }
+                when (index == -1) {
+                    true -> {
+                        adapter.modules.add(model)
+                        adapter.notifyItemInserted(adapter.modules.size -1)
+                    }
+                    false -> {
+                        adapter.modules[index] = model
+                        adapter.notifyItemChanged(index)
+                    }
+                }
+            })
 
         return binding.root
     }

@@ -19,6 +19,9 @@ class WordListViewHolder(
 ) : ModuleViewHolder(binding.root) {
 
     override fun bind(module: BaseModel) {
-        binding.moduleTitle.text = module.title
+        if (module is WordListModel) {
+            binding.moduleTitle.text = module.title
+            binding.moduleSubtitle.text = "${module.numWords} words"
+        }
     }
 }

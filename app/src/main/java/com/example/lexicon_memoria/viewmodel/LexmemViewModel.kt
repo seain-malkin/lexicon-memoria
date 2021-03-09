@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.database.entity.DictionaryWord
+import com.example.lexicon_memoria.database.entity.WordWithScore
 import com.example.lexicon_memoria.repository.UserWordRepository
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,12 @@ class LexmemViewModel(
         userWordRepo.numWords(id)
     }
 
+    val recentWords: LiveData<List<WordWithScore>> = Transformations.switchMap(totalWords) {
+        userId.value?.let { id ->
+            userWordRepo.recentWords(id, DEF_RECENT_LIMIT)
+        } ?: throw IllegalStateException("User id is not set.")
+    }
+
     /**
      * Setter for userId
      * @param id The user id of current user
@@ -46,6 +53,10 @@ class LexmemViewModel(
                 userWordRepo.addWord(uid, word)
             }
         }
+    }
+
+    companion object {
+        const val DEF_RECENT_LIMIT = 3
     }
 }
 
