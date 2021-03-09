@@ -27,11 +27,11 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
 
     private lateinit var binding: ActivityLexmemBinding
 
-    private val userViewModel: UserViewModel by viewModels {
+    private val userVm: UserViewModel by viewModels {
         AuthViewModelFactory((application as LexmemApplication).users, this, intent.extras)
     }
 
-    private val lexmemViewModel: LexmemViewModel by viewModels {
+    private val lexVm: LexmemViewModel by viewModels {
         LexmemViewModelFactory((application as LexmemApplication).userWords, this)
     }
 
@@ -39,7 +39,7 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
      * @see [SearchFragment.SearchFragmentListener.onAddWord]
      */
     override fun onAddWord(word: DictionaryWord) {
-        lexmemViewModel.addWord(word)
+        lexVm.addWord(word)
 
         supportFragmentManager.let { fm ->
             val fragment = fm.findFragmentById(R.id.content_frame)
@@ -67,8 +67,8 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
         setContentView(binding.root)
 
         // Set the user id in view models
-        userViewModel.user.observe(this, { user ->
-            user?.let { lexmemViewModel.userId = it.id }
+        userVm.user.observe(this, { user ->
+            user?.let { lexVm.setUserId(it.id) }
         })
 
         // Check for a search request

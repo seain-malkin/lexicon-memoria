@@ -1,44 +1,39 @@
 package com.example.lexicon_memoria.viewmodel
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.lexicon_memoria.database.entity.DictionaryWord
-import com.example.lexicon_memoria.fragments.ModuleListFragment
-import com.example.lexicon_memoria.module.AllWordsModule
-import com.example.lexicon_memoria.module.BaseModule
 import com.example.lexicon_memoria.repository.UserWordRepository
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class LexmemViewModel(
     private val userWordRepo: UserWordRepository
 ) : ViewModel() {
 
-    var userId: Long = 0L
-    set(value) {
-        field = value
-        loadModules()
-    }
-
-    private var _modules = MutableLiveData<List<BaseModule>>()
-    val modules: LiveData<List<BaseModule>> get() = _modules
-
-
-    fun getDaily() = userWordRepo.getDaily(userId)
+    /**
+     * @property userId The database id of the current user
+     *
+     * A value of -1 represents a null value. If the property is accessed before it's set to a
+     * valid id, an exception is thrown.
+     */
+    private val _userId = MutableLiveData(-1L)
+    val userId: LiveData<Long>
+        get() = _userId
 
     /**
-     * Creates the modules to be displayed in the module list
+     * @property totalWords The total number of words added by user
      */
-    private fun loadModules() {
-        viewModelScope.launch {
-            val moduleList = mutableListOf<BaseModule>()
+    val totalWords: LiveData<Int> = Transformations.switchMap(_userId) { id ->
+        userWordRepo.numWords(id)
+    }
 
-            moduleList.add(AllWordsModule(userWordRepo.numWords(userId)))
-
-            _modules.value = moduleList
-        }
+    /**
+     * Setter for userId
+     * @param id The user id of current user
+     */
+    fun setUserId(id: Long) {
+        _userId.value = id
     }
 
     /**
@@ -46,8 +41,10 @@ class LexmemViewModel(
      * @param word The word to add
      */
     fun addWord(word: DictionaryWord) {
-        viewModelScope.launch {
-            userWordRepo.addWord(userId, word)
+        _userId.value?.let { uid ->
+            viewModelScope.launch {
+                userWordRepo.addWord(uid, word)
+            }
         }
     }
 }

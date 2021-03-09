@@ -9,7 +9,7 @@ class UserWordRepository(
     private val userWordDao: UserWordDao
 ) {
 
-    suspend fun numWords(userId: Long) = userWordDao.countWords(userId)
+    fun numWords(userId: Long) = userWordDao.countWords(userId)
 
     fun getDaily(userId: Long) = userWordDao.getDaily(userId)
 

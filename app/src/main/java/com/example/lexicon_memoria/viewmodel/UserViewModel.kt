@@ -1,16 +1,11 @@
 package com.example.lexicon_memoria.viewmodel
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.lexicon_memoria.database.entity.Lexicon
 import com.example.lexicon_memoria.database.entity.UserEntity
 import com.example.lexicon_memoria.repository.UserRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlin.jvm.Throws
 
 /**
@@ -25,9 +20,6 @@ class UserViewModel(
 
     var user = MutableLiveData<UserEntity?>()
 
-    private val _lexicon = MutableLiveData<Lexicon?>()
-    val lexicon: LiveData<Lexicon?> get() = _lexicon
-
     init {
         // Load the local user or create a new one
         viewModelScope.launch {
@@ -35,14 +27,8 @@ class UserViewModel(
                 loadUser(savedStateHandle.get(ARG_USER_ID) ?: 0L)
             } catch (e: IllegalStateException) {
                 createDefaultUser()
-            } finally {
-                loadLexicon()
             }
         }
-    }
-
-    suspend fun loadLexicon() {
-        user.value?.let { _lexicon.value = userRepo.getWords(it.id) }
     }
 
     /**
