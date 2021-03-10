@@ -1,10 +1,10 @@
-package com.example.lexicon_memoria.module.wordlist
+package com.example.lexicon_memoria.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.lexicon_memoria.databinding.ViewholderWordListBinding
-import com.example.lexicon_memoria.module.BaseModel
-import com.example.lexicon_memoria.module.ModuleViewHolder
+import com.example.lexicon_memoria.fragments.modulelist.BaseModule
+import com.example.lexicon_memoria.fragments.modulelist.WordListModule
 
 /**
  * View Holder that displays a summary of all user words
@@ -18,8 +18,8 @@ class WordListViewHolder(
     )
 ) : ModuleViewHolder(binding.root) {
 
-    override fun bind(module: BaseModel) {
-        if (module is WordListModel) {
+    override fun bind(module: BaseModule) {
+        if (module is WordListModule) {
             binding.moduleTitle.text = module.title
             binding.moduleSubtitle.text = "${module.numWords} words"
         }

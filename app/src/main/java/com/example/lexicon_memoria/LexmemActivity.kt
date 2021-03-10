@@ -5,15 +5,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
 import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.databinding.ActivityLexmemBinding
-import com.example.lexicon_memoria.fragments.ModuleListFragment
+import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment
 import com.example.lexicon_memoria.fragments.SearchFragment
 import com.example.lexicon_memoria.viewmodel.UserViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory

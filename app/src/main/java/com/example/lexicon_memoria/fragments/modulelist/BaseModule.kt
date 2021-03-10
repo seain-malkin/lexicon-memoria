@@ -1,11 +1,11 @@
-package com.example.lexicon_memoria.module
+package com.example.lexicon_memoria.fragments.modulelist
 
 /**
  * The base data model for each module
  * @property title The title of the module
  * @property viewType The associated view type constant value
  */
-interface BaseModel {
+interface BaseModule {
     val title: String
     val viewType: Int
 

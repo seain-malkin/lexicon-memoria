@@ -1,20 +1,22 @@
-package com.example.lexicon_memoria.module
+package com.example.lexicon_memoria.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lexicon_memoria.module.wordlist.WordListViewHolder
+import com.example.lexicon_memoria.fragments.modulelist.BaseModule
+import com.example.lexicon_memoria.viewholder.ModuleViewHolder
+import com.example.lexicon_memoria.viewholder.WordListViewHolder
 
 /**
  * An adapter associated with the module list
  * @property modules The data to display
  */
 class ModuleListAdapter(
-    var modules: MutableList<BaseModel> = mutableListOf()
+    var modules: MutableList<BaseModule> = mutableListOf()
 ) : RecyclerView.Adapter<ModuleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {
         return when (viewType) {
-            BaseModel.VIEW_LIST -> WordListViewHolder(parent)
+            BaseModule.VIEW_LIST -> WordListViewHolder(parent)
             else -> throw IllegalStateException("View type has no corresponding view.")
         }
     }

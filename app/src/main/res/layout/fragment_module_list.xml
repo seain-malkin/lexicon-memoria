@@ -2,7 +2,7 @@
 <androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.ModuleListFragment"
+    tools:context=".fragments.modulelist.ModuleListFragment"
     android:id="@+id/module_list_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

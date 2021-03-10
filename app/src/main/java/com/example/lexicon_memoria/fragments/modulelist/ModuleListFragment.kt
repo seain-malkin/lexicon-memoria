@@ -1,20 +1,15 @@
-package com.example.lexicon_memoria.fragments
+package com.example.lexicon_memoria.fragments.modulelist
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.LexmemApplication
 import com.example.lexicon_memoria.databinding.FragmentModuleListBinding
-import com.example.lexicon_memoria.databinding.ViewholderWordListBinding
-import com.example.lexicon_memoria.module.BaseModel
-import com.example.lexicon_memoria.module.ModuleListAdapter
-import com.example.lexicon_memoria.module.wordlist.WordListModel
+import com.example.lexicon_memoria.adapter.ModuleListAdapter
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 
@@ -41,9 +36,9 @@ class ModuleListFragment : Fragment() {
             binding.root.context, LinearLayoutManager.VERTICAL, false
         )
 
-        WordListModel.awaitData("View all words", vm.totalWords, vm.recentWords)
+        WordListModule.awaitData("View all words", vm.totalWords, vm.recentWords)
             .observe(viewLifecycleOwner, { model ->
-                val index = adapter.modules.indexOfFirst { it.viewType == BaseModel.VIEW_LIST }
+                val index = adapter.modules.indexOfFirst { it.viewType == BaseModule.VIEW_LIST }
                 when (index == -1) {
                     true -> {
                         adapter.modules.add(model)
