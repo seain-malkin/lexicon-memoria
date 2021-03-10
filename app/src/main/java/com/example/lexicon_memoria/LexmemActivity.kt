@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
 import android.widget.Toast
@@ -12,7 +13,9 @@ import androidx.activity.viewModels
 import com.example.lexicon_memoria.database.entity.DictionaryWord
 import com.example.lexicon_memoria.databinding.ActivityLexmemBinding
 import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment
+import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment.ModuleListListener
 import com.example.lexicon_memoria.fragments.SearchFragment
+import com.example.lexicon_memoria.fragments.SearchFragment.SearchFragmentListener
 import com.example.lexicon_memoria.viewmodel.UserViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
@@ -21,7 +24,9 @@ import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
 /**
  * Main activity that displays the module list and search results
  */
-class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity() {
+class LexmemActivity(
+
+) : ModuleListListener, SearchFragmentListener, AppCompatActivity() {
 
     private lateinit var binding: ActivityLexmemBinding
 
@@ -31,6 +36,13 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
 
     private val lexVm: LexmemViewModel by viewModels {
         LexmemViewModelFactory((application as LexmemApplication).userWords, this)
+    }
+
+    /**
+     * @see [ModuleListFragment.ModuleListListener.onModuleClick]
+     */
+    override fun onModuleClick(moduleType: Int) {
+        Log.i("Module Clicked", "$moduleType")
     }
 
     /**
@@ -109,6 +121,9 @@ class LexmemActivity : SearchFragment.SearchFragmentListener, AppCompatActivity(
     }
 
     companion object {
+
+        const val MODULE_WORD_LIST = 1
+        const val MODULE_INTERVAL = 2
 
         /**
          * Creates the intent for launching the activity

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lexicon_memoria.LexmemApplication
+import com.example.lexicon_memoria.adapter.WordListAdapter
 import com.example.lexicon_memoria.databinding.FragmentWordListBinding
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
 import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
@@ -24,10 +26,16 @@ class WordListFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentWordListBinding
+    private val adapter = WordListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentWordListBinding.inflate(layoutInflater, container, false)
+
+        binding.listContainer.let {
+            it.adapter = adapter
+            it.layoutManager = LinearLayoutManager(requireContext())
+        }
 
         return binding.root
     }

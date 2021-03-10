@@ -3,6 +3,7 @@ package com.example.lexicon_memoria.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.fragments.modulelist.BaseModule
+import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment.ModuleListListener
 import com.example.lexicon_memoria.viewholder.ModuleViewHolder
 import com.example.lexicon_memoria.viewholder.WordListViewHolder
 
@@ -14,6 +15,8 @@ class ModuleListAdapter(
     var modules: MutableList<BaseModule> = mutableListOf()
 ) : RecyclerView.Adapter<ModuleViewHolder>() {
 
+    var listener: ModuleListListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModuleViewHolder {
         return when (viewType) {
             BaseModule.VIEW_LIST -> WordListViewHolder(parent)
@@ -22,7 +25,7 @@ class ModuleListAdapter(
     }
 
     override fun onBindViewHolder(holder: ModuleViewHolder, position: Int) {
-        holder.bind(modules[position])
+        holder.bind(modules[position]) { i -> listener?.onModuleClick(i) }
     }
 
     override fun getItemCount(): Int {

@@ -4,6 +4,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lexicon_memoria.fragments.modulelist.BaseModule
 
+typealias ClickHandler = (Int) -> Unit
+
 /**
  * The base view holder that all modules extend from.
  */
@@ -16,5 +18,5 @@ abstract class ModuleViewHolder(
      * Binds the module data to the module view holder
      * @param module The module data object
      */
-    abstract fun bind(module: BaseModule)
+    abstract fun bind(module: BaseModule, onClick: ClickHandler)
 }

@@ -1,5 +1,6 @@
 package com.example.lexicon_memoria.fragments.modulelist
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +21,20 @@ import com.example.lexicon_memoria.viewmodel.LexmemViewModelFactory
  */
 class ModuleListFragment : Fragment() {
 
+    /**
+     * Communicates with activity. Calling activity must implement.
+     */
+    interface ModuleListListener {
+
+        /**
+         * Triggered when a user requests to view a module
+         * @param moduleType The module to be viewed
+         */
+        fun onModuleClick(moduleType: Int)
+    }
+
+    private var listener: ModuleListListener? = null
+
     private val vm: LexmemViewModel by activityViewModels {
         LexmemViewModelFactory((requireActivity().application as LexmemApplication).userWords, this)
     }
@@ -28,13 +43,12 @@ class ModuleListFragment : Fragment() {
     private val adapter = ModuleListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentModuleListBinding.inflate(layoutInflater, container, false)
 
+        adapter.listener = listener
         binding.moduleListContainer.adapter = adapter
-        binding.moduleListContainer.layoutManager = LinearLayoutManager(
-            binding.root.context, LinearLayoutManager.VERTICAL, false
-        )
+        binding.moduleListContainer.layoutManager = LinearLayoutManager(binding.root.context)
 
         WordListModule.awaitData("View all words", vm.totalWords, vm.recentWords)
             .observe(viewLifecycleOwner, { model ->
@@ -52,6 +66,33 @@ class ModuleListFragment : Fragment() {
             })
 
         return binding.root
+    }
+
+    /**
+     * Reference the activity context and ensure interface implementation.
+     *
+     * @see [Fragment.onAttach]
+     */
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // Enforce interface implementation
+        if (context is ModuleListListener) {
+            listener = context
+        } else {
+            throw IllegalStateException("Activity must implement ModuleListListener interface.")
+        }
+    }
+
+    /**
+     * Remove reference to activity.
+     *
+     * @see [Fragment.onDetach]
+     */
+    override fun onDetach() {
+        super.onDetach()
+
+        listener = null
     }
 
     companion object {

@@ -8,6 +8,7 @@ package com.example.lexicon_memoria.fragments.modulelist
 interface BaseModule {
     val title: String
     val viewType: Int
+    val moduleType: Int
 
     companion object {
         const val VIEW_LIST = 0

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.lexicon_memoria.databinding.ViewholderWordListBinding
 import com.example.lexicon_memoria.fragments.modulelist.BaseModule
+import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment.ModuleListListener
 import com.example.lexicon_memoria.fragments.modulelist.WordListModule
 
 /**
@@ -18,10 +19,13 @@ class WordListViewHolder(
     )
 ) : ModuleViewHolder(binding.root) {
 
-    override fun bind(module: BaseModule) {
+    override fun bind(module: BaseModule, onClick: ClickHandler) {
         if (module is WordListModule) {
             binding.moduleTitle.text = module.title
             binding.moduleSubtitle.text = "${module.numWords} words"
+            binding.root.setOnClickListener { onClick.invoke(module.moduleType) }
+        } else {
+            throw IllegalStateException("The wrong module was injected.")
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.lexicon_memoria.fragments.modulelist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.example.lexicon_memoria.LexmemActivity
 import com.example.lexicon_memoria.database.entity.WordWithScore
 
 /**
@@ -12,7 +13,8 @@ data class WordListModule(
     override val title: String,
     val numWords: Int,
     val recentWords: List<WordWithScore>,
-    override val viewType: Int = BaseModule.VIEW_LIST
+    override val viewType: Int = BaseModule.VIEW_LIST,
+    override val moduleType: Int = LexmemActivity.MODULE_WORD_LIST
 ) : BaseModule {
 
     companion object {
