@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
 import android.widget.Toast
@@ -16,6 +15,7 @@ import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment
 import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment.ModuleListListener
 import com.example.lexicon_memoria.fragments.SearchFragment
 import com.example.lexicon_memoria.fragments.SearchFragment.SearchFragmentListener
+import com.example.lexicon_memoria.fragments.WordListFragment
 import com.example.lexicon_memoria.viewmodel.UserViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
@@ -39,10 +39,24 @@ class LexmemActivity(
     }
 
     /**
+     * When a module is clicked, load the associated fragment.
+     *
      * @see [ModuleListFragment.ModuleListListener.onModuleClick]
      */
     override fun onModuleClick(moduleType: Int) {
-        Log.i("Module Clicked", "$moduleType")
+        // Decide which fragment to create
+        val fragment = when (moduleType) {
+            MODULE_WORD_LIST -> WordListFragment.newInstance()
+            MODULE_INTERVAL -> throw IllegalStateException("Not implemented yet.")
+            else -> throw IllegalStateException("An unknown module was requested.")
+        }
+
+        // Replace the content frame with the new fragment
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.content_frame, fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     /**

@@ -35,6 +35,10 @@ class LexmemViewModel(
         } ?: throw IllegalStateException("User id is not set.")
     }
 
+    fun getWordList(): LiveData<List<WordWithScore>> {
+        return Transformations.switchMap(_userId) { id -> userWordRepo.getWords(id) }
+    }
+
     /**
      * Setter for userId
      * @param id The user id of current user

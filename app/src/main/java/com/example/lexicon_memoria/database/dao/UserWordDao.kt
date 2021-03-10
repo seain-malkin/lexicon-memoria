@@ -17,7 +17,15 @@ abstract class UserWordDao(
     @Query("SELECT COUNT(${Columns.id}) FROM ${Table.name} WHERE ${Columns.userId} = :userId")
     abstract fun countWords(userId: Long): LiveData<Int>
 
-    @Query("SELECT * FROM ${Table.name} WHERE ${Columns.userId} = :userId LIMIT :limit")
+    @Query("SELECT * FROM ${Table.name} WHERE ${Columns.userId} = :userId")
+    abstract fun getWords(userId: Long): LiveData<List<WordWithScore>>
+
+    @Query("""
+        SELECT * FROM ${Table.name} 
+        WHERE ${Columns.userId} = :userId 
+        ORDER BY ${Columns.creationDate} DESC 
+        LIMIT :limit
+        """)
     abstract fun recentWords(userId: Long, limit: Int): LiveData<List<WordWithScore>>
 
     @Query("""

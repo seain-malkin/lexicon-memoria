@@ -42,15 +42,6 @@ class UserRepository(
     }
 
     /**
-     * Gets a list of all users words as live data
-     * @param userId The user id
-     * @return Live data with the word list
-     */
-    suspend fun getWords(userId: Long): Lexicon? {
-        return userDao.getWords(userId)
-    }
-
-    /**
      * Inserts a user into persistent storage
      * @param[user] The user object to insert
      */

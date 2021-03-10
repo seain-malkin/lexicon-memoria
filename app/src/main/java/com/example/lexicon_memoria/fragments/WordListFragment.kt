@@ -37,6 +37,11 @@ class WordListFragment : Fragment() {
             it.layoutManager = LinearLayoutManager(requireContext())
         }
 
+        vm.getWordList().observe(viewLifecycleOwner, { words ->
+            adapter.words.addAll(words)
+            adapter.notifyDataSetChanged()
+        })
+
         return binding.root
     }
 

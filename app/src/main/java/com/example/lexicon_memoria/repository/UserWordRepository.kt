@@ -11,6 +11,8 @@ class UserWordRepository(
 
     fun numWords(userId: Long) = userWordDao.countWords(userId)
 
+    fun getWords(userId: Long) = userWordDao.getWords(userId)
+
     fun recentWords(userId: Long, limit: Int) = userWordDao.recentWords(userId, limit)
 
     fun getDaily(userId: Long) = userWordDao.getDaily(userId)
