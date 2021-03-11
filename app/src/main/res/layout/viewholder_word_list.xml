@@ -1,36 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <com.google.android.material.card.MaterialCardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gutterHalf">
+        android:layout_margin="@dimen/gutter">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/gutterHalf"
-            android:paddingBottom="@dimen/gutterHalf"
-            android:paddingStart="@dimen/gutter"
-            android:paddingEnd="@dimen/gutter">
+            android:orientation="vertical"
+            android:padding="@dimen/gutter">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/module_title"
+            <RelativeLayout
+                android:id="@+id/header_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
-                android:text="@string/placeholder_title" />
+                android:paddingBottom="@dimen/gutter">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/module_subtitle"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/module_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                    android:text="@string/module_word_list_title" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/module_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Body2"
+                    android:text="@string/word_count"/>
+
+            </RelativeLayout>
+
+            <View style="@style/Divider"/>
+
+            <RelativeLayout
+                android:id="@+id/recent_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/module_title"
-                android:text="@string/card_section_title"/>
+                android:paddingTop="@dimen/gutter">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/recent_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/module_word_list_recent"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline2"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recent_title">
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_title"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_long"/>
+
+                </com.google.android.material.chip.ChipGroup>
+
+
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+</RelativeLayout>

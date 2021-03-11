@@ -50,7 +50,7 @@ class ModuleListFragment : Fragment() {
         binding.moduleListContainer.adapter = adapter
         binding.moduleListContainer.layoutManager = LinearLayoutManager(binding.root.context)
 
-        WordListModule.awaitData("View all words", vm.totalWords, vm.recentWords)
+        WordListModule.awaitData("Summary", vm.totalWords, vm.recentWords)
             .observe(viewLifecycleOwner, { model ->
                 val index = adapter.modules.indexOfFirst { it.viewType == BaseModule.VIEW_LIST }
                 when (index == -1) {

@@ -6,13 +6,16 @@
     </style>
     <!-- End Toolbar -->
     
-    <style name="TextAppearance.MyTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-        <item name="android:textSize">32sp</item>
+    <style name="TextAppearance.MyTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline6">
+
     </style>
 
-    <style name="TextAppearance.MyTheme.Headline2" parent="TextAppearance.MaterialComponents.Headline3">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+    <style name="TextAppearance.MyTheme.Body2" parent="TextAppearance.MaterialComponents.Body2">
+       
+    </style>
+
+    <style name="TextAppearance.MyTheme.Headline2" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
@@ -21,7 +24,13 @@
     </style>
 
     <style name="Widget.MyTheme.CardView" parent="Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">0dp</item>
+
+    </style>
+    
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/statusBarColor</item>
     </style>
 
     <!-- Text Appearance

@@ -2,6 +2,7 @@ package com.example.lexicon_memoria.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.lexicon_memoria.R
 import com.example.lexicon_memoria.databinding.ViewholderWordListBinding
 import com.example.lexicon_memoria.fragments.modulelist.BaseModule
 import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment.ModuleListListener
@@ -22,7 +23,9 @@ class WordListViewHolder(
     override fun bind(module: BaseModule, onClick: ClickHandler) {
         if (module is WordListModule) {
             binding.moduleTitle.text = module.title
-            binding.moduleSubtitle.text = "${module.numWords} words"
+            binding.moduleSubtitle.text = binding.root.context.getString(
+                R.string.word_count, module.numWords
+            )
             binding.root.setOnClickListener { onClick.invoke(module.moduleType) }
         } else {
             throw IllegalStateException("The wrong module was injected.")

@@ -16,8 +16,13 @@
 
     <string name="key_merriam_webster_dictionary">f08d5a23-3852-489f-885b-ebd9134c1d00</string>
     <string name="key_merriam_webster_thesaurus">5ff04b8c-85d6-40c1-81a8-ae5480706cf9</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="module_word_list_title">Summary</string>
+    <string name="module_word_list_recent">Recently added</string>
+
+    <string name="word_count">%1$d words</string>
 
     <string name="definition"><b>%1$d: </b> %2$s</string>
 </resources>
