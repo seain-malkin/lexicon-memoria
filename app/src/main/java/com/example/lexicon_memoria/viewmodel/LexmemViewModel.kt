@@ -60,7 +60,7 @@ class LexmemViewModel(
     }
 
     companion object {
-        const val DEF_RECENT_LIMIT = 3
+        const val DEF_RECENT_LIMIT = 5
     }
 }
 

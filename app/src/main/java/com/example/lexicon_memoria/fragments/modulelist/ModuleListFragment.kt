@@ -30,7 +30,7 @@ class ModuleListFragment : Fragment() {
          * Triggered when a user requests to view a module
          * @param moduleType The module to be viewed
          */
-        fun onModuleClick(moduleType: Int)
+        fun onModuleClick(moduleType: Int, extra: Bundle? = null)
     }
 
     private var listener: ModuleListListener? = null

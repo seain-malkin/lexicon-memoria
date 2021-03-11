@@ -1,9 +1,13 @@
 package com.example.lexicon_memoria.fragments.modulelist
 
+import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.example.lexicon_memoria.LexmemActivity
 import com.example.lexicon_memoria.database.entity.WordWithScore
+import com.example.lexicon_memoria.fragments.ViewWordFragment
+import com.example.lexicon_memoria.fragments.WordListFragment
 
 /**
  * A module that displays a list of words
@@ -18,6 +22,10 @@ data class WordListModule(
 ) : BaseModule {
 
     companion object {
+        private const val ARG_ACTION = "word_list_module:action"
+        private const val ARG_ENTITY_ID = "word_list_module:entity_id"
+        private const val ACTION_VIEW_ALL = 0
+        private const val ACTION_CHIP_CLICK = 1
 
         fun awaitData(
             title: String,
@@ -48,6 +56,23 @@ data class WordListModule(
                     recentWordsValue = it
                     update()
                 }
+            }
+        }
+
+        fun getChipClickBundle(id: Long): Bundle {
+            return Bundle().apply {
+                putInt(ARG_ACTION, ACTION_CHIP_CLICK)
+                putLong(ARG_ENTITY_ID, id)
+            }
+        }
+
+        fun fragmentFactory(bundle: Bundle?): Fragment {
+            return when(bundle?.let { it.getInt(ARG_ACTION) } ?: ACTION_VIEW_ALL) {
+                ACTION_VIEW_ALL -> WordListFragment.newInstance()
+                ACTION_CHIP_CLICK -> bundle?.let {
+                    ViewWordFragment.newInstance(it.getLong(ARG_ENTITY_ID, 0L))
+                } ?: throw IllegalStateException("The entity id is not defined.")
+                else -> throw IllegalStateException("Unknown action requested.")
             }
         }
     }

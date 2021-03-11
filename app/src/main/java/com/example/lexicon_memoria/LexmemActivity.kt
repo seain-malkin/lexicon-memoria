@@ -16,6 +16,7 @@ import com.example.lexicon_memoria.fragments.modulelist.ModuleListFragment.Modul
 import com.example.lexicon_memoria.fragments.SearchFragment
 import com.example.lexicon_memoria.fragments.SearchFragment.SearchFragmentListener
 import com.example.lexicon_memoria.fragments.WordListFragment
+import com.example.lexicon_memoria.fragments.modulelist.WordListModule
 import com.example.lexicon_memoria.viewmodel.UserViewModel
 import com.example.lexicon_memoria.viewmodel.AuthViewModelFactory
 import com.example.lexicon_memoria.viewmodel.LexmemViewModel
@@ -43,10 +44,10 @@ class LexmemActivity(
      *
      * @see [ModuleListFragment.ModuleListListener.onModuleClick]
      */
-    override fun onModuleClick(moduleType: Int) {
+    override fun onModuleClick(moduleType: Int, extra: Bundle?) {
         // Decide which fragment to create
         val fragment = when (moduleType) {
-            MODULE_WORD_LIST -> WordListFragment.newInstance()
+            MODULE_WORD_LIST -> WordListModule.fragmentFactory(extra)
             MODULE_INTERVAL -> throw IllegalStateException("Not implemented yet.")
             else -> throw IllegalStateException("An unknown module was requested.")
         }

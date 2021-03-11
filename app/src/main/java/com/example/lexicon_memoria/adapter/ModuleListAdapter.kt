@@ -25,7 +25,7 @@ class ModuleListAdapter(
     }
 
     override fun onBindViewHolder(holder: ModuleViewHolder, position: Int) {
-        holder.bind(modules[position]) { i -> listener?.onModuleClick(i) }
+        holder.bind(modules[position]) { i, l -> listener?.onModuleClick(i, l) }
     }
 
     override fun getItemCount(): Int {
